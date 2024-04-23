@@ -1,0 +1,32 @@
+<div class="bg-[#1a1e2b] flex justify-between items-center py-2 px-4 pt-5 pb-4">
+  <!-- icono de menu -->
+
+  <div class="flex items-center border-white border rounded-full p-1 ml-9">
+    <a routerLink="">
+    <img src="assets/neon_png.png" class="h-16 w-auto" alt="Logo"></a>
+  </div>
+
+  <!-- barra de busqueda -->
+  <div class="flex items-center flex-grow justify-center">
+    <form class="form relative">
+      <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1 ">
+        <i [innerHTML]="ICONO_LUPA"></i>
+      </button>
+      <input type="text" required="" placeholder="BUSCAR..." class="input px-8 py-3 border-2 border-white focus:outline-none placeholder-white text-white bg-transparent rounded-lg focus:border-white w-full">
+      <button class="absolute right-3 -translate-y-1/2 top-1/2 p-1" type="reset">
+        <i [innerHTML]="ICONO_CERRAR"></i>
+      </button>
+    </form>
+  </div>
+
+<!--  icono de notificaciones-->
+<div class="flex">
+ <i [innerHTML]="ICONO_CAMPANA"></i>
+  <i [innerHTML]="ICONO_NOTIFICACIONES"></i>
+</div>
+
+</div>
+
+
+
+
