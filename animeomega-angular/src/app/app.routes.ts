@@ -8,6 +8,7 @@ import {FavoritoComponent} from "./pages/favorito/favorito.component";
 import {AbandonadoComponent} from "./pages/abandonado/abandonado.component";
 import {CompletadoComponent} from "./pages/completado/completado.component";
 import {NotFoundComponent} from "./errors/not-found/not-found.component";
+import {LoginCallbackComponent} from "./admin/login-callback/login-callback.component";
 
 export const routes: Routes = [
   {path: '', component:HomeComponent, pathMatch: 'full'},
@@ -19,4 +20,5 @@ export const routes: Routes = [
   {path: 'favorito', component: FavoritoComponent, title: 'Favoritos'},
   {path: 'completado', component: CompletadoComponent, title: 'Completado'},
   {path: 'abandonado', component: AbandonadoComponent, title: 'Abandonado'},
+  {path:'login-callback',component:LoginCallbackComponent},
 ];

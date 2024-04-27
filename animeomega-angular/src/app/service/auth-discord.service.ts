@@ -8,7 +8,7 @@ import {isPlatformBrowser} from "@angular/common";
   providedIn: 'root'
 })
 export class AuthDiscordService {
-  private loginUrl : string = `${environment.urlapi}/login`;
+  public loginUrl : string = `${environment.urlapi}/login`;
   private muestraUsuario : string = `${environment.urlapi}/usuario`;
   private jwtToken: string | null = null;
 

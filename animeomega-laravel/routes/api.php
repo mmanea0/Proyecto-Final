@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Route;
 
 // Rutas de autenticación
 Route::middleware('web')->group(function () {
-    Route::get('/login', [AuthController::class, 'login']);
+    Route::get('/logindiscord', [AuthController::class, 'loginDiscord']);
     Route::get('/auth/callback', [AuthController::class, 'store']);
 });
+
+Route::post('/iniciosesion', [AuthController::class, 'iniciodesesion']);
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/usuario', [AuthController::class, 'show']);
@@ -26,7 +29,7 @@ Route::middleware('auth:api')->group(function () {
 });
 
 // Otras rutas públicas
-Route::get('/prueba', [PruebaController::class, 'prueba1']);
+//Route::get('/prueba', [PruebaController::class, 'prueba1']);
 
 
 

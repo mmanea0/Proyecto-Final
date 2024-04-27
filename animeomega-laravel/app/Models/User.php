@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Auth\AuthProvider;
+use App\Traits\RolesTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +12,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use RolesTrait;
     use HasFactory, Notifiable,HasApiTokens;
 
     /**
@@ -24,7 +26,8 @@ class User extends Authenticatable
         'password',
         'discord_id',
         'nickname',
-        'avatar'
+        'avatar',
+        'imagen'
     ];
 
     /**
@@ -53,5 +56,21 @@ class User extends Authenticatable
     public function authProviders()
     {
         return $this->hasMany(AuthProvider::class);
+    }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'roles_usuarios');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->clientes()->delete();
+            $user->userRoles()->delete();
+            $user->register()->delete();
+            $user->passwordRenews()->delete();
+        });
     }
 }

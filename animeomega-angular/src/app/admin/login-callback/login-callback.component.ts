@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthDiscordService} from "../../service/auth-discord.service";
 
@@ -10,14 +10,16 @@ import {AuthDiscordService} from "../../service/auth-discord.service";
   templateUrl: './login-callback.component.html',
   styleUrl: './login-callback.component.css'
 })
-export class LoginCallbackComponent {
+export class LoginCallbackComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthDiscordService,
     private router: Router
+
   ) {
   }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const accessToken = params['access_token'];
@@ -40,5 +42,4 @@ export class LoginCallbackComponent {
             }
           });
       }
-    });}
-}
+    });}}

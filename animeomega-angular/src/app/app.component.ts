@@ -40,4 +40,8 @@ export class AppComponent {
       console.log(response);
     });
   }
+
+  loginprueba() {
+  window.location.href = this.authDiscordService.loginUrl;
+  }
 }
