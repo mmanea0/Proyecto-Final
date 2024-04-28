@@ -1,1 +1,38 @@
-<p>login</p>
+<br>
+
+<div>
+<button data-v-0fc51e59="" class="cut-text flex h-10 items-center gap-1 rounded px-2 text-lg font-bold"
+        style="background: linear-gradient(121deg, rgb(88, 101, 242) 0%, rgb(64, 78, 237) 100%);">
+  <i [innerHTML]="ICONO_DISCORD"></i> <a href="http://localhost/api/logindiscord"> INICIO DISCORD</a>
+</button>
+</div>
+
+<div>
+  <button (click)="mostrarFormulario()">
+    Inicio sesión normal
+  </button>
+</div>
+<div *ngIf="mostrarFormularioNormal">
+  <form (ngSubmit)="login()">
+    <div>
+      <input [(ngModel)]="credenciales.login" name="user" placeholder="Nombre de usuario">
+    </div>
+    <div>
+      <input [(ngModel)]="credenciales.pass" name="password" type="password" placeholder="Contraseña">
+    </div>
+    <button type="submit">Iniciar sesión</button>
+  </form>
+</div>
+
+
+<div>
+  hola {{(datosUsuario$ | async)?.nickname || 'desconocido'}}
+</div>
+
+<div>
+  <button (click)="logout()">
+    cerrar
+  </button>
+</div>
+
+

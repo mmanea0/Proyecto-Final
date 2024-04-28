@@ -3,6 +3,7 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {NgClass, NgIf} from "@angular/common";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {MenuComponent} from "../menu/menu.component";
+import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-barra-lateral',
@@ -12,7 +13,8 @@ import {MenuComponent} from "../menu/menu.component";
     RouterLink,
     MenuComponent,
     RouterOutlet,
-    NgClass
+    NgClass,
+    LoginComponent
   ],
   templateUrl: './barra-lateral.component.html',
   styleUrl: './barra-lateral.component.css'

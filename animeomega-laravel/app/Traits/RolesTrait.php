@@ -10,13 +10,13 @@ trait RolesTrait
     //añade devuelve los nombre de los roles en una array
     public function roleNames()
     {
-        return $this->roles->pluck('name')->toArray();
+        return $this->roles->pluck('descripcion')->toArray();
     }
 
     //devuelve tu si tiene el rol. Segun el nombre
     public function hasRole($roleName)
     {
-        return $this->roles->contains('name', $roleName);
+        return $this->roles->contains('descripcion', $roleName);
     }
    //Devuelve si tiene el rol. Segun el id
     public function hasRoleId($roleId)

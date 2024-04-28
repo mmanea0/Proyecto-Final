@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimesController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PruebaController;
 use Illuminate\Http\Request;
@@ -14,8 +15,15 @@ Route::middleware('web')->group(function () {
 Route::post('/iniciosesion', [AuthController::class, 'iniciodesesion']);
 Route::post('/register', [AuthController::class, 'register']);
 
+Route::get('/iniciosesion/info',[AuthController::class,'info'])->middleware('auth:api');
+
+
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/usuario', [AuthController::class, 'show']);
+
+Route::get('/anime/{anime}', [AnimesController::class, 'findAnime']);
+Route::get('/prueba', [AnimesController::class, 'prueba']);
+Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);
 
 
 // Otras rutas protegidas por autenticación

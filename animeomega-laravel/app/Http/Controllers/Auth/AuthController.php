@@ -7,8 +7,8 @@ use App\Models\AuthDiscord;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -16,6 +16,7 @@ class AuthController extends Controller
     {
         return Socialite::driver('discord')->redirect();
     }
+
 
 
     public function store()
@@ -109,10 +110,12 @@ class AuthController extends Controller
         return response()->json(['mensaje' => 'Sesión cerrada']);
     }
 
-    public function show()
+    public function info(Request $request)
     {
-        //muestra todos los usuarios
-        return response()->json(AuthDiscord::all());
+       return response()->json([
+            'nickname' => Auth::user()->nickname,
+            'roles' => Auth::user()->roleNames()
+        ]);
     }
 
 
