@@ -120,9 +120,8 @@ class AuthController extends Controller
     {
        return response()->json([
             'nickname' => Auth::user()->nickname,
+            'avatar' => Auth::user()->avatar,
             'roles' => Auth::user()->roleNames()
         ]);
     }
-
-
 }

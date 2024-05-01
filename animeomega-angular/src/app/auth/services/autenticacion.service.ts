@@ -119,6 +119,7 @@ export class AutenticacionService {
     return new Observable<User>();
   }
 
+
 // Cierra la sesión
 logout()
 {
