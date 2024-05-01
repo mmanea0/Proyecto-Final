@@ -62,7 +62,7 @@ export class AutenticacionService {
             console.log('Roles del usuario: ', JSON.stringify(response.roles));
             console.log(response.bloqueado, response.activo);
             this.username = response.nickname;
-            localStorage.setItem('username', response.nickname);
+            localStorage.setItem('nickname', response.nickname);
             return true;
           } else {
             throw new Error('Credenciales inválidas');

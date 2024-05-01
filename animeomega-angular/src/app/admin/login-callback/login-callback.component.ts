@@ -20,7 +20,7 @@ export class LoginCallbackComponent implements OnInit{
   ) {
   }
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const accessToken = params['access_token'];
 
@@ -42,4 +42,32 @@ export class LoginCallbackComponent implements OnInit{
             }
           });
       }
-    });}}
+    });}}*/
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const accessToken = params['access_token'];
+      const nickname = params['nickname']; // Obtén el nickname de los parámetros de la URL
+      const avatar = params['avatar']; // Obtén el avatar de los parámetros de la URL
+      const rol = params['rol']; // Obtén el rol de los parámetros de la URL
+
+      if (accessToken) {
+        this.authService.iniciarSesionExterna({ access_token: accessToken, nickname: nickname, avatar: avatar, rol: rol })
+          .subscribe(success => {
+            if (success) {
+              console.log('Inicio de sesión externo exitoso');
+              // Redirigir a la página de inicio y recargar
+              this.router.navigate(['']).then(() => {
+                window.location.reload();
+              });
+            } else {
+              console.log('Inicio de sesión externo fallido');
+              // Manejar error
+              this.router.navigate(['']).then(() => {
+                window.location.reload();
+              });
+            }
+          });
+      }
+    });
+  }
+}

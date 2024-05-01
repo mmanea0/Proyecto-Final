@@ -31,29 +31,34 @@ class AuthController extends Controller
         if (!$user) {
             $user = new User();
         }
-
         // Extraer los campos que deseas guardar
         $user->name = $discordUser->name;
         $user->email = $discordUser->email;
         $user->discord_id = $discordUser->id;
         $user->nickname = $discordUser->nickname;
         $user->avatar = $discordUser->avatar;
-
         $user->save();
+
+        $roleUser = Role::where('id', 1)->first();
+        // Asignar el rol al usuario
+        if ($roleUser) {
+            // Asignar el rol al usuario
+            $user->roles()->attach($roleUser);
+        } else {
+            throw new \Exception('El rol ROLE_USER no existe en la base de datos.');
+        }
         // Autentica al usuario de Laravel
         Auth::login($user);
 
         // Crea el token de acceso personal para el usuario autenticado
+        // Crea el token de acceso personal para el usuario autenticado
         $token = $user->createToken('token-name')->accessToken;
+        $nickname = $user->nickname;
+        $avatar = $user->avatar; // Suponiendo que $user->avatar contiene la URL del avatar
+        $rol = $user->roleNames()[0]; // Asigna el único rol del usuario
+        return redirect()->to('http://localhost:4200/login-callback/?access_token='.$token.'&nickname='.$nickname.'&avatar='.$avatar.'&rol='.$rol);
 
-/*        return response()->json([
-            'message' => 'Usuario creado exitosamente',
-            'user' => $user,
-            'access_token' => $token // Devuelve el token de acceso personal como parte de la respuesta JSON
-        ]);*/
 
-        // Redirige al frontend con el token de acceso personal
-        return redirect()->to('http://localhost:4200/login-callback/?access_token='.$token);
     }
 
     public function register(Request $request)
@@ -97,7 +102,8 @@ class AuthController extends Controller
                 'access_token' => $token->accessToken,
                 'token_type' => 'Bearer',
                 'nickname' => Auth::user()->nickname,
-                'roles' => Auth::user()->roleNames()
+                'roles' => Auth::user()->roleNames(),
+                'avatar' => Auth::user()->avatar,
             ]);
         }
 

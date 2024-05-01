@@ -26,12 +26,25 @@ muestrausuario() {
     return this.httpClient.get(this.muestraUsuario);
 }
 
-  iniciarSesionExterna(data: { access_token: string }): Observable<boolean> {
+/*  iniciarSesionExterna(data: { access_token: string }): Observable<boolean> {
     // Verifica si está en el lado del cliente antes de acceder a localStorage
     if (isPlatformBrowser(this.platformId)) {
       // Guarda el token JWT y los datos del usuario
       this.jwtToken = data.access_token;
       localStorage.setItem('jwtToken', data.access_token);
+    }
+    // Considera que la sesión ha sido iniciada exitosamente
+    return of(true);
+  }*/
+  iniciarSesionExterna(data: { access_token: string, nickname: string, avatar: string, rol: string }): Observable<boolean> {
+    // Verifica si está en el lado del cliente antes de acceder a localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      // Guarda el token JWT, el nickname, el avatar y el rol del usuario
+      this.jwtToken = data.access_token;
+      localStorage.setItem('jwtToken', data.access_token);
+      localStorage.setItem('nickname', data.nickname);
+      localStorage.setItem('avatar', data.avatar);
+      localStorage.setItem('rol', data.rol); // Guarda el rol en localStorage
     }
     // Considera que la sesión ha sido iniciada exitosamente
     return of(true);
