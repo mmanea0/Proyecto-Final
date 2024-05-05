@@ -20,6 +20,8 @@ import {User} from "../../auth/interfaces/user";
 })
 export class LoginComponent implements OnInit {
 
+
+
   credenciales = {
     login: '',
     pass: '',
@@ -49,6 +51,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.userRoles$ = this.autenticacionService.getRoles();
     this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
+    this.monstrarinfmoracion();
+
   }
 
   isSesionIniciada() {
@@ -101,6 +105,22 @@ export class LoginComponent implements OnInit {
 
   mostrarFormulario() {
     this.mostrarFormularioNormal = true;
+  }
+
+  montarinfouser = false;
+
+  montarinfo() {
+    // Verificar si la sesión está iniciada
+    if (this.isSesionIniciada()) {
+      // Establecer montarinfo en verdadero para mostrar la información del usuario
+      this.montarinfouser = true;
+    }
+  }
+
+  monstrarinfmoracion() {
+    this.autenticacionService.getDatosUsuario().subscribe(usuario => {
+      this.montarinfo();
+    });
   }
 
 }

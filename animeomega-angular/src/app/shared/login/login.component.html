@@ -7,16 +7,12 @@
 </button>
 </div>
 
-  <div class="rounded-md">
-    <div class="rounded-[16px] overflow-hidden" style="width: 200px; height: 200px;">
-      <img src="assets/imagenes/animacion.webp" class="w-full h-full" style="filter: blur(15px);">
-    </div>
-  </div>
 <div>
   <button (click)="mostrarFormulario()">
     Inicio sesión normal
   </button>
 </div>
+
 <div *ngIf="mostrarFormularioNormal">
   <form (ngSubmit)="login()">
     <div>
@@ -29,15 +25,22 @@
   </form>
 </div>
 
+  <div *ngIf="montarinfo">
+    <div>
+      {{ (datosUsuario$ | async)?.nickname}} <br>
+      <img [src]="(datosUsuario$ | async)?.avatar" alt="">
+    </div>
+    <div>
+      <button (click)="logout()">
+        cerrar
+      </button>
+    </div>
+  </div>
 
-<div>
-  hola {{(datosUsuario$ | async)?.nickname || 'desconocido'}}
-</div>
-
-<div>
-  <button (click)="logout()">
-    cerrar
-  </button>
-</div>
+  <div class="rounded-md">
+    <div class="rounded-[16px] overflow-hidden" style="width: 200px; height: 200px;">
+      <img src="assets/imagenes/animacion.webp" class="w-full h-full" style="filter: blur(15px);">
+    </div>
+  </div>
 
 </div>

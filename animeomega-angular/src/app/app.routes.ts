@@ -12,7 +12,6 @@ import {LoginCallbackComponent} from "./admin/login-callback/login-callback.comp
 
 export const routes: Routes = [
   {path: '', component:HomeComponent, pathMatch: 'full'},
- // { path: '**', component: NotFoundComponent},
   {path: 'siguiendo', component: SiguiendoComponent, title: 'Siguiendo'},
   {path: 'explorar', component: ExplorarComponent, title: 'Explorar'},
   {path: 'futuros-estrenos', component: FuturosEstrenosComponent, title: 'Futuros Estrenos'},
@@ -21,4 +20,9 @@ export const routes: Routes = [
   {path: 'completado', component: CompletadoComponent, title: 'Completado'},
   {path: 'abandonado', component: AbandonadoComponent, title: 'Abandonado'},
   {path:'login-callback',component:LoginCallbackComponent},
+
+  { path: '**', component: NotFoundComponent},
+
+
+
 ];

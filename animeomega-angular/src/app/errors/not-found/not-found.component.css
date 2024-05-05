@@ -1,15 +1,13 @@
 body {
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  /* Ocupa el 100% del alto de la ventana del navegador */
   align-items: center;
   justify-content: center;
   margin: 0;
-  background: #131313;
-  color: #fff;
-  font-size: 50rem; /* Tamaño de la fuente más grande */
+  /* Tamaño de la fuente más grande */
   letter-spacing: -7px;
-  text-align: center; /* Alineación centrada */
+  text-align: center;
+  /* Alineación centrada */
 }
 
 div {
