@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nombre_original_sin_kanji');
             $table->string('foto');
             $table->text('sipnosis');
-            $table->timestamp('fecha_de_estreno');
+            $table->date('fecha_de_estreno');
             $table->string('estudio_de_animacion');
             $table->integer('capitulos_totales');
             $table->float('valoracion');

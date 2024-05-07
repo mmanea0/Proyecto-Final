@@ -22,6 +22,7 @@ Route::get('/iniciosesion/info',[AuthController::class,'info'])->middleware('aut
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/usuario', [AuthController::class, 'show']);
 
+Route::get('/anime', [AnimesController::class, 'getAnimes']);
 Route::get('/anime/{anime}', [AnimesController::class, 'findAnime']);
 Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);

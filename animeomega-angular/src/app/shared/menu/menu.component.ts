@@ -1,12 +1,19 @@
 import { Component } from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {RouterLink} from "@angular/router";
+import {AnimeService} from "../../service/anime.service";
+import {FormsModule} from "@angular/forms";
+import {NgForOf, NgIf} from "@angular/common";
+import {Anime} from "../../interfaces/anime";
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    FormsModule,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
@@ -16,8 +23,15 @@ export class MenuComponent {
   ICONO_CERRAR: SafeHtml;
   ICONO_CAMPANA: SafeHtml;
   ICONO_NOTIFICACIONES: SafeHtml;
+  terminoBusqueda: string = '';
+  resultadosBusqueda: Anime[] = [
 
-  constructor(private sanitizer: DomSanitizer) {
+  ];
+
+  constructor(
+    private sanitizer: DomSanitizer,
+    private animeService: AnimeService
+  ) {
     this.ICONO_LUPA = this.sanitizer.bypassSecurityTrustHtml(`
      <svg class="w-5 h-5 text-white" aria-labelledby="search" role="img" xmlns="http://www.w3.org/2000/svg" fill="none" height="18" width="19">
           <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.333" stroke="currentColor" d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"></path>
@@ -58,4 +72,29 @@ export class MenuComponent {
     </defs>
   </svg>`);
   }
+
+  buscarAnime(): void {
+    if (this.terminoBusqueda.trim() !== '') { // Verifica si el término de búsqueda no está vacío
+      this.animeService.getAnimeNombre(this.terminoBusqueda).subscribe(
+        (data: Anime[]) => {
+          // Almacena los resultados de la búsqueda
+          this.resultadosBusqueda = data;
+        },
+        (error) => {
+          // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+          console.error(error);
+        }
+      );
+    } else {
+      // Limpia los resultados de búsqueda si el término de búsqueda está vacío
+      this.resultadosBusqueda = [];
+    }
+  }
+
+  seleccionarAnime(anime: Anime): void {
+    // Aquí puedes manejar la selección del anime, por ejemplo, redirigir a una página de detalles del anime
+    console.log('Anime seleccionado:', anime);
+  }
+
+
 }

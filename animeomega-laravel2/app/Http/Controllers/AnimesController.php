@@ -33,6 +33,34 @@ class AnimesController extends Controller
         return response()->json(['message' => 'Datos del anime agregados correctamente'], 200);
     }
 
+    public function getAnimes()
+    {
+        // Obtener todos los animes con las relaciones cargadas
+        $animes = Anime::with('categoria', 'estado', 'season')->get();
+
+        // Transformar los resultados
+        $animesTransformados = $animes->map(function ($anime) {
+            return [
+                'id' => $anime->id,
+                'nombre_original' => $anime->nombre_original,
+                'nombre_en' => $anime->nombre_en,
+                'nombre_original_sin_kanji' => $anime->nombre_original_sin_kanji,
+                'foto' => $anime->foto,
+                'sipnosis' => $anime->sipnosis,
+                'fecha_de_estreno' => $anime->fecha_de_estreno,
+                'estudio_de_animacion' => $anime->estudio_de_animacion,
+                'capitulos_totales' => $anime->capitulos_totales,
+                'valoracion' => $anime->valoracion,
+                'categoria' => $anime->categoria->tipo,
+                'estado' => $anime->estado->estado,
+                'season' => $anime->season->apoca,
+            ];
+        });
+
+        // Devolver los animes transformados en formato JSON
+        return response()->json($animesTransformados);
+    }
+
     public function findAnime(Request $request, $anime)
     {
         // Realizar la búsqueda de anime por nombre original o en inglés

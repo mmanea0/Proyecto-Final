@@ -17,4 +17,16 @@ protected $table = 'animes';
     {
         return $this->belongsToMany(Genero::class, 'generos_animes', 'anime_id', 'genero_id');
     }
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
+    }
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+    }
 }

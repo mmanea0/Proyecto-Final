@@ -1,1 +1,15 @@
-HOME
+<div class="grid grid-cols-5 gap-5">
+  <ng-container *ngFor="let anime of animes$ | async">
+    <div class="flex flex-col items-center justify-center relative"
+         (mouseenter)="mostrarTooltip(anime.sipnosis)"
+         (mouseleave)="ocultarTooltip()">
+      <div class="relative">
+        <img src="{{ anime.foto }}" alt="" class="rounded-lg w-40 h-auto">
+        <div *ngIf="tooltipText === anime.sipnosis" class="tooltip bg-white border rounded py-2 px-4 z-10 absolute bottom-0 left-0 w-full h-full overflow-y-auto opacity-0 hover:opacity-100 transition-opacity duration-300" style="user-select: none;">
+          {{ tooltipText }}
+        </div>
+      </div>
+      <h2 class="text-center">{{ anime.nombre_original }}</h2>
+    </div>
+  </ng-container>
+</div>
