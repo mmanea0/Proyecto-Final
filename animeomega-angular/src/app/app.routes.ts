@@ -11,6 +11,7 @@ import {NotFoundComponent} from "./errors/not-found/not-found.component";
 import {LoginCallbackComponent} from "./admin/login-callback/login-callback.component";
 import {AnimeComponent} from "./pages/anime/anime.component";
 import {VerCapituloComponent} from "./pages/ver-capitulo/ver-capitulo.component";
+import { AdminGuard } from './auth/guards/admin.guard'; // Importa la guarda de ruta AuthGuard
 
 export const routes: Routes = [
   {path: '', component:HomeComponent, pathMatch: 'full'},

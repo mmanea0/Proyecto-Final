@@ -21,7 +21,7 @@ Route::get('/iniciosesion/info',[AuthController::class,'info'])->middleware('aut
 
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/usuario', [AuthController::class, 'show']);
-Route::get('/anime/{id}', [AnimesController::class, 'show']);
+Route::get('/anime/id/{id}', [AnimesController::class, 'show']);
 Route::get('anime/{animeId}/capitulos/{capituloId}', [AnimesController::class, 'enlacesCapitulo']);
 
 Route::get('/anime', [AnimesController::class, 'getAnimes']);
@@ -30,12 +30,16 @@ Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);
 
 
+
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
     // Ruta para obtener el usuario autenticado
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::get('/favoritos', [AuthController::class, 'verfavoritosUsuario']);
 });
 
 

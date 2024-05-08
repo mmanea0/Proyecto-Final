@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuthDiscord;
+use App\Models\BibliotecaAnime;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -125,5 +126,18 @@ class AuthController extends Controller
         ]);
     }
 
+    public function verfavoritosUsuario()
+    {
+        // Obtener el ID del usuario autenticado
+        $userId = auth()->id();
+
+        // Buscar los registros en la tabla biblioteca_anime donde favorito sea verdadero y pertenezcan al usuario actual
+        $favoritos = BibliotecaAnime::where('id_usuario', $userId)
+            ->where('favorito', 1)
+            ->get(['id_anime']);
+
+        // Devolver la lista de IDs de animes favoritos
+        return response()->json($favoritos);
+    }
 
 }

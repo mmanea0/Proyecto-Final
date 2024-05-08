@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit{
   animes$: Observable<any> | undefined;
   ICONO_OJO: SafeHtml;
 
-
   constructor(
     private AnimeService: AnimeService,
     private router: ActivatedRoute,

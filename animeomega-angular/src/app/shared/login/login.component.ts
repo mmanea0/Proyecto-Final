@@ -52,11 +52,8 @@ export class LoginComponent implements OnInit {
     this.userRoles$ = this.autenticacionService.getRoles();
     this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
     this.monstrarinfmoracion();
-
-  }
-
-  isSesionIniciada() {
-    return this.autenticacionService.isSesionIniciada();
+    this.verificarAutenticacion();
+    this.verCardUsuraio()
   }
 
   login() {
@@ -109,12 +106,25 @@ export class LoginComponent implements OnInit {
 
   montarinfouser = false;
 
+  verCardUsuraio(){
+    if (this.montarinfouser) {
+      this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
+    }
+  }
+
+
   montarinfo() {
     // Verificar si la sesión está iniciada
-    if (this.isSesionIniciada()) {
+    if (this.autenticacionService.isSesionIniciada()) {
       // Establecer montarinfo en verdadero para mostrar la información del usuario
       this.montarinfouser = true;
     }
+  }
+
+
+  verificarAutenticacion() {
+    // Verificar si la sesión está iniciada
+    this.montarinfouser = this.autenticacionService.isSesionIniciada();
   }
 
   monstrarinfmoracion() {

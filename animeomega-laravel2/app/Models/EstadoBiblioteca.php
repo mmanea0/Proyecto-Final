@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstadoBiblioteca extends Model
 {
+    protected $table = 'estados_bibliotecas';
+    protected $fillable = ['tipo'];
     use HasFactory;
 }
