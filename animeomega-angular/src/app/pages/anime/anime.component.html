@@ -1,1 +1,14 @@
-<p>anime works!</p>
+<div *ngIf="anime$ | async as anime">
+  <img [src]="anime.foto" alt="{{ anime.nombre_original }}" class="rounded-lg w-40 h-auto">
+  <h2>{{ anime.nombre_original }}</h2>
+  <p>{{ anime.sipnosis }}</p>
+  <h3>Capítulos:</h3>
+  <ul>
+
+    <li *ngFor="let capitulo of anime.capitulos">
+      <a (click)="verCapitulo(anime.id, capitulo.id)">
+      <strong>Capítulo {{ capitulo.numero_capitulo }}:</strong> {{ capitulo.sipnosis }}
+      </a>
+    </li>
+  </ul>
+</div>

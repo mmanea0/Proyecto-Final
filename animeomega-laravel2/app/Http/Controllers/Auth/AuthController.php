@@ -124,4 +124,6 @@ class AuthController extends Controller
             'roles' => Auth::user()->roleNames()
         ]);
     }
+
+
 }

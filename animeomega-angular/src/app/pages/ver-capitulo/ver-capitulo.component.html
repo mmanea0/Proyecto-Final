@@ -1,0 +1,7 @@
+<div *ngIf="enlaces$ | async as enlaces">
+  <ul>
+    <li *ngFor="let enlace of enlaces">
+      <iframe [src]="sanitizeUrl(enlace.url)" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+    </li>
+  </ul>
+</div>

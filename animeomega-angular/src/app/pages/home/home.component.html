@@ -1,5 +1,6 @@
 <div class="grid grid-cols-5 gap-5">
   <ng-container *ngFor="let anime of animes$ | async">
+    <a (click)="verAnime(anime)">
     <div class="flex flex-col items-center justify-center relative"
          (mouseenter)="mostrarTooltip(anime.sipnosis)"
          (mouseleave)="ocultarTooltip()">
@@ -11,5 +12,6 @@
       </div>
       <h2 class="text-center">{{ anime.nombre_original }}</h2>
     </div>
+    </a>
   </ng-container>
 </div>

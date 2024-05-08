@@ -12,4 +12,18 @@ export interface Anime {
   categoria: string;
   estado: string;
   season: string;
+  capitulos?: Capitulo[];
+}
+export interface Capitulo {
+  id: number;
+  anime_id: number;
+  numero_capitulo: number;
+  sipnosis: string;
+  duracion: number;
+  enlaces: Enlace[];
+}
+export interface Enlace {
+  id: number;
+  url: string;
+  capitulo_id: number;
 }

@@ -21,6 +21,8 @@ Route::get('/iniciosesion/info',[AuthController::class,'info'])->middleware('aut
 
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/usuario', [AuthController::class, 'show']);
+Route::get('/anime/{id}', [AnimesController::class, 'show']);
+Route::get('anime/{animeId}/capitulos/{capituloId}', [AnimesController::class, 'enlacesCapitulo']);
 
 Route::get('/anime', [AnimesController::class, 'getAnimes']);
 Route::get('/anime/{anime}', [AnimesController::class, 'findAnime']);
@@ -35,6 +37,9 @@ Route::middleware('auth:api')->group(function () {
         return $request->user();
     });
 });
+
+
+
 
 // Otras rutas públicas
 //Route::get('/prueba', [PruebaController::class, 'prueba1']);

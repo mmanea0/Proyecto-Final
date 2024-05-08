@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anime;
+use App\Models\Enlace;
 use App\Models\Genero;
 use Illuminate\Http\Request;
 
@@ -90,6 +91,53 @@ class AnimesController extends Controller
             return response()->json(['message' => 'No se encontraron animes para el género: ' . $genero], 404);
         }
         return response()->json($animes);
+    }
+
+
+    public function show(Request $request, $id)
+    {
+        // Obtener el anime por ID con los capítulos relacionados
+        $anime = Anime::with('capitulos')->find($id);
+
+        // Verificar si se encontró el anime
+        if (!$anime) {
+            // No se encontró el anime, devolver un mensaje de error
+            return response()->json(['message' => 'Anime no encontrado'], 404);
+        }
+
+        // Se encontró el anime, devolver el anime en formato JSON
+        return [
+            'id' => $anime->id,
+            'nombre_original' => $anime->nombre_original,
+            'nombre_en' => $anime->nombre_en,
+            'nombre_original_sin_kanji' => $anime->nombre_original_sin_kanji,
+            'foto' => $anime->foto,
+            'sipnosis' => $anime->sipnosis,
+            'fecha_de_estreno' => $anime->fecha_de_estreno,
+            'estudio_de_animacion' => $anime->estudio_de_animacion,
+            'capitulos_totales' => $anime->capitulos_totales,
+            'valoracion' => $anime->valoracion,
+            'categoria' => $anime->categoria->tipo,
+            'estado' => $anime->estado->estado,
+            'season' => $anime->season->apoca,
+            'capitulos' => $anime->capitulos, // Agregar los capítulos al resultado
+        ];
+    }
+
+
+    public function enlacesCapitulo(Request $request, $animeId, $capituloId)
+    {
+        // Obtener los enlaces de un capítulo específico
+        $enlaces = Enlace::where('capitulo_id', $capituloId)->get();
+
+        // Verificar si se encontraron enlaces
+        if ($enlaces->isEmpty()) {
+            // No se encontraron enlaces, devolver un mensaje de error
+            return response()->json(['message' => 'No se encontraron enlaces para el capítulo'], 404);
+        }
+
+        // Se encontraron enlaces, devolver los enlaces en formato JSON
+        return response()->json($enlaces);
     }
 
 

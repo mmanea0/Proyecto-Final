@@ -23,4 +23,14 @@ export class AnimeService {
     const $anime = this.httpClient.get<Anime>(`${this.animeUrl}/${anime}`);
     return $anime;
   }
+
+  getAnimePorId(id: number): Observable<any>{
+    const $anime = this.httpClient.get<Anime>(`${this.animeUrl}/${id}`);
+    return $anime;
+
+  }
+  getEnlacesCapitulo(animeId: number, capituloId: number): Observable<any> {
+    const $anime = this.httpClient.get<any>(`${this.animeUrl}/${animeId}/capitulos/${capituloId}`);
+    return $anime;
+  }
 }

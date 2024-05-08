@@ -29,4 +29,9 @@ protected $table = 'animes';
     {
         return $this->belongsTo(Season::class);
     }
+
+    public function capitulos()
+    {
+        return $this->hasMany(CapituloAnime::class);
+    }
 }

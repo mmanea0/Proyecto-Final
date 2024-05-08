@@ -4,7 +4,7 @@ import {BarraLateralComponent} from "../../shared/barra-lateral/barra-lateral.co
 import {AnimeService} from "../../service/anime.service";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {Observable, of} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit{
     private AnimeService: AnimeService,
     private router: ActivatedRoute,
     private sanitizer: DomSanitizer,
+    private ruta: Router
   ) {
     this.ICONO_OJO = this.sanitizer.bypassSecurityTrustHtml(`<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -67,5 +68,9 @@ export class HomeComponent implements OnInit{
   // Función para ocultar el tooltip
   ocultarTooltip(): void {
     this.tooltipText = null; // Restablecemos el texto del tooltip a nulo
+  }
+
+  verAnime(anime: any): void {
+    this.ruta.navigate(['/anime', anime.id]);
   }
 }
