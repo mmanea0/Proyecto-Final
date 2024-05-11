@@ -18,6 +18,7 @@ import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 export class AnimeComponent implements OnInit {
 
   anime$: Observable<any> | undefined;
+  isLoading = false;
 
 
   constructor(
@@ -32,14 +33,19 @@ export class AnimeComponent implements OnInit {
 
 
   cargarAnime() {
+    this.isLoading = true;
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.animeService.getAnimePorId(id).subscribe(
         (anime) => {
           this.anime$ = of(anime);
+          this.isLoading = false;
+
         },
         error => {
           console.error('Error al cargar el anime', error);
+          this.isLoading = false;
+
         }
       );
     });

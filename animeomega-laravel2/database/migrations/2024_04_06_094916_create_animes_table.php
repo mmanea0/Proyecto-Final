@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nombre_en');
             $table->string('nombre_original_sin_kanji');
             $table->string('foto');
+            $table->string('banner');
             $table->text('sipnosis');
             $table->date('fecha_de_estreno');
             $table->string('estudio_de_animacion');

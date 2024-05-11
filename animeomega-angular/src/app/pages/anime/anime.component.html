@@ -1,14 +1,95 @@
-<div *ngIf="anime$ | async as anime">
-  <img [src]="anime.foto" alt="{{ anime.nombre_original }}" class="rounded-lg w-40 h-auto">
-  <h2>{{ anime.nombre_original }}</h2>
-  <p>{{ anime.sipnosis }}</p>
-  <h3>Capítulos:</h3>
-  <ul>
 
-    <li *ngFor="let capitulo of anime.capitulos">
-      <a (click)="verCapitulo(anime.id, capitulo.id)">
-      <strong>Capítulo {{ capitulo.numero_capitulo }}:</strong> {{ capitulo.sipnosis }}
-      </a>
-    </li>
-  </ul>
+<div *ngIf="isLoading">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <span class="loading loading-spinner text-primary loading-lg"></span>
+  </div>
+</div>
+
+<div *ngIf="!isLoading && (anime$ | async )as anime">
+
+
+  <div class="flex relative mt-10 mx-5 text-white">
+
+    <div class="left-0 z-10 mt-16 flex">
+
+      <div class="mr-10 mt-10">
+        <img [src]="anime.foto" alt="{{ anime.nombre_original }}" class="rounded-lg w-48 h-auto mt-20 ml-20">
+      </div>
+      <div class="m-auto absolute top-5 mx-20 overflow-y-auto max-h-40">
+        <div class="sticky top-0">
+          <strong class="text-2xl">SINOPSIS</strong>
+        </div>
+        <div>
+          <p class="p-2">{{ anime.sipnosis }}</p>
+        </div>
+      </div>
+
+      <div class="flex">
+
+        <div class="mt-28">
+          <h2 class="mt-4 text-[2rem]">{{ anime.nombre_original }}</h2>
+        </div>
+
+        <div class="flex ml-[38rem] mt-52">
+       <div class="mr-5 ">
+         <div class="mt-2 bg-[#1a1e2b] rounded-lg px-2 py-0.5">{{ anime.nombre_en }} </div>
+       </div>
+
+        <div class="">
+          <div class="mt-2 bg-[#1a1e2b] rounded-lg px-2 py-0.5 ">{{ anime.nombre_original_sin_kanji }} </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+
+    <div class="bg-gray-300 opacity-40">
+    <img [src]="anime.banner" alt="" class="absolute top-0 left-0 z-0 rounded-2xl">
+
+  </div>
+  </div>
+
+
+
+
+  <div class="flex justify-center">
+    <ul class="w-full md:w-1/2">
+      <li *ngFor="let capitulo of anime.capitulos" class="bg-[#1a1e2b] mb-2 flex pr-16 pl-5 py-5 rounded-xl">
+
+
+        <div class="avatar">
+          <div class="w-36 rounded-xl mr-10">
+            <img [src]="anime.foto" />
+          </div>
+        </div>
+
+
+        <a (click)="verCapitulo(anime.id, capitulo.id)">
+          <strong>CAPÍTULO Nº {{ capitulo.numero_capitulo }}</strong> <br>
+          SINOPSIS: <br>
+          {{ capitulo.sipnosis }}
+        </a>
+        <div class="flex items-center ml-auto">
+          <input type="checkbox" class="toggle toggle-accent" />
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+<!--
+  <div class="toast toast-end">
+    <div class="alert bg-green-400 text-white">
+      <span>Marcado como visto.</span>
+    </div>
+  </div>
+
+  <div class="toast toast-end">
+    <div class="alert bg-red-400 text-white">
+      <span>Quitado como visto.</span>
+    </div>
+  </div>-->
+
+
 </div>

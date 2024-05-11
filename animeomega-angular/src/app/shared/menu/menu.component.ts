@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
@@ -30,7 +30,8 @@ export class MenuComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private animeService: AnimeService
+    private animeService: AnimeService,
+    private router: Router
   ) {
     this.ICONO_LUPA = this.sanitizer.bypassSecurityTrustHtml(`
      <svg class="w-5 h-5 text-white" aria-labelledby="search" role="img" xmlns="http://www.w3.org/2000/svg" fill="none" height="18" width="19">
@@ -96,5 +97,13 @@ export class MenuComponent {
     console.log('Anime seleccionado:', anime);
   }
 
+  // Método para redirigir al componente resultado-busqueda con los resultados de la búsqueda
+  redireccionarResultadoBusqueda() {
+    // Comprueba si el término de búsqueda está definido
+    if (this.terminoBusqueda) {
+      // Navega al componente resultado-busqueda y pasa el término de búsqueda como parámetro en la URL
+      this.router.navigate(['/resultado', {termino: this.terminoBusqueda}]);
+    }
 
+  }
 }

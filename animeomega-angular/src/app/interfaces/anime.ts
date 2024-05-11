@@ -12,6 +12,7 @@ export interface Anime {
   categoria: string;
   estado: string;
   season: string;
+  banner:string;
   capitulos?: Capitulo[];
 }
 export interface Capitulo {
