@@ -18,7 +18,7 @@ import {Router} from "@angular/router";
 })
 export class FavoritoComponent implements OnInit {
   favoritos: any[] = [];
-  cargandoFavoritos: boolean = false;
+  isLoading = false;
 
   constructor(
     private animeService: AnimeService,
@@ -32,7 +32,7 @@ export class FavoritoComponent implements OnInit {
   }
 
   cargarFavoritos(): void {
-    this.cargandoFavoritos = true; // Indicar que se están cargando los favoritos
+    this.isLoading = true; // Indicar que se están cargando los favoritos
     this.animeService.getFavoritosUsuario().subscribe(
       (response) => {
         // Extraer los IDs de los animes de la respuesta
@@ -42,18 +42,18 @@ export class FavoritoComponent implements OnInit {
           this.animeService.getAnimePorId(id).subscribe(
             (anime) => {
               this.favoritos.push(anime); // Agregar el anime a la lista de favoritos
-              this.cargandoFavoritos = false; // Indicar que se han cargado los favoritos
+              this.isLoading = false; // Indicar que se han cargado los favoritos
             },
             (error) => {
               console.error('Error al cargar favorito:', error);
-              this.cargandoFavoritos = false; // Indicar que ha ocurrido un error al cargar los favoritos
+              this.isLoading = false; // Indicar que ha ocurrido un error al cargar los favoritos
             }
           );
         });
       },
       (error) => {
         console.error('Error al cargar favoritos:', error);
-        this.cargandoFavoritos = false; // Indicar que ha ocurrido un error al cargar los favoritos
+        this.isLoading = false; // Indicar que ha ocurrido un error al cargar los favoritos
       }
     );
   }

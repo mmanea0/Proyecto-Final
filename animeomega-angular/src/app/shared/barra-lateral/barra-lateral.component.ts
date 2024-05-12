@@ -4,6 +4,7 @@ import {NgClass, NgIf} from "@angular/common";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {MenuComponent} from "../menu/menu.component";
 import {LoginComponent} from "../login/login.component";
+import {AnimeService} from "../../service/anime.service";
 
 @Component({
   selector: 'app-barra-lateral',
@@ -44,15 +45,21 @@ export class BarraLateralComponent implements OnInit{
     abandonado: false,
     estrenos: false,
   };
+  sesionIniciada: boolean = false;
   ngOnInit() {
     const seleccionadoStr = localStorage.getItem('seleccionado');
     if (seleccionadoStr) {
       this.seleccionado = JSON.parse(seleccionadoStr);
     }
     this.limpiarSeleccion();
+    this.sesionIniciada = this.serviceAnime.isSesionIniciada();
   }
 
-  constructor(private santizer: DomSanitizer) {
+  constructor(
+
+    private santizer: DomSanitizer,
+  private serviceAnime: AnimeService
+  ) {
     this.ICONO_EXPLORAR = this.santizer.bypassSecurityTrustHtml(`
  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_60_15)">
@@ -247,9 +254,5 @@ export class BarraLateralComponent implements OnInit{
       currentUrl.startsWith('/abandonado')
     );
   }
-
-
-
-
 
 }

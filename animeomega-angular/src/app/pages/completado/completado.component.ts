@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-completado',
   standalone: true,
-  imports: [],
+    imports: [
+        NgIf
+    ],
   templateUrl: './completado.component.html',
   styleUrl: './completado.component.css'
 })
-export class CompletadoComponent {
+export class CompletadoComponent implements OnInit{
+  isLoading = false;
 
+constructor() {
+}
+
+ngOnInit(): void {
+  this.isLoading = true;
+}
 }

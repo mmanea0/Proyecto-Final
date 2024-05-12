@@ -59,7 +59,7 @@ export class AnimeService {
   }
 
   // Función para verificar si la sesión está iniciada
-  private isSesionIniciada(): boolean {
+  isSesionIniciada(): boolean {
     return !!localStorage.getItem('jwtToken');
   }
 

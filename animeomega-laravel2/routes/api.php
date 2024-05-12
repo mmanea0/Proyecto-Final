@@ -28,6 +28,8 @@ Route::get('/anime', [AnimesController::class, 'getAnimes']);
 Route::get('/anime/{anime}', [AnimesController::class, 'findAnime']);
 Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);
+Route::get('/ultimosanimes', [AnimesController::class, 'ultimosanimesañadidos']);
+
 
 
 

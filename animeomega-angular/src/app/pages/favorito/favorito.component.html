@@ -1,8 +1,12 @@
-<div *ngIf="cargandoFavoritos">
-  <p>Cargando favoritos...</p>
+
+<div *ngIf="isLoading">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <span class="loading loading-spinner text-error loading-lg"></span>
+  </div>
 </div>
 
-<div *ngIf="!cargandoFavoritos">
+<div *ngIf="isLoading">
+
 <div *ngIf="favoritos && favoritos.length > 0">
   <h2>Mis Favoritos</h2>
   <ul>

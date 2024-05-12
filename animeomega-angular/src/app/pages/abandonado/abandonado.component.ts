@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-abandonado',
   standalone: true,
-  imports: [],
+  imports: [
+    NgIf
+  ],
   templateUrl: './abandonado.component.html',
   styleUrl: './abandonado.component.css'
 })
-export class AbandonadoComponent {
+export class AbandonadoComponent implements OnInit{
+  isLoading = false;
+
+  constructor() { }
+
+  ngOnInit(): void {
+   this.isLoading = true;
+
+  }
 
 }
