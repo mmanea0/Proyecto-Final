@@ -19,16 +19,20 @@ export class AnimeComponent implements OnInit {
 
   anime$: Observable<any> | undefined;
   isLoading = false;
+  sesionIniciada: boolean = false;
 
 
   constructor(
     private animeService: AnimeService,
     private route: ActivatedRoute,
     private router: Router,
+    private serviceAnime: AnimeService
   ) { }
 
   ngOnInit(): void {
     this.cargarAnime();
+    this.sesionIniciada = this.serviceAnime.isSesionIniciada();
+
   }
 
 

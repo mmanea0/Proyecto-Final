@@ -9,18 +9,26 @@
 <div  *ngIf="!isLoading">
 
 
-  <div class="flex justify-center mt-7">
-    <div class="carousel carousel-center max-w-[90%] p-0 space-x-4 bg-neutral rounded-box relative">
-      <ng-container *ngFor="let anime of animes$ | async">
-        <div class="carousel-item relative w-[100%]">
+  <div class="carousel w-full relative">
+    <div class="carousel-inner w-full flex">
+      <ng-container *ngFor="let anime of animes$ | async; let i = index">
+        <div id="item{{i + 1}}" class="carousel-item w-full" *ngIf="i === currentIndex">
           <div class="absolute top-32 left-16 text-black text-center p-2 z-10 text-[2.5rem] nombre">{{anime.nombre_original}}</div>
-
-          <button class="btn btn-info absolute top-60 left-16 bg-blue-400 text-white px-5 " (click)="verAnime(anime)">VER</button>
-
+          <button class="btn btn-info absolute top-60 left-16 bg-blue-400 text-white px-5" (click)="verAnime(anime)">VER</button>
           <img [src]="anime.banner" class="w-full h-full object-cover rounded-box" alt="{{ anime.nombre_original }}" />
         </div>
       </ng-container>
     </div>
+
+    <div class="carousel-controls absolute inset-y-0 left-0 flex justify-between items-center w-full px-2">
+      <button class="carousel-control-prev text-white" (click)="anteriorImagen()">
+        <i class="btn btn-circle">❮</i>
+      </button>
+      <button class="carousel-control-next text-white" (click)="siguienteImagen()">
+        <i class="btn btn-circle">❯</i>
+      </button>
+    </div>
+
   </div>
 
 

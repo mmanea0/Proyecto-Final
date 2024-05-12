@@ -70,10 +70,9 @@
           SINOPSIS: <br>
           {{ capitulo.sipnosis }}
         </a>
-        <div class="flex items-center ml-auto">
+        <div *ngIf="sesionIniciada" class="flex items-center ml-auto">
           <input type="checkbox" class="toggle toggle-accent" />
         </div>
-
       </li>
     </ul>
   </div>

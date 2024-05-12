@@ -3,7 +3,7 @@ import {MenuComponent} from "../../shared/menu/menu.component";
 import {BarraLateralComponent} from "../../shared/barra-lateral/barra-lateral.component";
 import {AnimeService} from "../../service/anime.service";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {Observable, of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit{
   ICONO_OJO: SafeHtml;
   isLoading = false;
 
+  currentIndex = 0;
 
   constructor(
     private AnimeService: AnimeService,
@@ -43,6 +44,27 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     this.cargarAnime();
   }
+
+
+  anteriorImagen(): void {
+    if (this.animes$) {
+      this.animes$.subscribe(animes => {
+        const lastIndex = 4; // Índice de la última imagen en la vista
+        this.currentIndex = this.currentIndex === 0 ? lastIndex : this.currentIndex - 1;
+      });
+    }
+  }
+
+  siguienteImagen(): void {
+    if (this.animes$) {
+      this.animes$.subscribe(animes => {
+        const lastIndex = 4; // Índice de la última imagen en la vista
+        this.currentIndex = this.currentIndex === lastIndex ? 0 : this.currentIndex + 1;
+      });
+    }
+  }
+
+
 
   cargarAnime() {
     this.isLoading = true;
