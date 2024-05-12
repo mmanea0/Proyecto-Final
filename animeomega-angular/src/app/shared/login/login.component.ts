@@ -56,6 +56,10 @@ export class LoginComponent implements OnInit {
     this.verCardUsuraio()
   }
 
+  cancelarInicioSesion() {
+    this.mostrarFormularioNormal = false;
+  }
+
   login() {
     this.autenticacionService.iniciarSesion(this.credenciales.login, this.credenciales.pass)
       .subscribe({
