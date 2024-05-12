@@ -1,3 +1,6 @@
+
+
+
 <div class="fixed top-0 left-0 w-full z-50 bg-[#1a1e2b] flex justify-between items-center py-2 px-4 pt-5 pb-4">
   <!-- icono de menu -->
 
@@ -6,32 +9,31 @@
       <img src="assets/neon_png.png" class="h-16 w-auto" alt="Logo"></a>
   </div>
 
-  <!-- barra de busqueda -->
-  <div class="flex flex-col items-center justify-center ml-4 md:flex-row md:ml-4">
+  <div class="flex flex-col items-center justify-center ml-4 md:flex-row md:ml-4 relative">
     <form class="form relative">
       <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1 ">
         <i [innerHTML]="ICONO_LUPA"></i>
       </button>
-      <input type="text"  [(ngModel)]="terminoBusqueda" autocomplete="off" (input)="buscarAnime()" name="terminoBusqueda" required="" placeholder="BUSCAR..." class="input px-8 py-3 border-2 border-white focus:outline-none placeholder-white text-white bg-transparent rounded-lg focus:border-white w-full">
+      <input type="text" [(ngModel)]="terminoBusqueda" autocomplete="off" (input)="buscarAnime()" name="terminoBusqueda" required="" placeholder="BUSCAR..." class="input px-8 py-3 border-2 border-white focus:outline-none placeholder-white text-white bg-transparent rounded-lg focus:border-white w-full">
       <button class="absolute right-3 -translate-y-1/2 top-1/2 p-1" type="reset">
         <i [innerHTML]="ICONO_CERRAR"></i>
       </button>
     </form>
 
-    <!-- Resultados de la busqueda -->
-    <div class="relative w-full mt-2 md:w-80 md:mt-0">
-      <div class="absolute z-20 bg-white rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80" *ngIf="resultadosBusqueda.length > 0">
-        <ul>
-          <li *ngFor="let anime of resultadosBusqueda.slice()" class="px-4 py-2 hover:bg-gray-100">
-            <a href="#" (click)="seleccionarAnime(anime)" class="flex">
-              <img src="{{ anime.foto}}" alt="" width="40px" height="50px">
-              {{ anime.nombre_original }}
-            </a>
-          </li>
-        </ul>
-      </div>
+    <!-- Resultados de la búsqueda -->
+    <div class="absolute z-20 bg-white rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80 mt-56" *ngIf="terminoBusqueda && resultadosBusqueda.length > 0">
+      <ul>
+        <li *ngFor="let anime of resultadosBusqueda.slice()" class="px-4 py-2 hover:bg-gray-100">
+          <a href="#" (click)="seleccionarAnime(anime)" class="flex">
+            <img src="{{ anime.foto}}" alt="" width="40px" height="50px">
+            {{ anime.nombre_original }}
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
+
+
 
   <!-- icono de notificaciones-->
   <div class="flex">

@@ -55,4 +55,19 @@ export class AnimeComponent implements OnInit {
     this.router.navigate(['/anime', animeId, 'capitulo', capituloId]);
   }
 
+
+  cargarUltimosAnimes() {
+    this.isLoading = true;
+    this.animeService.getultimos().subscribe(
+      (anime) => {
+        this.anime$ = of(anime);
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Error al cargar el anime', error);
+        this.isLoading = false;
+
+      }
+    );
+  }
 }

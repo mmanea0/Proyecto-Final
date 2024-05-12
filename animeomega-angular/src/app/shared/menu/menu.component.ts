@@ -25,8 +25,8 @@ export class MenuComponent {
   ICONO_NOTIFICACIONES: SafeHtml;
   terminoBusqueda: string = '';
   resultadosBusqueda: Anime[] = [
-
   ];
+
 
   constructor(
     private sanitizer: DomSanitizer,

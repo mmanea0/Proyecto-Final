@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit{
 
   animes$: Observable<any> | undefined;
   ICONO_OJO: SafeHtml;
+  isLoading = false;
+
 
   constructor(
     private AnimeService: AnimeService,
@@ -43,14 +45,19 @@ export class HomeComponent implements OnInit{
   }
 
   cargarAnime() {
-   this.router.params.subscribe((params) => {
+    this.isLoading = true;
+    this.router.params.subscribe((params) => {
      const id = params['id'];
      this.AnimeService.getAnime().subscribe(
        (anime) => {
          this.animes$ = of(anime);
+         this.isLoading = false;
+
        },
        error => {
          console.error('Error al cargar el anime',error);
+         this.isLoading = false;
+
        }
      );
    });

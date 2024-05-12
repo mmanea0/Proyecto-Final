@@ -142,5 +142,33 @@ class AnimesController extends Controller
         return response()->json($enlaces);
     }
 
+    public function ultimosanimesañadidos()
+    {
+        // Obtener los últimos 10 animes añadidos
+        $animes = Anime::orderBy('created_at', 'desc')->take(5)->get();
+
+        // Transformar los resultados
+        $animesTransformados = $animes->map(function ($anime) {
+            return [
+                'id' => $anime->id,
+                'nombre_original' => $anime->nombre_original,
+                'nombre_en' => $anime->nombre_en,
+                'nombre_original_sin_kanji' => $anime->nombre_original_sin_kanji,
+                'foto' => $anime->foto,
+                'banner' => $anime->banner,
+                'sipnosis' => $anime->sipnosis,
+                'fecha_de_estreno' => $anime->fecha_de_estreno,
+                'estudio_de_animacion' => $anime->estudio_de_animacion,
+                'capitulos_totales' => $anime->capitulos_totales,
+                'valoracion' => $anime->valoracion,
+                'categoria' => $anime->categoria->tipo,
+                'estado' => $anime->estado->estado,
+                'season' => $anime->season->apoca,
+            ];
+        });
+
+        return response()->json($animesTransformados);
+
+    }
 
 }

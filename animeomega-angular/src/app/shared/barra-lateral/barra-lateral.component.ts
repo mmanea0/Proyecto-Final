@@ -49,6 +49,7 @@ export class BarraLateralComponent implements OnInit{
     if (seleccionadoStr) {
       this.seleccionado = JSON.parse(seleccionadoStr);
     }
+    this.limpiarSeleccion();
   }
 
   constructor(private santizer: DomSanitizer) {
@@ -184,6 +185,15 @@ export class BarraLateralComponent implements OnInit{
 
 
   toggleSeleccion(elemento: string) {
+    // Verifica si estás en una página específica
+    const enPaginaEspecifica = this.enPaginaEspecifica();
+
+    // Si no estás en una página específica, limpia la selección y retorna
+    if (!enPaginaEspecifica) {
+      this.limpiarSeleccion();
+      return;
+    }
+
     // Inicializar el objeto seleccionado si es nulo o indefinido
     if (!this.seleccionado) {
       this.seleccionado = {};
@@ -191,12 +201,6 @@ export class BarraLateralComponent implements OnInit{
 
     // Verificar si el elemento actual ya está seleccionado
     const elementoSeleccionado = this.seleccionado[elemento];
-
-    // Verificar si no estás en la página de inicio y si el elemento actual ya está seleccionado
-    if (elementoSeleccionado) {
-      // Si ya está seleccionado, no realizar ningún cambio
-      return;
-    }
 
     // Cambiar el estado de selección del elemento
     this.seleccionado[elemento] = !elementoSeleccionado;
@@ -213,6 +217,38 @@ export class BarraLateralComponent implements OnInit{
     // Guardar el estado de selección en el almacenamiento local
     localStorage.setItem('seleccionado', JSON.stringify(this.seleccionado));
   }
+
+
+  limpiarSeleccion() {
+    // Limpiar la selección
+    console.log('Limpiando la selección...');
+    this.seleccionado = {};
+    // Establecer todos los selectores como false
+    for (const key in this.seleccionado) {
+      this.seleccionado[key] = false;
+    }
+    // Guardar el estado de selección vacío en el almacenamiento local
+    localStorage.removeItem('seleccionado');
+  }
+
+
+
+  enPaginaEspecifica() {
+    // Obtiene la URL actual
+    const currentUrl = window.location.pathname;
+
+    // Verifica si la URL actual corresponde a alguna de las páginas específicas
+    // Puedes personalizar esto según las rutas de tus páginas
+    return (
+      currentUrl.startsWith('/siguiendo') ||
+      currentUrl.startsWith('/pendiente') ||
+      currentUrl.startsWith('/favorito') ||
+      currentUrl.startsWith('/completado') ||
+      currentUrl.startsWith('/abandonado')
+    );
+  }
+
+
 
 
 
