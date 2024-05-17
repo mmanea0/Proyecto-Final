@@ -1,5 +1,14 @@
 
 
+<div *ngIf="isLoading">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <span class="loading loading-spinner text-primary loading-lg"></span>
+  </div>
+</div>
+
+
+<div  *ngIf="!isLoading">
+
 <div class="fixed bottom-0 left-0 text-white">
 <br>
 
@@ -65,3 +74,5 @@
     </div>
   </div>
 </div>
+
+  </div>

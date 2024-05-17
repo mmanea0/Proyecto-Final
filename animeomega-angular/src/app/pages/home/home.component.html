@@ -1,19 +1,15 @@
-
 <div *ngIf="isLoading">
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div class="flex justify-center items-center h-screen">
     <span class="loading loading-spinner text-primary loading-lg"></span>
   </div>
 </div>
 
-
-<div  *ngIf="!isLoading">
-
-
+<div *ngIf="!isLoading">
   <div class="carousel w-full relative">
     <div class="carousel-inner w-full flex">
       <ng-container *ngFor="let anime of animes$ | async; let i = index">
         <div id="item{{i + 1}}" class="carousel-item w-full" *ngIf="i === currentIndex">
-          <div class="absolute top-32 left-16 text-black text-center p-2 z-10 text-[2.5rem] nombre">{{anime.nombre_original}}</div>
+          <div class="absolute top-32 left-16 text-black text-center p-2 z-10 text-[2.5rem] nombre sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]">{{anime.nombre_original}}</div>
           <button class="btn btn-info absolute top-60 left-16 bg-blue-400 text-white px-5" (click)="verAnime(anime)">VER</button>
           <img [src]="anime.banner" class="w-full h-full object-cover rounded-box" alt="{{ anime.nombre_original }}" />
         </div>
@@ -28,32 +24,27 @@
         <i class="btn btn-circle">❯</i>
       </button>
     </div>
-
   </div>
 
+  <div class="mt-10">
+    <div class="text-white text-2xl ml-10">NUEVOS CAPITULOS</div>
 
-
-
-<div class="mt-10">
-<div class="text-white text-2xl ml-10">NUEVOS CAPITULOS</div>
-
-<div class="grid grid-cols-5 gap-5 mt-10">
-
-    <ng-container *ngFor="let anime of animes$ | async">
-      <a (click)="verAnime(anime)">
-        <div class="flex flex-col items-center justify-center relative"
-             (mouseenter)="mostrarTooltip(anime.sipnosis)"
-             (mouseleave)="ocultarTooltip()">
-          <div class="relative w-48 h-60">
-            <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
-            <div *ngIf="tooltipText === anime.sipnosis" class="tooltip bg-white border rounded-xl py-2 px-4 z-10 absolute bottom-0 left-0 w-full h-full overflow-y-auto opacity-0 hover:opacity-100 transition-opacity duration-300" style="user-select: none;">
-              {{ tooltipText }}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
+      <ng-container *ngFor="let anime of animes$ | async">
+        <a (click)="verAnime(anime)">
+          <div class="flex flex-col items-center justify-center relative"
+               (mouseenter)="mostrarTooltip(anime.sipnosis)"
+               (mouseleave)="ocultarTooltip()">
+            <div class="relative w-48 h-60">
+              <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
+              <div *ngIf="tooltipText === anime.sipnosis" class="tooltip bg-white border rounded-xl py-2 px-4 z-10 absolute bottom-0 left-0 w-full h-full overflow-y-auto opacity-0 hover:opacity-100 transition-opacity duration-300" style="user-select: none;">
+                {{ tooltipText }}
+              </div>
             </div>
+            <h2 class="text-center text-white">{{ anime.nombre_original }}</h2>
           </div>
-          <h2 class="text-center text-white">{{ anime.nombre_original }}</h2>
-        </div>
-      </a>
-    </ng-container>
-</div>
-</div>
+        </a>
+      </ng-container>
+    </div>
+  </div>
 </div>

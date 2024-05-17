@@ -18,6 +18,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 })
 export class VerCapituloComponent implements OnInit{
 
+  isLoading = false;
+
   enlaces$: Observable<any> | undefined;
     constructor(
       private animeService: AnimeService,
@@ -31,6 +33,7 @@ export class VerCapituloComponent implements OnInit{
     }
 
   cargarEnlacesCapitulo() {
+
     this.route.params.subscribe(params => {
       const animeId = params['animeId'];
       const capituloId = params['capituloId'];

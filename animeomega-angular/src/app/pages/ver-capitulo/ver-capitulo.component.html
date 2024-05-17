@@ -1,3 +1,16 @@
+<div *ngIf="isLoading">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <span class="loading loading-spinner text-warning loading-lg"></span>
+  </div>
+</div>
+
+
+<div *ngIf="isLoading">
+
+
+
+</div>
+
 <div *ngIf="enlaces$ | async as enlaces">
   <ul>
     <li *ngFor="let enlace of enlaces">

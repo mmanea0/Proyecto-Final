@@ -5,7 +5,9 @@
   </div>
 </div>
 
-<div *ngIf="isLoading">
+
+
+
 
 <div *ngIf="favoritos && favoritos.length > 0">
   <h2>Mis Favoritos</h2>
@@ -22,7 +24,9 @@
   </ul>
 </div>
 
+
+
 <div *ngIf="!favoritos || favoritos.length === 0">
-  <p>No tienes favoritos todavía.</p>
+  <div *ngIf="isLoading">
 </div>
-</div>
+  </div>

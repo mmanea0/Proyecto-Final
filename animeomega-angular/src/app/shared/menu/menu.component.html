@@ -21,7 +21,7 @@
     </form>
 
     <!-- Resultados de la búsqueda -->
-    <div class="absolute z-20 bg-white rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80 mt-56" *ngIf="terminoBusqueda && resultadosBusqueda.length > 0">
+    <div class="absolute z-20 bg-red-400 rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80 mt-56" *ngIf="terminoBusqueda && resultadosBusqueda.length > 0">
       <ul>
         <li *ngFor="let anime of resultadosBusqueda.slice()" class="px-4 py-2 hover:bg-gray-100">
           <a href="#" (click)="seleccionarAnime(anime)" class="flex">
@@ -41,3 +41,5 @@
     <i [innerHTML]="ICONO_NOTIFICACIONES"></i>
   </div>
 </div>
+
+
