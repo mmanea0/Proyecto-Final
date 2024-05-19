@@ -1,20 +1,21 @@
-<div *ngIf="isLoading">
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <span class="loading loading-spinner text-warning loading-lg"></span>
+<!--<div *ngIf="isLoading">-->
+<!--  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">-->
+<!--    <span class="loading loading-spinner text-warning loading-lg"></span>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<!--<div *ngIf="isLoading">-->
+<!--</div>-->
+
+
+  <div *ngIf="animeAndEnlaces$ | async as data">
+    <h2 class="text-4xl">{{ data.anime.nombre_original }}</h2>
+
+    <div *ngFor="let enlace of data.enlaces" class="my-4 flex justify-center w-full">
+      <iframe [src]="sanitizeUrl(enlace.url)" width="1024" height="480" frameborder="0" allowfullscreen class="rounded-2xl"></iframe>
+    </div>
+
+
   </div>
-</div>
 
-
-<div *ngIf="isLoading">
-
-
-
-</div>
-
-<div *ngIf="enlaces$ | async as enlaces">
-  <ul>
-    <li *ngFor="let enlace of enlaces">
-      <iframe [src]="sanitizeUrl(enlace.url)" width="640" height="360" frameborder="0" allowfullscreen></iframe>
-    </li>
-  </ul>
-</div>

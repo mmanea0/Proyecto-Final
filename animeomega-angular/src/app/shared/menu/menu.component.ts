@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Router, RouterLink} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {Anime} from "../../interfaces/anime";
+import {Observable} from "rxjs";
+import {AutenticacionService} from "../../auth/services/autenticacion.service";
 
 @Component({
   selector: 'app-menu',
@@ -13,12 +15,13 @@ import {Anime} from "../../interfaces/anime";
     RouterLink,
     FormsModule,
     NgForOf,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit{
   ICONO_LUPA: SafeHtml;
   ICONO_CERRAR: SafeHtml;
   ICONO_CAMPANA: SafeHtml;
@@ -27,11 +30,21 @@ export class MenuComponent {
   resultadosBusqueda: Anime[] = [
   ];
 
+  userRoles$: Observable<string[]> | undefined;
+
+  datosUsuario$: Observable<any> | undefined;
+
+  ngOnInit(): void {
+    this.mostrarinfmoracion();
+    this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
+  }
 
   constructor(
     private sanitizer: DomSanitizer,
     private animeService: AnimeService,
-    private router: Router
+    private router: Router,
+    private autenticacionService: AutenticacionService,
+
   ) {
     this.ICONO_LUPA = this.sanitizer.bypassSecurityTrustHtml(`
      <svg class="w-5 h-5 text-white" aria-labelledby="search" role="img" xmlns="http://www.w3.org/2000/svg" fill="none" height="18" width="19">
@@ -105,5 +118,11 @@ export class MenuComponent {
       this.router.navigate(['/resultado', {termino: this.terminoBusqueda}]);
     }
 
+  }
+
+  mostrarinfmoracion() {
+    this.autenticacionService.getDatosUsuario().subscribe(usuario => {
+      this.autenticacionService.isSesionIniciada();
+    });
   }
 }

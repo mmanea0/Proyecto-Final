@@ -1,0 +1,5 @@
+@media (min-height: 896px) {
+  .dropdown.dropdown-end {
+    display: none;
+  }
+}

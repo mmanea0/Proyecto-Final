@@ -1,6 +1,6 @@
 
 <app-menu></app-menu>
-  <div class="flex mt-[6.9rem] z-50">
+ <!-- <div class="flex z-50">
     <div class="fixed bg-[#1a1e2b] w-1/6 h-[100%] pr-1 z-0">
 
       <div class="text-white ">
@@ -86,4 +86,108 @@
         <router-outlet></router-outlet>
       </div>
     </div>
+  </div>-->
+
+
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <!-- Page content here -->
+
+    <div class="flex-1 mr-3 ml-5 mt-32">
+        <router-outlet></router-outlet>
+    </div>
+
+    <label for="my-drawer-2" class="btn btn-circle swap swap-rotate fixed top-5 left-0 z-50 p-4 text-white cursor-pointer drawer-button lg:hidden">
+      <input type="checkbox" />
+
+      <svg class="swap-off fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"/></svg>
+
+      <svg class="swap-on fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49"/></svg>
+
+    </label>
+
   </div>
+  <div class="drawer-side z-40">
+    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu p-4 w-72 min-h-[100%] bg-[#1a1e2b] text-base-content">
+      <div class="text-white ">
+        <h2 class="text-2xl ml-10 pt-10">MENU</h2>
+
+        <div class="mb-5 mt-10"
+             [ngClass]="{'seleccionado': seleccionado['explorar']}"
+             (click)="toggleSeleccion('explorar')">
+          <a routerLink="/explorar"
+             class="flex ml-5 items-center transition duration-300 ease-in-out hover:text-green-300">
+            <i [innerHTML]="ICONO_EXPLORAR" class="mr-3 transition duration-300 ease-in-out hover:text-green-300"></i>EXPLORAR
+          </a>
+        </div>
+
+        <div class="mb-5 mt-5"
+             [ngClass]="{'seleccionado': seleccionado['estrenos']}"
+             (click)="toggleSeleccion('estrenos')">
+          <a routerLink="/futuros-estrenos"
+             class="flex ml-3 items-center transition duration-300 ease-in-out hover:text-green-300">
+            <i [innerHTML]="ICONO_ESTRENO" class="mr-3 transition duration-300 ease-in-out hover:text-green-300"></i>FUTUROS ESTRENOS
+          </a>
+        </div>
+
+        <div *ngIf="sesionIniciada">
+          <div class="flex items-center ml-5" (click)="toggleLista()" style="cursor: pointer; user-select: none;">
+            <i [innerHTML]="ICONO_LISTA" class="mr-3 "></i>
+            <span class="mr-5">MI LISTA</span>
+            <i [innerHTML]="mostrarLista ? ICONO_FLECHA_CERRADA : ICONO_FLECHA_ABIERTA"></i>
+          </div>
+
+          <ul *ngIf="mostrarLista" class="flex flex-col space-y-1 mt-3">
+
+            <li [ngClass]="{'seleccionado': seleccionado['siguiendo']}"
+                (click)="toggleSeleccion('siguiendo')"
+                class="pl-14">
+              <a routerLink="/siguiendo" class="flex items-center py-2 transition duration-300 ease-in-out hover:text-green-300">
+                <i [innerHTML]="ICONO_SIGUIENDO" class="mr-2 transition duration-300 ease-in-out hover:text-green-300"></i>
+                SIGUIENDO
+              </a>
+            </li>
+
+            <li [ngClass]="{'seleccionado': seleccionado['pendiente']}"
+                (click)="toggleSeleccion('pendiente')" class="pl-14">
+              <a routerLink="/pendiente" class="flex items-center py-2 transition duration-300 ease-in-out hover:text-green-300">
+                <i [innerHTML]="ICONO_PENDIENTE" class="mr-2"></i>
+                PENDIENTE
+              </a>
+            </li>
+
+            <li [ngClass]="{'seleccionado': seleccionado['favorito']}"
+                (click)="toggleSeleccion('favorito')" class="pl-14">
+              <a routerLink="/favorito" class="flex items-center py-2 transition duration-300 ease-in-out hover:text-green-300">
+                <i [innerHTML]="ICONO_FAVORITO" class="mr-2"></i>
+                FAVORITO
+              </a>
+            </li>
+
+            <li [ngClass]="{'seleccionado': seleccionado['completado']}"
+                (click)="toggleSeleccion('completado')" class="pl-14">
+              <a routerLink="/completado" class="flex items-center py-2 transition duration-300 ease-in-out hover:text-green-300">
+                <i [innerHTML]="ICONO_COMPLETADO" class="mr-2"></i>
+                COMPLETADO
+              </a>
+            </li>
+
+            <li [ngClass]="{'seleccionado': seleccionado['abandonado']}"
+                (click)="toggleSeleccion('abandonado')" class="pl-14">
+              <a routerLink="/abandonado" class="flex items-center py-2 transition duration-300 ease-in-out hover:text-green-300">
+                <i [innerHTML]="ICONO_ABANDONADO" class="mr-2"></i>
+                ABANDONADO
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        <app-login></app-login>
+      </div>
+
+    </ul>
+
+  </div>
+</div>

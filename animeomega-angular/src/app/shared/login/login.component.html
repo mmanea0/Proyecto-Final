@@ -7,7 +7,8 @@
 </div>
 
 
-<div  *ngIf="!isLoading">
+
+<div  *ngIf="!isLoading" class="ocultar" >
 
 <div class="fixed bottom-0 left-0 text-white">
 <br>
@@ -59,7 +60,6 @@
       <!-- Avatar y nickname -->
       <div class="absolute -top-24 left-5 p-4 text-white z-10">
         <img [src]="(datosUsuario$ | async)?.avatar" class=" rounded-xl" alt="">
-        <span class="block">{{ (datosUsuario$ | async)?.nickname }}</span>
       </div>
 
       <!-- Imagen de fondo con filtro de desenfoque -->
@@ -75,4 +75,4 @@
   </div>
 </div>
 
-  </div>
+</div>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {combineLatest, map, Observable, of, switchMap} from "rxjs";
 import {AnimeService} from "../../service/anime.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
@@ -20,7 +20,7 @@ export class VerCapituloComponent implements OnInit{
 
   isLoading = false;
 
-  enlaces$: Observable<any> | undefined;
+  animeAndEnlaces$: Observable<{ anime: any, enlaces: any }> | undefined;
     constructor(
       private animeService: AnimeService,
       private route: ActivatedRoute,
@@ -28,19 +28,30 @@ export class VerCapituloComponent implements OnInit{
       private sanitizer: DomSanitizer
     ) { }
 
-    ngOnInit(): void {
-      this.cargarEnlacesCapitulo();
-    }
+  ngOnInit(): void {
+    this.carcarCapitulo();
+  }
 
-  cargarEnlacesCapitulo() {
 
-    this.route.params.subscribe(params => {
-      const animeId = params['animeId'];
-      const capituloId = params['capituloId'];
-      this.enlaces$ = this.animeService.getEnlacesCapitulo(animeId, capituloId);
-    });
+  carcarCapitulo(): void {
+    this.animeAndEnlaces$ = this.route.params.pipe(
+      switchMap(params => {
+        const animeId = params['animeId'];
+        const capituloId = params['capituloId'];
+        return combineLatest([
+          this.animeService.getAnimePorId(animeId),
+          this.animeService.getEnlacesCapitulo(animeId, capituloId)
+        ]);
+      }),
+      map(([anime, enlaces]) => ({ anime, enlaces }))
+    );
+
+
   }
   sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
 }
+
+
