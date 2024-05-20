@@ -171,4 +171,6 @@ class AnimesController extends Controller
 
     }
 
+
+
 }

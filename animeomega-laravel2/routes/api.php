@@ -42,6 +42,14 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::get('/favoritos', [AuthController::class, 'verfavoritosUsuario']);
+
+    Route::post('/agregarfavorito/{id_anime}',[AuthController::class, 'agregarfavoritosUsuario']);
+    Route::post('/agregarpendiente/{id_anime}',[AuthController::class, 'agregarpendiente']);
+    Route::post('/agregarsiguiendo/{id_anime}',[AuthController::class, 'agregarsiguiendo']);
+    Route::post('/agregarcompleado/{id_anime}',[AuthController::class, 'agregarcompleado']);
+    Route::post('/agregarabandonado/{id_anime}',[AuthController::class, 'agregarabandonado']);
+    Route::get('/biblioteca', [AuthController::class, 'animesdelusuario']);
+
 });
 
 
