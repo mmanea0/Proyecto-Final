@@ -4,8 +4,22 @@
   </div>
 </div>
 
-<div *ngIf="isLoading">
-
-
-
+<div *ngIf="!isLoading">
+  <div *ngIf="animes.length > 0; else noAnimes">
+    <h2>Animes Completo:</h2>
+    <ul>
+      <li *ngFor="let anime of animes">
+        <a (click)="verAnime(anime)">
+        <img src="{{ anime.foto }}">
+        <p>{{ anime.nombre_original }}</p>
+        </a>
+        <!-- Agrega más detalles según la estructura de tu objeto anime -->
+      </li>
+    </ul>
+  </div>
+  <ng-template #noAnimes>
+    <div style="text-align: center;">
+      <p>No tienes ningún anime en tu biblioteca.</p>
+    </div>
+  </ng-template>
 </div>

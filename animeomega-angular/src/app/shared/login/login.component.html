@@ -43,8 +43,6 @@
         <button class="btn btn-outline btn-error ml-5" (click)="cancelarInicioSesion()">Cancelar</button>
       </form>
 
-
-
     </div>
 
     <!-- Ocultar el botón "Inicio normal" cuando se inicia sesión -->
@@ -73,6 +71,12 @@
       </button>
     </div>
   </div>
-</div>
+
+  <div *ngIf="!montarinfouser && !isLoading">
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+      <span class="loading loading-spinner text-secondary loading-lg"></span>
+    </div>
+  </div>
+
 
 </div>

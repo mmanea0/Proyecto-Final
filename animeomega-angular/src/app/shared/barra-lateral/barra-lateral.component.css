@@ -3,5 +3,5 @@
 /*}*/
 .seleccionado {
   border-left: 4px solid #53E2EB !important;
-
+  margin-left: -12px;
 }

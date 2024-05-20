@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {catchError, Observable, throwError} from "rxjs";
 import {Anime} from "../interfaces/anime";
 
 @Injectable({
@@ -17,6 +17,8 @@ export class AnimeService {
     private httpClient: HttpClient,
   ) {
   }
+
+
 
   getAnime(): Observable<any> {
     const $anime = this.httpClient.get<Anime[]>(`${this.animeUrl}`);
@@ -56,6 +58,75 @@ export class AnimeService {
     }
     // Si no se encontró un token JWT o la sesión no está iniciada, retornar un observable vacío o manejar el caso según sea necesario
     return new Observable<any>();
+  }
+
+  addAnimeToList(animeId: number, endpoint: string): Observable<any> {
+    // Verificar si la sesión está iniciada
+    if (this.isSesionIniciada()) {
+      // Obtener el token JWT del almacenamiento local
+      const jwtToken = localStorage.getItem('jwtToken');
+      // Verificar si se encontró un token JWT
+      if (jwtToken) {
+        // Construir las cabeceras de la solicitud con el token JWT
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        // Realizar la solicitud HTTP con las cabeceras
+        return this.httpClient.post<any>(`${this.base}/${endpoint}/${animeId}`, {}, { headers });
+      } else {
+        // Manejar el caso de token faltante
+        return throwError('Token JWT no encontrado');
+      }
+    } else {
+      // Manejar el caso de sesión no iniciada
+      return throwError('Sesión no iniciada');
+    }
+  }
+
+  addFavoritos(animeId: number): Observable<any> {
+    return this.addAnimeToList(animeId, 'agregarfavorito');
+  }
+
+  addPendientes(animeId: number): Observable<any> {
+    return this.addAnimeToList(animeId, 'agregarpendiente');
+  }
+
+  addSiguiendo(animeId: number): Observable<any> {
+    return this.addAnimeToList(animeId, 'agregarsiguiendo');
+  }
+
+  addCompleado(animeId: number): Observable<any> {
+    return this.addAnimeToList(animeId, 'agregarcompleado');
+  }
+
+  addAbandonado(animeId: number): Observable<any> {
+    return this.addAnimeToList(animeId, 'agregarabandonado');
+  }
+
+  bibliotecaUsuario(estadoId?: number): Observable<any> {
+    let params = new HttpParams();
+    if (estadoId !== undefined) {
+      params = params.set('estado_id', estadoId.toString());
+    }
+
+    // Obtener el token JWT del almacenamiento local
+    const jwtToken = localStorage.getItem('jwtToken');
+    // Verificar si se encontró un token JWT
+    if (!jwtToken) {
+      return throwError('Token JWT no encontrado');
+    }
+
+    // Construir las cabeceras de la solicitud con el token JWT
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${jwtToken}`
+    });
+
+    return this.httpClient.get<any>(`${this.base}/biblioteca`, { params, headers }).pipe(
+      catchError(error => {
+        // Manejar errores de la solicitud HTTP
+        return throwError(error);
+      })
+    );
   }
 
   // Función para verificar si la sesión está iniciada

@@ -9,9 +9,13 @@
     <div class="carousel-inner w-full flex">
       <ng-container *ngFor="let anime of animes$ | async; let i = index">
         <div id="item{{i + 1}}" class="carousel-item w-full" *ngIf="i === currentIndex">
-          <div class="absolute top-32 left-16 text-black text-center p-2 z-10 text-[2.5rem] nombre sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]">{{anime.nombre_original}}</div>
-          <button class="btn btn-info absolute top-60 left-16 bg-blue-400 text-white px-5" (click)="verAnime(anime)">VER</button>
-          <img [src]="anime.banner" class="w-full h-full object-cover rounded-box" alt="{{ anime.nombre_original }}" />
+          <div
+            class="absolute top-32 left-16 text-black text-center p-2 z-10 text-[2.5rem] nombre sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]">{{ anime.nombre_original }}
+          </div>
+          <button class="btn btn-info absolute top-60 left-16 bg-blue-400 text-white px-5" (click)="verAnime(anime)">
+            VER
+          </button>
+          <img [src]="anime.banner" class="w-full h-full object-cover rounded-box" alt="{{ anime.nombre_original }}"/>
         </div>
       </ng-container>
     </div>
@@ -29,21 +33,25 @@
   <div class="mt-10">
     <div class="text-white text-2xl ml-10">NUEVOS CAPITULOS</div>
 
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
       <ng-container *ngFor="let anime of animes$ | async">
         <a (click)="verAnime(anime)">
-          <div class="flex flex-col items-center justify-center relative"
-               (mouseenter)="mostrarTooltip(anime.sipnosis)"
-               (mouseleave)="ocultarTooltip()">
-            <div class="relative w-48 h-60">
-              <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
-              <div *ngIf="tooltipText === anime.sipnosis" class="tooltip bg-white border rounded-xl py-2 px-4 z-10 absolute bottom-0 left-0 w-full h-full overflow-y-auto opacity-0 hover:opacity-100 transition-opacity duration-300" style="user-select: none;">
-                {{ tooltipText }}
-              </div>
+        <div class="relative overflow-hidden w-60 h-80 rounded-3xl cursor-pointer text-2xl font-bold bg-[#1a1e2b]">
+          <div class="z-10 absolute w-full h-full peer"></div>
+          <div class="absolute peer-hover:-top-20 peer-hover:-left-16 peer-hover:w-[140%] peer-hover:h-[140%] -top-60 -left-16 w-32 h-44 rounded-full bg-transparent backdrop-blur-md transition-all duration-500"></div>
+          <div class="absolute flex items-center justify-center peer-hover:right-0 peer-hover:bottom-0 peer-hover:items-center peer-hover:justify-center peer-hover:w-full peer-hover:h-full -bottom-[40rem] -right-16 w-36 h-44 bg-transparent backdrop-blur-md transition-all duration-500 rounded-none peer-hover:rounded-b-none" style="pointer-events: auto;">
+            <div class="overflow-y-auto max-h-full ml-4">
+              {{ getShortSynopsis(anime.sipnosis) }}
             </div>
-            <h2 class="text-center text-white">{{ anime.nombre_original }}</h2>
           </div>
+          <div class="w-full h-full items-center justify-center flex uppercase">
+            <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
+          </div>
+          <h2 class="text-center text-white">{{ anime.nombre_original }}</h2>
+        </div>
         </a>
+
       </ng-container>
     </div>
   </div>

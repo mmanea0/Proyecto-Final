@@ -10,7 +10,11 @@
 
 
   <div *ngIf="animeAndEnlaces$ | async as data">
-    <h2 class="text-4xl">{{ data.anime.nombre_original }}</h2>
+    <div class="flex items-center">
+      <h2 class="text-4xl">{{ data.anime.nombre_original }}</h2>
+    <div (click)="verAnime(data.anime.id)" [innerHTML]="ICONO_ANIME" style="cursor: pointer;" class=""></div>
+
+  </div>
 
     <div *ngFor="let enlace of data.enlaces" class="my-4 flex justify-center w-full">
       <iframe [src]="sanitizeUrl(enlace.url)" width="1024" height="480" frameborder="0" allowfullscreen class="rounded-2xl"></iframe>

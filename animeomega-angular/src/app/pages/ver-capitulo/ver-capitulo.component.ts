@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {combineLatest, map, Observable, of, switchMap} from "rxjs";
 import {AnimeService} from "../../service/anime.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
@@ -11,7 +11,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
   imports: [
     AsyncPipe,
     NgIf,
-    NgForOf
+    NgForOf,
+    RouterLink
   ],
   templateUrl: './ver-capitulo.component.html',
   styleUrl: './ver-capitulo.component.css'
@@ -19,17 +20,28 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 export class VerCapituloComponent implements OnInit{
 
   isLoading = false;
+  ICONO_ANIME: SafeResourceUrl='';
 
   animeAndEnlaces$: Observable<{ anime: any, enlaces: any }> | undefined;
     constructor(
       private animeService: AnimeService,
       private route: ActivatedRoute,
       private router: Router,
-      private sanitizer: DomSanitizer
-    ) { }
+      private sanitizer: DomSanitizer,
+    ) {
+
+      this.ICONO_ANIME = this.sanitizer.bypassSecurityTrustHtml(`<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</svg>`)
+
+    }
 
   ngOnInit(): void {
     this.carcarCapitulo();
+
   }
 
 
@@ -52,6 +64,9 @@ export class VerCapituloComponent implements OnInit{
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
+  verAnime(animeId: number): void {
+    this.router.navigate(['/anime', animeId]);
+  }
 }
 
 

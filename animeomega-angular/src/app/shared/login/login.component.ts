@@ -49,11 +49,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true; // Establecer isLoading a true al iniciar la carga de la página
     this.userRoles$ = this.autenticacionService.getRoles();
     this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
     this.mostrarinfmoracion();
     this.verificarAutenticacion();
-    this.verCardUsuraio()
   }
 
   cancelarInicioSesion() {
@@ -127,13 +127,15 @@ export class LoginComponent implements OnInit {
   }
 
   verificarAutenticacion() {
-    // Verificar si la sesión está iniciada
-    this.montarinfouser = this.autenticacionService.isSesionIniciada();
+    this.montarinfouser = this.autenticacionService.isSesionIniciada(); // Verificar si la sesión está iniciada
   }
 
   mostrarinfmoracion() {
     this.autenticacionService.getDatosUsuario().subscribe(usuario => {
-      this.montarinfo();
+      this.isLoading = false; // Marcar isLoading como falso cuando se obtengan los datos del usuario
+      this.montarinfouser = true; // Mostrar la información del usuario cuando se obtengan los datos
+    }, error => {
+      this.isLoading = false; // Marcar isLoading como falso en caso de error al obtener los datos del usuario
     });
   }
 

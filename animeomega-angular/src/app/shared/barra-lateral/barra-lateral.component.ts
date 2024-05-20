@@ -92,26 +92,26 @@ export class BarraLateralComponent implements OnInit{
 
     this.ICONO_FLECHA_ABIERTA = this.santizer.bypassSecurityTrustHtml(`
   <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M24 1.5L13 12.5L2 1.5" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 1.5L13 12.5L2 1.5" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`);
 
     this.ICONO_FLECHA_CERRADA = this.santizer.bypassSecurityTrustHtml(`
      <svg width="26" height="14" viewBox="0 0 26 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.99805 12.5L12.998 1.5L23.998 12.5" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.99805 12.5L12.998 1.5L23.998 12.5" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     `);
 
     this.ICONO_SIGUIENDO = this.santizer.bypassSecurityTrustHtml(`
     <svg width="24" height="24" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2 2.27734V20.1415L16.625 11.2094L2 2.27734Z" stroke="#FFEC00" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2 2.27734V20.1415L16.625 11.2094L2 2.27734Z" stroke="#FFEC00"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     `);
 
     this.ICONO_PENDIENTE = this.santizer.bypassSecurityTrustHtml(`
     <svg width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_60_34)">
-<path d="M13.5 23.625C19.0919 23.625 23.625 19.0919 23.625 13.5C23.625 7.90812 19.0919 3.375 13.5 3.375C7.90812 3.375 3.375 7.90812 3.375 13.5C3.375 19.0919 7.90812 23.625 13.5 23.625Z" stroke="#FF63C1" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M13.5 7.875V13.5L16.875 16.875" stroke="#FF63C1" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.5 23.625C19.0919 23.625 23.625 19.0919 23.625 13.5C23.625 7.90812 19.0919 3.375 13.5 3.375C7.90812 3.375 3.375 7.90812 3.375 13.5C3.375 19.0919 7.90812 23.625 13.5 23.625Z" stroke="#FF63C1" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.5 7.875V13.5L16.875 16.875" stroke="#FF63C1"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_60_34">
@@ -122,20 +122,20 @@ export class BarraLateralComponent implements OnInit{
 
     this.ICONO_FAVORITO = this.santizer.bypassSecurityTrustHtml(`
     <svg width="24" height="24" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20.5771 11.0835L12.1396 19.3769L3.70212 11.0835C3.14559 10.546 2.70722 9.89999 2.41461 9.18612C2.12201 8.47225 1.9815 7.70598 2.00195 6.93556C2.0224 6.16515 2.20335 5.40728 2.53342 4.70969C2.86349 4.01209 3.33552 3.38988 3.91979 2.88223C4.50406 2.37458 5.18791 1.99249 5.92828 1.76002C6.66865 1.52756 7.4495 1.44975 8.22166 1.5315C8.99382 1.61324 9.74056 1.85278 10.4149 2.23502C11.0892 2.61725 11.6764 3.13391 12.1396 3.75246C12.6048 3.1384 13.1928 2.62626 13.8666 2.24808C14.5404 1.8699 15.2857 1.63382 16.0557 1.55463C16.8257 1.47543 17.6038 1.55483 18.3415 1.78784C19.0791 2.02085 19.7604 2.40246 20.3426 2.90878C20.9248 3.41511 21.3955 4.03526 21.7251 4.73041C22.0547 5.42555 22.2362 6.18075 22.2582 6.94871C22.2802 7.71668 22.1423 8.48088 21.853 9.19351C21.5638 9.90613 21.1294 10.5518 20.5771 11.0902" stroke="#FF2825" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.5771 11.0835L12.1396 19.3769L3.70212 11.0835C3.14559 10.546 2.70722 9.89999 2.41461 9.18612C2.12201 8.47225 1.9815 7.70598 2.00195 6.93556C2.0224 6.16515 2.20335 5.40728 2.53342 4.70969C2.86349 4.01209 3.33552 3.38988 3.91979 2.88223C4.50406 2.37458 5.18791 1.99249 5.92828 1.76002C6.66865 1.52756 7.4495 1.44975 8.22166 1.5315C8.99382 1.61324 9.74056 1.85278 10.4149 2.23502C11.0892 2.61725 11.6764 3.13391 12.1396 3.75246C12.6048 3.1384 13.1928 2.62626 13.8666 2.24808C14.5404 1.8699 15.2857 1.63382 16.0557 1.55463C16.8257 1.47543 17.6038 1.55483 18.3415 1.78784C19.0791 2.02085 19.7604 2.40246 20.3426 2.90878C20.9248 3.41511 21.3955 4.03526 21.7251 4.73041C22.0547 5.42555 22.2362 6.18075 22.2582 6.94871C22.2802 7.71668 22.1423 8.48088 21.853 9.19351C21.5638 9.90613 21.1294 10.5518 20.5771 11.0902" stroke="#FF2825" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     `);
 
     this.ICONO_COMPLETADO = this.santizer.bypassSecurityTrustHtml(`
     <svg width="23" height="24" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3 8.72709L8.625 14.3097L19.875 3.14453" stroke="#00B341" stroke-opacity="0.7" stroke-width="4.58333" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 8.72709L8.625 14.3097L19.875 3.14453" stroke="#00B341"  stroke-width="4.58333" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     `);
 
 
     this.ICONO_ABANDONADO = this.santizer.bypassSecurityTrustHtml(`
     <svg width="24" height="24" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.5 11.8977V2.96564C6.5 2.66952 6.38147 2.38553 6.17049 2.17615C5.95952 1.96676 5.67337 1.84913 5.375 1.84913H3.125C2.82663 1.84913 2.54048 1.96676 2.3295 2.17615C2.11853 2.38553 2 2.66952 2 2.96564V10.7812C2 11.0773 2.11853 11.3613 2.3295 11.5707C2.54048 11.7801 2.82663 11.8977 3.125 11.8977H6.5ZM6.5 11.8977C7.69347 11.8977 8.83807 12.3683 9.68198 13.2058C10.5259 14.0434 11 15.1793 11 16.3638V17.4803C11 18.0725 11.2371 18.6405 11.659 19.0593C12.081 19.4781 12.6533 19.7133 13.25 19.7133C13.8467 19.7133 14.419 19.4781 14.841 19.0593C15.2629 18.6405 15.5 18.0725 15.5 17.4803V11.8977H18.875C19.4717 11.8977 20.044 11.6625 20.466 11.2437C20.8879 10.8249 21.125 10.2569 21.125 9.66471L20 4.08215C19.8382 3.3972 19.5313 2.80906 19.1255 2.40631C18.7197 2.00356 18.2369 1.80801 17.75 1.84913H9.875C8.97989 1.84913 8.12145 2.20202 7.48851 2.83018C6.85558 3.45834 6.5 4.31031 6.5 5.19866" stroke="#00BFD8" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.5 11.8977V2.96564C6.5 2.66952 6.38147 2.38553 6.17049 2.17615C5.95952 1.96676 5.67337 1.84913 5.375 1.84913H3.125C2.82663 1.84913 2.54048 1.96676 2.3295 2.17615C2.11853 2.38553 2 2.66952 2 2.96564V10.7812C2 11.0773 2.11853 11.3613 2.3295 11.5707C2.54048 11.7801 2.82663 11.8977 3.125 11.8977H6.5ZM6.5 11.8977C7.69347 11.8977 8.83807 12.3683 9.68198 13.2058C10.5259 14.0434 11 15.1793 11 16.3638V17.4803C11 18.0725 11.2371 18.6405 11.659 19.0593C12.081 19.4781 12.6533 19.7133 13.25 19.7133C13.8467 19.7133 14.419 19.4781 14.841 19.0593C15.2629 18.6405 15.5 18.0725 15.5 17.4803V11.8977H18.875C19.4717 11.8977 20.044 11.6625 20.466 11.2437C20.8879 10.8249 21.125 10.2569 21.125 9.66471L20 4.08215C19.8382 3.3972 19.5313 2.80906 19.1255 2.40631C18.7197 2.00356 18.2369 1.80801 17.75 1.84913H9.875C8.97989 1.84913 8.12145 2.20202 7.48851 2.83018C6.85558 3.45834 6.5 4.31031 6.5 5.19866" stroke="#00BFD8" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     `);
 
@@ -144,11 +144,11 @@ export class BarraLateralComponent implements OnInit{
   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_60_45)">
 <path d="M33.0007 9.16602H11.0007C8.97561 9.16602 7.33398 10.8076 7.33398 12.8327V34.8327C7.33398 36.8577 8.97561 38.4993 11.0007 38.4993H33.0007C35.0257 38.4993 36.6673 36.8577 36.6673 34.8327V12.8327C36.6673 10.8076 35.0257 9.16602 33.0007 9.16602Z" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M29.334 5.5V12.8333" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M14.666 5.5V12.8333" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.33398 20.166H36.6673" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.166 27.5H21.9993" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22 27.5V33" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M29.334 5.5V12.8333" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.666 5.5V12.8333" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.33398 20.166H36.6673" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.166 27.5H21.9993" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22 27.5V33" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_60_45">
@@ -175,7 +175,7 @@ export class BarraLateralComponent implements OnInit{
     <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_61_74)">
 <path d="M25.6667 14.6673V11.0007C25.6667 10.0282 25.2804 9.09556 24.5927 8.40793C23.9051 7.72029 22.9725 7.33398 22 7.33398H9.16667C8.19421 7.33398 7.26158 7.72029 6.57394 8.40793C5.88631 9.09556 5.5 10.0282 5.5 11.0007V33.0007C5.5 33.9731 5.88631 34.9057 6.57394 35.5934C7.26158 36.281 8.19421 36.6673 9.16667 36.6673H22C22.9725 36.6673 23.9051 36.281 24.5927 35.5934C25.2804 34.9057 25.6667 33.9731 25.6667 33.0007V29.334" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.834 22H38.5007M38.5007 22L33.0007 16.5M38.5007 22L33.0007 27.5" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.834 22H38.5007M38.5007 22L33.0007 16.5M38.5007 22L33.0007 27.5" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_61_74">

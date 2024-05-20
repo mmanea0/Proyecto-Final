@@ -60,17 +60,14 @@ export class AnimeComponent implements OnInit {
   }
 
 
-  cargarUltimosAnimes() {
-    this.isLoading = true;
-    this.animeService.getultimos().subscribe(
-      (anime) => {
-        this.anime$ = of(anime);
-        this.isLoading = false;
+
+  addFavoritos(animeId: number): void {
+    this.animeService.addFavoritos(animeId).subscribe(
+      () => {
+        console.log('Anime agregado a favoritos');
       },
       error => {
-        console.error('Error al cargar el anime', error);
-        this.isLoading = false;
-
+        console.error('Error al agregar el anime a favoritos', error);
       }
     );
   }
