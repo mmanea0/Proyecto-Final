@@ -1,0 +1,24 @@
+/* styles.css */
+.dark-filter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  pointer-events: auto; /* Allow clicks to be detected */
+}
+
+.video-container {
+  position: relative;
+  z-index: 1001;
+}
+
+.no-pointer-events {
+  pointer-events: none; /* Prevent clicks on iframe from closing the filter */
+}
+.disabled {
+  opacity: 0.5; /* Reducir la opacidad */
+  pointer-events: none; /* Deshabilitar eventos de clic */
+}

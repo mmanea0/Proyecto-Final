@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Anime} from "../interfaces/anime";
 
 @Injectable({
@@ -35,6 +35,7 @@ export class AnimeService {
     return $anime;
 
   }
+
 
   getEnlacesCapitulo(animeId: number, capituloId: number): Observable<any> {
     const $anime = this.httpClient.get<any>(`${this.animeUrl}/${animeId}/capitulos/${capituloId}`);
