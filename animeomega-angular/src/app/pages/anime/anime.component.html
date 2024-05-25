@@ -8,7 +8,7 @@
 <div *ngIf="!isLoading && (anime$ | async )as anime">
 
   <div class="flex relative mt-10 mx-5 text-white">
-    <div class="left-0 z-10 mt-16 flex">
+    <div class="left-0 z-10 mt-16 flex h-max">
       <div class="mr-10 mt-10">
         <img [src]="anime.foto" alt="{{ anime.nombre_original }}" class="rounded-lg w-48 h-auto mt-20 ml-20">
       </div>
@@ -16,33 +16,86 @@
         <div class="sticky top-0">
           <strong class="text-2xl">SINOPSIS</strong>
         </div>
-        <div>
-          <p class="p-2">{{ anime.sipnosis }}</p>
+        <div >
+          <p class="p-2 pr-48">{{ anime.sipnosis }}</p>
         </div>
+
+
       </div>
-      <div class="flex">
-        <div class="mt-28">
+
+      <div class="flex mt-24 h-max">
+        <div class="">
           <h2 class="mt-4 text-[2rem]">{{ anime.nombre_original }}</h2>
         </div>
-        <div class="flex ml-[38rem] mt-52">
-       <div class="mr-5 ">
+
+        <div class="flex ml-[20rem] mt-7 alineacion h-max">
+       <div class="mr-5  h-max">
          <div class="mt-2 bg-[#1a1e2b] rounded-lg px-2 py-0.5">{{ anime.nombre_en }} </div>
        </div>
-        <div class="">
+        <div class="h-max">
           <div class="mt-2 bg-[#1a1e2b] rounded-lg px-2 py-0.5 ">{{ anime.nombre_original_sin_kanji }} </div>
         </div>
       </div>
+
       </div>
+
+
     </div>
+
     <div class="bg-gray-300 opacity-40">
-    <img [src]="anime.banner" alt="" class="absolute top-0 left-0 z-0 rounded-2xl">
+       <img [src]="anime.banner" alt="" class="absolute top-0 left-0 z-0 rounded-2xl ">
+    </div>
+
+  </div>
+
+  <div class="flex w-max ml-20 opciones space-x-2 z-40" >
+  <div (click)="toggleFavorito(anime.id)" class="inline-flex items-center p-2" style="cursor: pointer">
+    <i *ngIf="!isFavorito" class="">
+      <svg width="24" height="24" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.5771 11.0835L12.1396 19.3769L3.70212 11.0835C3.14559 10.546 2.70722 9.89999 2.41461 9.18612C2.12201 8.47225 1.9815 7.70598 2.00195 6.93556C2.0224 6.16515 2.20335 5.40728 2.53342 4.70969C2.86349 4.01209 3.33552 3.38988 3.91979 2.88223C4.50406 2.37458 5.18791 1.99249 5.92828 1.76002C6.66865 1.52756 7.4495 1.44975 8.22166 1.5315C8.99382 1.61324 9.74056 1.85278 10.4149 2.23502C11.0892 2.61725 11.6764 3.13391 12.1396 3.75246C12.6048 3.1384 13.1928 2.62626 13.8666 2.24808C14.5404 1.8699 15.2857 1.63382 16.0557 1.55463C16.8257 1.47543 17.6038 1.55483 18.3415 1.78784C19.0791 2.02085 19.7604 2.40246 20.3426 2.90878C20.9248 3.41511 21.3955 4.03526 21.7251 4.73041C22.0547 5.42555 22.2362 6.18075 22.2582 6.94871C22.2802 7.71668 22.1423 8.48088 21.853 9.19351C21.5638 9.90613 21.1294 10.5518 20.5771 11.0902" stroke="#FF2825" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </i>
+    <i *ngIf="isFavorito" class="icon icon-tabler icon-tabler-heart-filled">
+      <svg width="24" height="24" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.5771 11.0835L12.1396 19.3769L3.70212 11.0835C3.14559 10.546 2.70722 9.89999 2.41461 9.18612C2.12201 8.47225 1.9815 7.70598 2.00195 6.93556C2.0224 6.16515 2.20335 5.40728 2.53342 4.70969C2.86349 4.01209 3.33552 3.38988 3.91979 2.88223C4.50406 2.37458 5.18791 1.99249 5.92828 1.76002C6.66865 1.52756 7.4495 1.44975 8.22166 1.5315C8.99382 1.61324 9.74056 1.85278 10.4149 2.23502C11.0892 2.61725 11.6764 3.13391 12.1396 3.75246C12.6048 3.1384 13.1928 2.62626 13.8666 2.24808C14.5404 1.8699 15.2857 1.63382 16.0557 1.55463C16.8257 1.47543 17.6038 1.55483 18.3415 1.78784C19.0791 2.02085 19.7604 2.40246 20.3426 2.90878C20.9248 3.41511 21.3955 4.03526 21.7251 4.73041C22.0547 5.42555 22.2362 6.18075 22.2582 6.94871C22.2802 7.71668 22.1423 8.48088 21.853 9.19351C21.5638 9.90613 21.1294 10.5518 20.5771 11.0902" fill="#FF2825" stroke="#FF2825" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </i>
+  </div>
+
+
+  <div (click)="addAbandonados(anime.id)" class="inline-flex items-center p-2 " style="cursor: pointer">
+    <svg width="24" height="24" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.5 11.8977V2.96564C6.5 2.66952 6.38147 2.38553 6.17049 2.17615C5.95952 1.96676 5.67337 1.84913 5.375 1.84913H3.125C2.82663 1.84913 2.54048 1.96676 2.3295 2.17615C2.11853 2.38553 2 2.66952 2 2.96564V10.7812C2 11.0773 2.11853 11.3613 2.3295 11.5707C2.54048 11.7801 2.82663 11.8977 3.125 11.8977H6.5ZM6.5 11.8977C7.69347 11.8977 8.83807 12.3683 9.68198 13.2058C10.5259 14.0434 11 15.1793 11 16.3638V17.4803C11 18.0725 11.2371 18.6405 11.659 19.0593C12.081 19.4781 12.6533 19.7133 13.25 19.7133C13.8467 19.7133 14.419 19.4781 14.841 19.0593C15.2629 18.6405 15.5 18.0725 15.5 17.4803V11.8977H18.875C19.4717 11.8977 20.044 11.6625 20.466 11.2437C20.8879 10.8249 21.125 10.2569 21.125 9.66471L20 4.08215C19.8382 3.3972 19.5313 2.80906 19.1255 2.40631C18.7197 2.00356 18.2369 1.80801 17.75 1.84913H9.875C8.97989 1.84913 8.12145 2.20202 7.48851 2.83018C6.85558 3.45834 6.5 4.31031 6.5 5.19866" stroke="#00BFD8" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div (click)="addSiguendo(anime.id)" class="inline-flex items-center p-2" style="cursor: pointer">
+    <svg width="24" height="24" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2.27734V20.1415L16.625 11.2094L2 2.27734Z" stroke="#FFEC00"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div (click)="addPendiente(anime.id)" class="inline-flex items-center p-2 " style="cursor: pointer">
+    <svg width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_60_34)">
+        <path d="M13.5 23.625C19.0919 23.625 23.625 19.0919 23.625 13.5C23.625 7.90812 19.0919 3.375 13.5 3.375C7.90812 3.375 3.375 7.90812 3.375 13.5C3.375 19.0919 7.90812 23.625 13.5 23.625Z" stroke="#FF63C1" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13.5 7.875V13.5L16.875 16.875" stroke="#FF63C1"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <defs>
+        <clipPath id="clip0_60_34">
+          <rect width="27" height="27" fill="white"/>
+        </clipPath>
+      </defs>
+    </svg>
+  </div>
+  <div (click)="addCompletado(anime.id)" class="inline-flex items-center p-2 " style="cursor: pointer">
+    <svg width="23" height="24" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 8.72709L8.625 14.3097L19.875 3.14453" stroke="#00B341"  stroke-width="4.58333" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
   </div>
 
-  <div  (click)="addFavoritos(anime.id)">añadir</div>
 
 
-  <div class="flex justify-center">
+  <div class="flex justify-center -mt-20 ml-10">
     <ul class="w-full md:w-1/2">
       <li *ngFor="let capitulo of anime.capitulos" class="bg-[#1a1e2b] mb-2 flex pr-16 pl-5 py-5 rounded-xl">
 
@@ -63,19 +116,5 @@
       </li>
     </ul>
   </div>
-
-<!--
-  <div class="toast toast-end">
-    <div class="alert bg-green-400 text-white">
-      <span>Marcado como visto.</span>
-    </div>
-  </div>
-
-  <div class="toast toast-end">
-    <div class="alert bg-red-400 text-white">
-      <span>Quitado como visto.</span>
-    </div>
-  </div>-->
-
 
 </div>

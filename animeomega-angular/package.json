@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /angular-app",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:animeomega-angular": "node dist/animeomega-angular/server/server.mjs"
@@ -24,6 +24,7 @@
     "@ionic/angular": "^8.0.1",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.11.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

@@ -44,21 +44,48 @@ export class AnimeService {
   getFavoritosUsuario(): Observable<any> {
     // Verificar si la sesión está iniciada
     if (this.isSesionIniciada()) {
-      // Obtener el token JWT del almacenamiento local
       const jwtToken = localStorage.getItem('jwtToken');
-      // Verificar si se encontró un token JWT
       if (jwtToken) {
         // Construir las cabeceras de la solicitud con el token JWT
         const headers = new HttpHeaders({
           'Authorization': `Bearer ${jwtToken}`
         });
-        // Realizar la solicitud HTTP con las cabeceras
         return this.httpClient.get<any>(this.favoritosUrl, {headers});
       }
     }
     // Si no se encontró un token JWT o la sesión no está iniciada, retornar un observable vacío o manejar el caso según sea necesario
     return new Observable<any>();
   }
+
+
+  getUnfavortio(animeId: number): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.get<any>(`${this.base}/favorito/${animeId}`, { headers });
+      }
+    }
+    return new Observable<any>();
+  }
+
+
+
+  removeFavorito(animeId: number): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.post<any>(`${this.base}/eliminarFavorito/${animeId}`, {}, { headers });
+      }
+    }
+    return throwError('Token JWT no encontrado o sesión no iniciada');
+  }
+
 
   addAnimeToList(animeId: number, endpoint: string): Observable<any> {
     // Verificar si la sesión está iniciada
@@ -128,6 +155,8 @@ export class AnimeService {
       })
     );
   }
+
+
 
   // Función para verificar si la sesión está iniciada
   isSesionIniciada(): boolean {
