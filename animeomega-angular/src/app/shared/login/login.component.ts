@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {AutenticacionService} from "../../auth/services/autenticacion.service";
-import {Router} from "@angular/router";
-import {async, Observable} from "rxjs";
-import {FormsModule} from "@angular/forms";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {AsyncPipe, NgIf} from "@angular/common";
-import {User} from "../../auth/interfaces/user";
+import { AutenticacionService } from "../../auth/services/autenticacion.service";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { FormsModule } from "@angular/forms";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -16,22 +15,17 @@ import {User} from "../../auth/interfaces/user";
     AsyncPipe
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  isLoading = false;
-
-  credenciales = {
-    login: '',
-    pass: '',
-  };
+  isLoading = true; // Inicializar en true
+  credenciales = { login: '', pass: '' };
   ICONO_DISCORD: SafeHtml;
   userRoles$: Observable<string[]> | undefined;
-
   datosUsuario$: Observable<any> | undefined;
-
-  errorInicioSesion: boolean = false;
+  errorInicioSesion = false;
+  mostrarFormularioNormal = false;
+  montarinfouser = false;
 
   constructor(
     private autenticacionService: AutenticacionService,
@@ -39,20 +33,15 @@ export class LoginComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {
     this.ICONO_DISCORD = this.sanitizer.bypassSecurityTrustHtml(
-      '  <svg data-v-9d2fac81="" data-v-0fc51e59="" xmlns="http://www.w3.org/2000/svg"\n' +
-      '       xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon" width="24px" height="24px"\n' +
-      '       viewBox="0 0 24 24">\n' +
-      '    <path fill="currentColor"\n' +
-      '          d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12"></path>\n' +
-      '  </svg>')
-
+      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon" width="24px" height="24px" viewBox="0 0 24 24"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12"></path></svg>'
+    );
   }
 
   ngOnInit(): void {
     this.isLoading = true; // Establecer isLoading a true al iniciar la carga de la página
     this.userRoles$ = this.autenticacionService.getRoles();
     this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
-    this.mostrarinfmoracion();
+    this.mostrarinformacion();
     this.verificarAutenticacion();
   }
 
@@ -69,7 +58,7 @@ export class LoginComponent implements OnInit {
             this.userRoles$ = this.autenticacionService.getRoles();
             // Redirigir al usuario a la página de inicio sabiendo sus roles
             this.userRoles$.subscribe(roles => {
-              if (roles &&( roles.includes('Administrador') || roles.includes('Usuario') || roles.includes('Moderador'))) {
+              if (roles && (roles.includes('Administrador') || roles.includes('Usuario') || roles.includes('Moderador'))) {
                 this.router.navigate(['']).then(() => {
                   // Recargar la página
                   window.location.reload();
@@ -94,7 +83,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-
   logout() {
     this.autenticacionService.logout();
     this.router.navigateByUrl('').then(() => {
@@ -102,35 +90,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  mostrarFormularioNormal: boolean = false;
-
   mostrarFormulario() {
     this.mostrarFormularioNormal = true;
-  }
-
-  montarinfouser = false;
-
-  verCardUsuraio(){
-    if (this.montarinfouser) {
-      this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
-    }
-
-  }
-
-  montarinfo() {
-    // Verificar si la sesión está iniciada
-    if (this.autenticacionService.isSesionIniciada()) {
-      // Establecer montarinfo en verdadero para mostrar la información del usuario
-      this.montarinfouser = true;
-
-    }
   }
 
   verificarAutenticacion() {
     this.montarinfouser = this.autenticacionService.isSesionIniciada(); // Verificar si la sesión está iniciada
   }
 
-  mostrarinfmoracion() {
+  mostrarinformacion() {
     this.autenticacionService.getDatosUsuario().subscribe(usuario => {
       this.isLoading = false; // Marcar isLoading como falso cuando se obtengan los datos del usuario
       this.montarinfouser = true; // Mostrar la información del usuario cuando se obtengan los datos
@@ -138,6 +106,4 @@ export class LoginComponent implements OnInit {
       this.isLoading = false; // Marcar isLoading como falso en caso de error al obtener los datos del usuario
     });
   }
-
 }
-
