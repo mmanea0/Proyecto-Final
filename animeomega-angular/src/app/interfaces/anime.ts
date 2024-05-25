@@ -1,3 +1,4 @@
+
 export interface Anime {
   id: number;
   nombre_original: string;
@@ -28,3 +29,5 @@ export interface Enlace {
   url: string;
   capitulo_id: number;
 }
+
+

@@ -12,5 +12,8 @@ class CapituloAnime extends Model
     use HasFactory;
 
 
-
+    public function anime()
+    {
+        return $this->belongsTo(Anime::class, 'anime_id');
+    }
 }

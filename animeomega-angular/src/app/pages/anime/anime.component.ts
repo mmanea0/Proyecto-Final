@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AnimeService} from "../../service/anime.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable, of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import Swal from 'sweetalert2';
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-anime',
@@ -11,7 +12,8 @@ import Swal from 'sweetalert2';
   imports: [
     NgIf,
     AsyncPipe,
-    NgForOf
+    NgForOf,
+    FormsModule
   ],
   templateUrl: './anime.component.html',
   styleUrl: './anime.component.css'
@@ -21,7 +23,8 @@ export class AnimeComponent implements OnInit {
   anime$: Observable<any> | undefined;
   isLoading = false;
   sesionIniciada: boolean = false;
-  isFavorito: boolean = false;  // Estado para manejar si es favorito
+  isFavorito: boolean = false;
+  capituloVisto: boolean = false;
 
   constructor(
     private animeService: AnimeService,
@@ -33,7 +36,7 @@ export class AnimeComponent implements OnInit {
   ngOnInit(): void {
     this.cargarAnime();
     this.sesionIniciada = this.serviceAnime.isSesionIniciada();
-    this.sesionIniciada = this.animeService.isSesionIniciada();
+
   }
 
 
@@ -44,10 +47,10 @@ export class AnimeComponent implements OnInit {
       this.animeService.getAnimePorId(id).subscribe(
         (anime) => {
           this.anime$ = of(anime);
+          this.verificarFavorito(id);
+          this.verificacionCapituloVisto(id);
           this.isLoading = false;
 
-          // Verificar si el anime está en favoritos después de cargar los datos del anime
-          this.verificarFavorito(id);
         },
         error => {
           console.error('Error al cargar el anime', error);
@@ -56,6 +59,7 @@ export class AnimeComponent implements OnInit {
       );
     });
   }
+
   verCapitulo(animeId: number, capituloId: number): void {
     this.router.navigate(['/anime', animeId, 'capitulo', capituloId]);
   }
@@ -72,6 +76,22 @@ export class AnimeComponent implements OnInit {
       );
     }
   }
+
+  verificacionCapituloVisto(idCapitulo: number): void {
+    if (this.sesionIniciada) {
+      this.animeService.GetUnEpisodioVisto(idCapitulo).subscribe(
+        (response) => {
+          this.capituloVisto = response.visto === 1;
+          console.log('Capitulo visto', this.capituloVisto)
+          },
+        error => {
+          console.error('Error al verificar el estado de capitulo visto', error);
+        }
+      );
+    }
+  }
+
+
 
   toggleFavorito(animeId: number): void {
     const Toast = Swal.mixin({
@@ -228,7 +248,7 @@ export class AnimeComponent implements OnInit {
           background: '#1a1e2b',
           color: '#fff',
           iconColor: 'transparent',
-          
+
         });
       },
       error => {
@@ -236,4 +256,29 @@ export class AnimeComponent implements OnInit {
       }
     );
   }
+
+  marcarEpisodioComoVisto(idCapitulo: number, visto: boolean): void {
+    if (this.anime$) { // Verificar si anime$ está definido
+      this.animeService.marcarComoVisto(idCapitulo).subscribe(
+        () => {
+          // Actualizar el estado del checkbox
+          this.anime$?.pipe(
+            map(anime => anime?.capitulos.find((c: any) => c.id === idCapitulo))
+          )?.subscribe((capitulo: any) => {
+            if (capitulo) {
+              capitulo.visto = !visto; // Invertir el estado
+            }
+          });
+        },
+        error => {
+          console.error('Error al marcar episodio como visto', error);
+        }
+      );
+    } else {
+      console.error('Error: anime$ es undefined');
+    }
+  }
+
+
+
 }

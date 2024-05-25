@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Anime;
 use App\Models\BibliotecaAnime;
+use App\Models\BibliotecaCapitulo;
+use App\Models\CapituloAnime;
 use Cassandra\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -209,6 +211,54 @@ class MisListasController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener el estado favorito del anime',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function marcarepisodiocomovisto($id_capitulo)
+    {
+        $userId = auth()->id();
+
+        $biblioteca = BibliotecaCapitulo::where('capitulo_id', $id_capitulo)
+            ->where('usuario_id', $userId)
+            ->first();
+
+        if (!$biblioteca) {
+            $biblioteca = new BibliotecaCapitulo();
+            $biblioteca->capitulo_id = $id_capitulo;
+            $biblioteca->usuario_id = $userId;
+            $biblioteca->visto = true;
+        } else {
+            if ($biblioteca->visto) {
+                $biblioteca->visto = false;
+            } else {
+                // Si no estaba marcado como visto, cambiarlo a "visto"
+                $biblioteca->visto = true;
+            }
+        }
+        $biblioteca->save();
+
+        return response()->json(['message' => 'Estado del episodio actualizado con éxito']);
+    }
+
+
+    public function capitulosvistos($id_capitulo)
+    {
+        try {
+            $userId = auth()->id();
+
+            // Verificar si el capítulo dado está marcado como visto para el usuario actual
+            $esVisto = BibliotecaCapitulo::where('usuario_id', $userId)
+                ->where('visto', true)
+                ->where('capitulo_id', $id_capitulo)
+                ->exists();
+
+            return response()->json(['visto' => $esVisto], 200);
+        } catch (Exception $e) {
+            // Manejar errores y devolver una respuesta de error
+            return response()->json([
+                'message' => 'Error al obtener el estado de visto del capítulo',
                 'error' => $e->getMessage()
             ], 500);
         }

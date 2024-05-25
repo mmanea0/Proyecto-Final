@@ -71,6 +71,34 @@ export class AnimeService {
     return new Observable<any>();
   }
 
+  GetUnEpisodioVisto($id_capitulo: number): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.get<any>(`${this.base}/capitulosvisto/${$id_capitulo}`, { headers });
+      }
+    }
+    return new Observable<any>();
+  }
+
+  marcarComoVisto($id_capitulo: number): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.post<any>(`${this.base}/marcarvisto/${$id_capitulo}`, {}, { headers });
+      }
+    }
+    return throwError('Token JWT no encontrado o sesión no iniciada');
+  }
+
+
+
 
 
   removeFavorito(animeId: number): Observable<any> {

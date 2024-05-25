@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('biblioteca_capitulos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usario_id')->constrained('users');
+            $table->foreignId('usuario_id')->constrained('users');
             $table->boolean('visto');
             $table->foreignId('capitulo_id')->constrained('capitulos_animes');
             $table->timestamps();

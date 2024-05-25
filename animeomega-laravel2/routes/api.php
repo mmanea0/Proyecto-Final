@@ -51,7 +51,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/agregarcompleado/{id_anime}',[MisListasController::class, 'agregarcompleado']);
     Route::post('/agregarabandonado/{id_anime}',[MisListasController::class, 'agregarabandonado']);
     Route::get('/biblioteca', [MisListasController::class, 'animesdelusuario']);
-
+    Route::post('/marcarvisto/{id_capitulo}',[MisListasController::class, 'marcarepisodiocomovisto']);
+    Route::get('/capitulosvisto/{id_capitulo}',[MisListasController::class, 'capitulosvistos']);
 });
 
 
