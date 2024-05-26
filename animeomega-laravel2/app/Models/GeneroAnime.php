@@ -10,4 +10,14 @@ class GeneroAnime extends Model
     use HasFactory;
     protected $table = 'genero_anime';
     protected $fillable = ['anime_id', 'genero_id'];
+
+    public function animes()
+    {
+        return $this->belongsToMany(Anime::class, 'animes', 'anime_id', 'genero_id');
+    }
+
+    public function generos()
+    {
+        return $this->belongsToMany(Genero::class, 'generos', 'anime_id', 'genero_id');
+    }
 }

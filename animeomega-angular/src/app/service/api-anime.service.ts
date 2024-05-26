@@ -17,6 +17,11 @@ export class ApiAnimeService {
 
 
   searchAnime(query: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.base}/api-search?query=${query}`);
+    return this.httpClient.post<any>(`${this.base}/api-search`, { query });
+  }
+
+
+  saveAnime(animeData: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.base}/save-anime`, animeData);
   }
 }

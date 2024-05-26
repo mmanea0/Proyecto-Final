@@ -30,8 +30,8 @@ Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);
 Route::get('/ultimosanimes', [AnimesController::class, 'ultimosanimesañadidos']);
 
-Route::get('/api-search', [ApiAnimeController::class, 'search']);
-
+Route::post('/api-search', [ApiAnimeController::class, 'search']);
+Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
 
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {

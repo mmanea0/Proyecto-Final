@@ -15,8 +15,7 @@ protected $table = 'animes';
 
     public function generos()
     {
-        return $this->belongsToMany(Genero::class, 'generos_animes', 'anime_id', 'genero_id');
-    }
+        return $this->belongsToMany(Genero::class, 'generos_animes', 'anime_id', 'genero_id');    }
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
