@@ -1,0 +1,4 @@
+.tab-content {
+  height: 75vh; /* Fijar la altura al 70% del viewport height */
+  overflow-y: auto; /* Permitir el scroll vertical si el contenido excede la altura */
+}

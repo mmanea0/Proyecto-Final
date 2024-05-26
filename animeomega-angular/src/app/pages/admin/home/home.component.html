@@ -1,12 +1,18 @@
 <div role="tablist" class="tabs tabs-lifted">
 
-  <input type="radio" name="my_tabs_2" id="estadisticas-tab" role="tab" class="tab text-xl checked:text-white" aria-label="Estadisticas" checked routerLink="./estadisticas" (click)="saveActiveTab('estadisticas-tab')"/>
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6"> <app-estadisticas></app-estadisticas></div>
+  <input type="radio" name="my_tabs_2" id="estadisticas-tab" role="tab" class="tab text-xl checked:text-white min-w-[200px]" aria-label="Estadisticas" checked routerLink="./estadisticas" (click)="saveActiveTab('estadisticas-tab')"/>
+  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6 overflow-auto h-screen">
+    <app-estadisticas></app-estadisticas>
+  </div>
 
-  <input type="radio" name="my_tabs_2" id="gestion-anime-tab" role="tab" class="tab text-xl checked:text-white" aria-label="Gestion Anime" routerLink="./gestionAnime" (click)="saveActiveTab('gestion-anime-tab')"/>
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6"> <app-gestion-animes></app-gestion-animes>   </div>
+  <input type="radio" name="my_tabs_2" id="gestion-anime-tab" role="tab" class="tab text-xl checked:text-white min-w-[200px]" aria-label="Gestion Anime" routerLink="./gestionAnime" (click)="saveActiveTab('gestion-anime-tab')"/>
+  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6 overflow-auto h-screen">
+    <app-gestion-animes></app-gestion-animes>
+  </div>
 
-  <input type="radio" name="my_tabs_2" id="gestion-usuario-tab" role="tab" class="tab text-xl checked:text-white" aria-label="Gestion Usuario"  routerLink="./gestionUsuario" (click)="saveActiveTab('gestion-usuario-tab')"/>
-  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6 " > <app-gestion-usuarios></app-gestion-usuarios>  </div>
+  <input type="radio" name="my_tabs_2" id="gestion-usuario-tab" role="tab" class="tab text-xl checked:text-white min-w-[200px]" aria-label="Gestion Usuario" routerLink="./gestionUsuario" (click)="saveActiveTab('gestion-usuario-tab')"/>
+  <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6 overflow-auto h-screen">
+    <app-gestion-usuarios></app-gestion-usuarios>
+  </div>
 
 </div>
