@@ -15,6 +15,7 @@ import { AdminGuard } from './auth/guards/admin.guard';
 import {ResultadoBusquedaComponent} from "./pages/resultado-busqueda/resultado-busqueda.component";
 import {authGuard} from "./auth/guards/auth.guard";
 import {HomeAdminComponent} from "./pages/admin/home/home.component";
+import {UnauthorizedComponent} from "./errors/unauthorized/unauthorized.component";
 
 export const routes: Routes = [
   {path: '', component:HomeComponent, pathMatch: 'full'},
@@ -30,7 +31,7 @@ export const routes: Routes = [
   {path: 'resultado',component : ResultadoBusquedaComponent,title: 'Resultado de la busqueda'},
   {path:'login-callback',component:LoginCallbackComponent},
   {path:'admin',component:HomeAdminComponent,canActivate: [AdminGuard]},
-
+  {path: 'unauthorized',component: UnauthorizedComponent},
   { path: '**', component: NotFoundComponent},
 
 
