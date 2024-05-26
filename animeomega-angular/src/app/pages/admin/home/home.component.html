@@ -1,0 +1,13 @@
+<div>
+  <input [(ngModel)]="query" placeholder="Search for anime" />
+  <button (click)="search()">Search</button>
+</div>
+
+<div *ngIf="results">
+  <ul>
+    <li *ngFor="let anime of results">
+      <img [src]="anime.main_picture.medium" alt="{{ anime.title }}" />
+      <span>{{ anime.title }}</span>
+    </li>
+  </ul>
+</div>

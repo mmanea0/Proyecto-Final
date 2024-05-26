@@ -13,7 +13,8 @@ import {AnimeComponent} from "./pages/anime/anime.component";
 import {VerCapituloComponent} from "./pages/ver-capitulo/ver-capitulo.component";
 import { AdminGuard } from './auth/guards/admin.guard';
 import {ResultadoBusquedaComponent} from "./pages/resultado-busqueda/resultado-busqueda.component";
-import {authGuard} from "./auth/guards/auth.guard"; // Importa la guarda de ruta AuthGuard
+import {authGuard} from "./auth/guards/auth.guard";
+import {HomeAdminComponent} from "./pages/admin/home/home.component";
 
 export const routes: Routes = [
   {path: '', component:HomeComponent, pathMatch: 'full'},
@@ -28,6 +29,8 @@ export const routes: Routes = [
   {path: 'anime/:animeId/capitulo/:capituloId', component: VerCapituloComponent, title: 'Capitulos'},
   {path: 'resultado',component : ResultadoBusquedaComponent,title: 'Resultado de la busqueda'},
   {path:'login-callback',component:LoginCallbackComponent},
+  {path:'admin',component:HomeAdminComponent,canActivate: [AdminGuard]},
+
   { path: '**', component: NotFoundComponent},
 
 

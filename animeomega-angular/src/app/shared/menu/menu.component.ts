@@ -31,7 +31,7 @@ export class MenuComponent implements OnInit{
   ];
   ICONO_DISCORD: SafeHtml;
   montarinfouser = false;
-
+  isAdmin = false;
 
   userRoles$: Observable<string[]> | undefined;
 
@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit{
     this.mostrarinfmoracion();
     this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
     this.verificarAutenticacion();
-
+    this.checkAdminRole();
   }
 
   constructor(
@@ -150,4 +150,10 @@ export class MenuComponent implements OnInit{
     });
 
   }
+  checkAdminRole() {
+    this.autenticacionService.getRoles().subscribe(roles => {
+      this.isAdmin = roles.includes('Administrador');
+    });
+  }
+
 }
