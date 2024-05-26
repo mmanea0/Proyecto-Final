@@ -35,6 +35,7 @@ class AuthController extends Controller
         if (!$user) {
             $user = new User();
         }
+
         // Extraer los campos que deseas guardar
         $user->name = $discordUser->name;
         $user->email = $discordUser->email;
@@ -43,27 +44,29 @@ class AuthController extends Controller
         $user->avatar = $discordUser->avatar;
         $user->save();
 
+        // Verificar si el usuario ya tiene el rol asignado
         $roleUser = Role::where('id', 1)->first();
-        // Asignar el rol al usuario
         if ($roleUser) {
-            // Asignar el rol al usuario
-            $user->roles()->attach($roleUser);
+            // Solo asignar el rol si el usuario no lo tiene
+            if (!$user->roles->contains($roleUser)) {
+                $user->roles()->attach($roleUser);
+            }
         } else {
             throw new \Exception('El rol ROLE_USER no existe en la base de datos.');
         }
-        // Autentica al usuario de Laravel
+
+        // Autenticar al usuario de Laravel
         Auth::login($user);
 
-        // Crea el token de acceso personal para el usuario autenticado
-        // Crea el token de acceso personal para el usuario autenticado
+        // Crear el token de acceso personal para el usuario autenticado
         $token = $user->createToken('token-name')->accessToken;
         $nickname = $user->nickname;
         $avatar = $user->avatar; // Suponiendo que $user->avatar contiene la URL del avatar
-        $rol = $user->roleNames()[0]; // Asigna el único rol del usuario
+        $rol = $user->roles->first()->name; // Obtener el nombre del primer rol del usuario
+
         return redirect()->to('http://localhost:4200/login-callback/?access_token='.$token.'&nickname='.$nickname.'&avatar='.$avatar.'&rol='.$rol);
-
-
     }
+
 
     public function register(Request $request)
     {

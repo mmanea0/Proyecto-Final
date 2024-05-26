@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimesController;
+use App\Http\Controllers\ApiAnimeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MisListasController;
@@ -29,7 +30,7 @@ Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);
 Route::get('/ultimosanimes', [AnimesController::class, 'ultimosanimesañadidos']);
 
-
+Route::get('/api-search', [ApiAnimeController::class, 'search']);
 
 
 // Otras rutas protegidas por autenticación
@@ -53,7 +54,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/biblioteca', [MisListasController::class, 'animesdelusuario']);
     Route::post('/marcarvisto/{id_capitulo}',[MisListasController::class, 'marcarepisodiocomovisto']);
     Route::get('/capitulosvisto/{id_capitulo}',[MisListasController::class, 'capitulosvistos']);
+
+
 });
+
 
 
 
