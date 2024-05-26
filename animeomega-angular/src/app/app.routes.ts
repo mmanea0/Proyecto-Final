@@ -16,6 +16,9 @@ import {ResultadoBusquedaComponent} from "./pages/resultado-busqueda/resultado-b
 import {authGuard} from "./auth/guards/auth.guard";
 import {HomeAdminComponent} from "./pages/admin/home/home.component";
 import {UnauthorizedComponent} from "./errors/unauthorized/unauthorized.component";
+import {EstadisticasComponent} from "./pages/admin/estadisticas/estadisticas.component";
+import {GestionAnimesComponent} from "./pages/admin/gestion-animes/gestion-animes.component";
+import {GestionUsuariosComponent} from "./pages/admin/gestion-usuarios/gestion-usuarios.component";
 
 export const routes: Routes = [
   {path: '', component:HomeComponent, pathMatch: 'full'},
@@ -30,7 +33,20 @@ export const routes: Routes = [
   {path: 'anime/:animeId/capitulo/:capituloId', component: VerCapituloComponent, title: 'Capitulos'},
   {path: 'resultado',component : ResultadoBusquedaComponent,title: 'Resultado de la busqueda'},
   {path:'login-callback',component:LoginCallbackComponent},
-  {path:'admin',component:HomeAdminComponent,canActivate: [AdminGuard]},
+
+  {
+    path: 'admin',
+    component: HomeAdminComponent,
+    canActivate: [AdminGuard],
+    children: [
+      { path: '', redirectTo: 'estadisticas', pathMatch: 'full' },
+      { path: 'estadisticas', component: EstadisticasComponent },
+      { path: 'gestionAnime', component: GestionAnimesComponent },
+      { path: 'gestionUsuario', component: GestionUsuariosComponent },
+    ]
+  },
+
+
   {path: 'unauthorized',component: UnauthorizedComponent},
   { path: '**', component: NotFoundComponent},
 
