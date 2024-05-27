@@ -122,7 +122,7 @@ class ApiAnimeController extends Controller
         $anime->sipnosis = !empty($animeData['description']) ? strip_tags($animeData['description']) : 'vacio';
         $anime->fecha_de_estreno = $animeData['startDate']['year'] . '-' . $animeData['startDate']['month'] . '-' . $animeData['startDate']['day'];
         $anime->estudio_de_animacion = !empty($animeData['studios']['nodes']) ? implode(', ', array_column($animeData['studios']['nodes'], 'name')) : 'vacio';
-        $anime->capitulos_totales = !empty($animeData['episodes']) ? $animeData['episodes'] : 'vacio';
+        $anime->capitulos_totales = !empty($animeData['episodes']) ? $animeData['episodes'] : 0;
         $anime->valoracion = !empty($animeData['averageScore']) ? $animeData['averageScore'] : 0;
         $anime->categoria_id = $categoria->id;
         $anime->estado_id = $estado->id;
