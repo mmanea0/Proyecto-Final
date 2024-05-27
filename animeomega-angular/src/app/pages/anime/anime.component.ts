@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AnimeService} from "../../service/anime.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {map, Observable, of} from "rxjs";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import Swal from 'sweetalert2';
 import {FormsModule} from "@angular/forms";
 import {TruncatePipe} from "../../pipe/limte.pipe";
@@ -11,12 +11,10 @@ import {TruncatePipe} from "../../pipe/limte.pipe";
   selector: 'app-anime',
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
-    NgForOf,
     FormsModule,
     TruncatePipe
-  ],
+],
   templateUrl: './anime.component.html',
   styleUrl: './anime.component.css'
 })

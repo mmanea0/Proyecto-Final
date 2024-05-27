@@ -1,6 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {NgClass, NgIf} from "@angular/common";
+import { NgClass } from "@angular/common";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {MenuComponent} from "../menu/menu.component";
 import {LoginComponent} from "../login/login.component";
@@ -10,13 +10,12 @@ import {AnimeService} from "../../service/anime.service";
   selector: 'app-barra-lateral',
   standalone: true,
   imports: [
-    NgIf,
     RouterLink,
     MenuComponent,
     RouterOutlet,
     NgClass,
     LoginComponent
-  ],
+],
   templateUrl: './barra-lateral.component.html',
   styleUrl: './barra-lateral.component.css'
 })

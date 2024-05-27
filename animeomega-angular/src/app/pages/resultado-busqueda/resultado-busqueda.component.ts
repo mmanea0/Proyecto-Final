@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
-import {NgForOf, NgIf} from "@angular/common";
+
 
 @Component({
   selector: 'app-resultado-busqueda',
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf
-  ],
+  imports: [],
   templateUrl: './resultado-busqueda.component.html',
   styleUrl: './resultado-busqueda.component.css'
 })

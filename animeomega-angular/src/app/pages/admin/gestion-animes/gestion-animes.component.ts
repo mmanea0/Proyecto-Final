@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {KeyValuePipe, NgForOf, NgIf} from "@angular/common";
+import { KeyValuePipe } from "@angular/common";
 import {ApiAnimeService} from "../../../service/api-anime.service";
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from "rxjs";
 
@@ -9,10 +9,8 @@ import {debounceTime, distinctUntilChanged, Subject, switchMap} from "rxjs";
   standalone: true,
   imports: [
     FormsModule,
-    NgForOf,
-    NgIf,
     KeyValuePipe
-  ],
+],
   templateUrl: './gestion-animes.component.html',
   styleUrl: './gestion-animes.component.css'
 })

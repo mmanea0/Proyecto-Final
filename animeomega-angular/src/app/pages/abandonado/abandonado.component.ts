@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+
 import {AnimeService} from "../../service/anime.service";
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-abandonado',
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf
-  ],
+  imports: [],
   templateUrl: './abandonado.component.html',
   styleUrl: './abandonado.component.css'
 })

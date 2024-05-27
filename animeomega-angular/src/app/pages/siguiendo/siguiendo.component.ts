@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuComponent} from "../../shared/menu/menu.component";
 import {BarraLateralComponent} from "../../shared/barra-lateral/barra-lateral.component";
-import {NgForOf, NgIf} from "@angular/common";
+
 import {AnimeService} from "../../service/anime.service";
 import {Router} from "@angular/router";
 
@@ -10,10 +10,8 @@ import {Router} from "@angular/router";
   standalone: true,
   imports: [
     MenuComponent,
-    BarraLateralComponent,
-    NgIf,
-    NgForOf
-  ],
+    BarraLateralComponent
+],
   templateUrl: './siguiendo.component.html',
   styleUrl: './siguiendo.component.css'
 })

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AsyncPipe, NgForOf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {Observable, of} from "rxjs";
@@ -8,9 +8,8 @@ import {Observable, of} from "rxjs";
   selector: 'app-explorar',
   standalone: true,
     imports: [
-        AsyncPipe,
-        NgForOf
-    ],
+    AsyncPipe
+],
   templateUrl: './explorar.component.html',
   styleUrl: './explorar.component.css'
 })

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenuComponent} from "../../shared/menu/menu.component";
 import {BarraLateralComponent} from "../../shared/barra-lateral/barra-lateral.component";
 import {AnimeService} from "../../service/anime.service";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {map, Observable, of} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
@@ -13,10 +13,8 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
   imports: [
     MenuComponent,
     BarraLateralComponent,
-    AsyncPipe,
-    NgForOf,
-    NgIf
-  ],
+    AsyncPipe
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

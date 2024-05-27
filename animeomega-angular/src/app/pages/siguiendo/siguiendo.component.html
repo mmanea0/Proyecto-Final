@@ -1,34 +1,33 @@
-<div *ngIf="isLoading">
-  <div class="flex justify-center items-center h-screen">
-    <span class="loading loading-spinner text-warning loading-lg"></span>
-  </div>
-</div>
-
-<div *ngIf="!isLoading">
-
-
-  <div *ngIf="animes.length > 0; else noAnimes">
-
-    <div class="text-white text-2xl ml-10">ANIMES QUE SIGUES:</div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
-      <ng-container *ngFor="let anime of animes">
-        <a (click)="verAnime(anime)" class="flex flex-col items-center">
-          <div class="relative overflow-hidden w-40 h-64 rounded-xl cursor-pointer text-2xl font-bold bg-[#1a1e2b]">
-            <div class="w-full h-full items-center justify-center flex uppercase">
-              <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
-            </div>
-            <h2 class="text-center text-white mt-2">{{ anime.nombre_original }}</h2>
-          </div>
-        </a>
-      </ng-container>
+@if (isLoading) {
+  <div>
+    <div class="flex justify-center items-center h-screen">
+      <span class="loading loading-spinner text-warning loading-lg"></span>
     </div>
-
-
-
   </div>
-  <ng-template #noAnimes>
-    <div class="text-center">
-      <p>No tienes ningún anime en tu biblioteca.</p>
-    </div>
-  </ng-template>
-</div>
+}
+
+@if (!isLoading) {
+  <div>
+    @if (animes.length > 0) {
+      <div>
+        <div class="text-white text-2xl ml-10">ANIMES QUE SIGUES:</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
+          @for (anime of animes; track anime) {
+            <a (click)="verAnime(anime)" class="flex flex-col items-center">
+              <div class="relative overflow-hidden w-40 h-64 rounded-xl cursor-pointer text-2xl font-bold bg-[#1a1e2b]">
+                <div class="w-full h-full items-center justify-center flex uppercase">
+                  <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
+                </div>
+                <h2 class="text-center text-white mt-2">{{ anime.nombre_original }}</h2>
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="text-center">
+        <p>No tienes ningún anime en tu biblioteca.</p>
+      </div>
+    }
+  </div>
+}

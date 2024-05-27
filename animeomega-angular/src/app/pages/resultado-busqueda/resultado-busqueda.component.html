@@ -1,10 +1,16 @@
-<div *ngIf="resultados.length > 0">
-  <h2>Resultados de la búsqueda para "{{ terminoBusqueda }}"</h2>
-  <div *ngFor="let resultado of resultados">
-    <!-- Aquí muestra cada resultado de la búsqueda según tu diseño -->
-    <p>{{ resultado.nombre }}</p>
+@if (resultados.length > 0) {
+  <div>
+    <h2>Resultados de la búsqueda para "{{ terminoBusqueda }}"</h2>
+    @for (resultado of resultados; track resultado) {
+      <div>
+        <!-- Aquí muestra cada resultado de la búsqueda según tu diseño -->
+        <p>{{ resultado.nombre }}</p>
+      </div>
+    }
   </div>
-</div>
-<div *ngIf="resultados.length === 0">
-  <p>No se encontraron resultados para "{{ terminoBusqueda }}"</p>
-</div>
+}
+@if (resultados.length === 0) {
+  <div>
+    <p>No se encontraron resultados para "{{ terminoBusqueda }}"</p>
+  </div>
+}

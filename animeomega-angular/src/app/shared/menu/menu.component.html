@@ -9,29 +9,30 @@
     </a>
 
 
-    <button *ngIf="isAdmin" routerLink="/admin"
-      class="ml-28 group w-12 hover:w-60 h-12 hover:bg-sky-600 relative bg-sky-700 rounded text-neutral-50 duration-700 font-bold flex justify-start gap-2 items-center p-2 pr-6">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-settings w-8 h-8 shrink-0"
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="#ffffff"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-        <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
-        <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-      </svg>
-
-      <span
-        class="origin-left inline-flex duration-100 group-hover:duration-300 group-hover:delay-500 opacity-0 group-hover:opacity-100 border-l-2 px-1 transform scale-x-0 group-hover:scale-x-100 transition-all"
-      >ADMINISTRADOR</span>
-    </button>
+    @if (isAdmin) {
+      <button routerLink="/admin"
+        class="ml-28 group w-12 hover:w-60 h-12 hover:bg-sky-600 relative bg-sky-700 rounded text-neutral-50 duration-700 font-bold flex justify-start gap-2 items-center p-2 pr-6">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-settings w-8 h-8 shrink-0"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#ffffff"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+          <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+        </svg>
+        <span
+          class="origin-left inline-flex duration-100 group-hover:duration-300 group-hover:delay-500 opacity-0 group-hover:opacity-100 border-l-2 px-1 transform scale-x-0 group-hover:scale-x-100 transition-all"
+        >ADMINISTRADOR</span>
+      </button>
+    }
 
 
 
@@ -50,16 +51,20 @@
       </button>
     </form>
 
-    <div class="absolute z-20 bg-red-400 rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80 mt-56" *ngIf="terminoBusqueda && resultadosBusqueda.length > 0">
-      <ul>
-        <li *ngFor="let anime of resultadosBusqueda.slice()" class="px-4 py-2 hover:bg-gray-100">
-          <a href="#" (click)="seleccionarAnime(anime)" class="flex">
-            <img src="{{ anime.foto}}" alt="" width="40px" height="50px">
-            {{ anime.nombre_original }}
-          </a>
-        </li>
-      </ul>
-    </div>
+    @if (terminoBusqueda && resultadosBusqueda.length > 0) {
+      <div class="absolute z-20 bg-red-400 rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80 mt-56">
+        <ul>
+          @for (anime of resultadosBusqueda.slice(); track anime) {
+            <li class="px-4 py-2 hover:bg-gray-100">
+              <a href="#" (click)="seleccionarAnime(anime)" class="flex">
+                <img src="{{ anime.foto}}" alt="" width="40px" height="50px">
+                {{ anime.nombre_original }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </div>
 
   <div class="navbar-end">
@@ -74,32 +79,34 @@
     </button>
 
 
-    <button *ngIf="!montarinfouser" data-v-0fc51e59="" class="cut-text flex h-10 items-center gap-1 rounded px-2 text-lg font-bold ocultar"
-            style="background: linear-gradient(121deg, rgb(88, 101, 242) 0%, rgb(64, 78, 237) 100%);">
-      <i [innerHTML]="ICONO_DISCORD"></i> <a href="http://localhost/api/logindiscord"> INICIO DISCORD</a>
-    </button>
+    @if (!montarinfouser) {
+      <button data-v-0fc51e59="" class="cut-text flex h-10 items-center gap-1 rounded px-2 text-lg font-bold ocultar"
+        style="background: linear-gradient(121deg, rgb(88, 101, 242) 0%, rgb(64, 78, 237) 100%);">
+        <i [innerHTML]="ICONO_DISCORD"></i> <a href="http://localhost/api/logindiscord"> INICIO DISCORD</a>
+      </button>
+    }
 
-    <div *ngIf="montarinfouser" class="ocultar">
-
-    <div class="dropdown dropdown-end pr-5">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full border-[2.5px] border-white ">
-          <img alt="" [src]="(datosUsuario$ | async)?.avatar" />
+    @if (montarinfouser) {
+      <div class="ocultar">
+        <div class="dropdown dropdown-end pr-5">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full border-[2.5px] border-white ">
+              <img alt="" [src]="(datosUsuario$ | async)?.avatar" />
+            </div>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-[#1B2636] rounded-box w-52">
+            <li>
+              <a class="justify-between">
+                Profile
+                <span class="badge">New</span>
+              </a>
+            </li>
+            <li><a>Settings</a></li>
+            <li (click)="logout()"><a>Logout</a></li>
+          </ul>
         </div>
       </div>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-[#1B2636] rounded-box w-52">
-        <li>
-
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
-          </a>
-        </li>
-        <li><a>Settings</a></li>
-        <li (click)="logout()"><a>Logout</a></li>
-      </ul>
-    </div>
-    </div>
+    }
   </div>
 
 </div>

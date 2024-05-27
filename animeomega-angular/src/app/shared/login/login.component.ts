@@ -4,16 +4,15 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { FormsModule } from "@angular/forms";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { AsyncPipe, NgIf } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
-    NgIf,
     AsyncPipe
-  ],
+],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

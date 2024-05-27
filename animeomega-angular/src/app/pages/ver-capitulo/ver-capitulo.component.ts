@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {combineLatest, map, Observable, of, switchMap, tap} from "rxjs";
 import {AnimeService} from "../../service/anime.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
@@ -10,10 +10,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
   standalone: true,
   imports: [
     AsyncPipe,
-    NgIf,
-    NgForOf,
     RouterLink
-  ],
+],
   templateUrl: './ver-capitulo.component.html',
   styleUrl: './ver-capitulo.component.css'
 })

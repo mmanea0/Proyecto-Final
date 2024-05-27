@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiAnimeService} from "../../../service/api-anime.service";
 import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+
 import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {EstadisticasComponent} from "../estadisticas/estadisticas.component";
 import {GestionAnimesComponent} from "../gestion-animes/gestion-animes.component";
@@ -12,14 +12,12 @@ import {GestionUsuariosComponent} from "../gestion-usuarios/gestion-usuarios.com
   standalone: true,
   imports: [
     FormsModule,
-    NgIf,
-    NgForOf,
     RouterLink,
     RouterOutlet,
     EstadisticasComponent,
     GestionAnimesComponent,
     GestionUsuariosComponent
-  ],
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

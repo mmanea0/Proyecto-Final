@@ -3,7 +3,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Router, RouterLink} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {FormsModule} from "@angular/forms";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {Anime} from "../../interfaces/anime";
 import {Observable} from "rxjs";
 import {AutenticacionService} from "../../auth/services/autenticacion.service";
@@ -14,10 +14,8 @@ import {AutenticacionService} from "../../auth/services/autenticacion.service";
   imports: [
     RouterLink,
     FormsModule,
-    NgForOf,
-    NgIf,
     AsyncPipe
-  ],
+],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })

@@ -2,17 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {Anime} from "../../interfaces/anime";
 import {AnimeService} from "../../service/anime.service";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-favorito',
   standalone: true,
   imports: [
-    NgIf,
-    NgForOf,
     AsyncPipe
-  ],
+],
   templateUrl: './favorito.component.html',
   styleUrl: './favorito.component.css'
 })
