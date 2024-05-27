@@ -16,4 +16,9 @@ class CapituloAnime extends Model
     {
         return $this->belongsTo(Anime::class, 'anime_id');
     }
+
+    public function enlaces()
+    {
+        return $this->hasMany(Enlace::class, 'capitulo_id');
+    }
 }

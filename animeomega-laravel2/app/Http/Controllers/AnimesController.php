@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anime;
+use App\Models\CapituloAnime;
 use App\Models\Enlace;
 use App\Models\Genero;
 use Illuminate\Http\Request;
@@ -142,35 +143,15 @@ class AnimesController extends Controller
         return response()->json($enlaces);
     }
 
-    public function ultimosanimesañadidos()
+    public function ultimosCapitulosanimesañadidos()
     {
-        // Obtener los últimos 10 animes añadidos
-        $animes = Anime::orderBy('created_at', 'desc')->take(5)->get();
+        $ultimosCapitulos = CapituloAnime::with(['anime', 'enlaces'])
+            ->orderBy('created_at', 'desc')
+            ->take(10) // Ajusta el número de capítulos a devolver según tus necesidades
+            ->get();
 
-        // Transformar los resultados
-        $animesTransformados = $animes->map(function ($anime) {
-            return [
-                'id' => $anime->id,
-                'nombre_original' => $anime->nombre_original,
-                'nombre_en' => $anime->nombre_en,
-                'nombre_original_sin_kanji' => $anime->nombre_original_sin_kanji,
-                'foto' => $anime->foto,
-                'banner' => $anime->banner,
-                'sipnosis' => $anime->sipnosis,
-                'fecha_de_estreno' => $anime->fecha_de_estreno,
-                'estudio_de_animacion' => $anime->estudio_de_animacion,
-                'capitulos_totales' => $anime->capitulos_totales,
-                'valoracion' => $anime->valoracion,
-                'categoria' => $anime->categoria->tipo,
-                'estado' => $anime->estado->estado,
-                'season' => $anime->season->apoca,
-            ];
-        });
-
-        return response()->json($animesTransformados);
-
+        return response()->json($ultimosCapitulos);
     }
-
 
 
 }
