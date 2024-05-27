@@ -35,8 +35,8 @@ Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
 
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
-    // Ruta para obtener el usuario autenticado
 
+    // Ruta para obtener el usuario autenticado
     Route::get('/user', function (Request $request) {
         return $request->user();
     });

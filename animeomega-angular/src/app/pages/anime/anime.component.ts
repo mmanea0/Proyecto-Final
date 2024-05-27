@@ -5,6 +5,7 @@ import {map, Observable, of} from "rxjs";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import Swal from 'sweetalert2';
 import {FormsModule} from "@angular/forms";
+import {TruncatePipe} from "../../pipe/limte.pipe";
 
 @Component({
   selector: 'app-anime',
@@ -13,7 +14,8 @@ import {FormsModule} from "@angular/forms";
     NgIf,
     AsyncPipe,
     NgForOf,
-    FormsModule
+    FormsModule,
+    TruncatePipe
   ],
   templateUrl: './anime.component.html',
   styleUrl: './anime.component.css'

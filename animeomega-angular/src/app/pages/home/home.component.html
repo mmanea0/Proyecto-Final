@@ -5,13 +5,13 @@
 </div>
 
 
-<div *ngIf="!isLoading">
+@if (!isLoading){
   <div class="carousel w-full relative">
     <div class="carousel-inner w-full flex">
       <ng-container *ngFor="let anime of animes$ | async; let i = index">
         <div id="item{{i + 1}}" class="carousel-item w-full" *ngIf="i === currentIndex">
           <div
-            class="absolute left-16 text-white text-center p-2 z-10 text-[2.5rem] nombre sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]">{{ anime.nombre_original }}
+            class="absolute left-16 text-white text-center p-2 z-10 text-[2.5rem] nombre sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]">{{ anime.nombre_original_sin_kanji }}
           </div>
 
           <button (click)="verAnime(anime)"
@@ -80,6 +80,4 @@
       </ng-container>
     </div>
   </div>
-
-
-</div>
+}
