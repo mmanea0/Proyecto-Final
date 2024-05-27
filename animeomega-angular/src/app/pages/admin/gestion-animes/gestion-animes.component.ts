@@ -16,6 +16,7 @@ import {debounceTime, distinctUntilChanged, Subject, switchMap} from "rxjs";
 })
 export class GestionAnimesComponent {
   query: string = '';
+  prevQuery: string = '';
   results: any[] = [];
   loading: boolean = false;
   private searchSubject = new Subject<string>();
@@ -33,6 +34,7 @@ export class GestionAnimesComponent {
         data => {
           this.loading = false;
           this.results = data;
+          this.prevQuery = this.query;
         },
         error => {
           this.loading = false;

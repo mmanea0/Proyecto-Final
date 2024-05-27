@@ -16,6 +16,7 @@
   <div>
     <div class="flex items-center justify-between">
       <h2 class="text-4xl ml-20">{{ data.anime.nombre_original_sin_kanji }}</h2>
+
       <div (click)="verAnime(data.anime.id)" [innerHTML]="ICONO_ANIME" class="cursor-pointer mr-10 bg-[#0f131b] p-1 px-10 rounded-xl"></div>
     </div>
     @for (enlace of data.enlaces; track enlace) {

@@ -1,0 +1,38 @@
+
+
+
+<div class="mt-10">
+  <div class="text-white text-2xl ml-10">NUEVOS CAPÍTULOS</div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
+    <ng-container *ngIf="animes$ | async as animes">
+      <ng-container *ngFor="let capitulo of animes">
+        <a (click)="verCapituloAnime(capitulo.anime, capitulo.id)">
+          <div class="relative overflow-hidden w-60 h-80 rounded-3xl cursor-pointer text-2xl font-bold bg-[#1a1e2b]">
+            <div class="z-10 absolute w-full h-full peer"></div>
+            <div
+              class="absolute peer-hover:-top-20 peer-hover:-left-16 peer-hover:w-[140%] peer-hover:h-[140%] -top-60 -left-16 w-32 h-44 rounded-full bg-transparent backdrop-blur-md transition-all duration-500"></div>
+            <div
+              class="absolute flex items-center justify-center peer-hover:right-0 peer-hover:bottom-0 peer-hover:items-center peer-hover:justify-center peer-hover:w-full peer-hover:h-full -bottom-[40rem] -right-16 w-36 h-44 bg-transparent backdrop-blur-md transition-all duration-500 rounded-none peer-hover:rounded-b-none"
+              style="pointer-events: auto;">
+              <div class="overflow-y-auto max-h-full ml-4">
+                {{ getShortSynopsis(capitulo.anime.sipnosis) }}
+              </div>
+            </div>
+            <div class="w-full h-full items-center justify-center flex uppercase">
+              <img src="{{ capitulo.anime.foto }}" alt="{{ capitulo.anime.nombre_original }}"
+                   class="rounded-xl w-full h-full object-cover">
+            </div>
+            <h2 class="text-center text-white">{{ capitulo.anime.nombre_original }}</h2>
+            <p class="text-center text-white">Capítulo: {{ capitulo.numero_capitulo }}</p>
+            <div class="text-center">
+              <a *ngFor="let enlace of capitulo.enlaces" [href]="enlace.url" target="_blank" class="text-blue-400 underline">
+                Ver
+              </a>
+            </div>
+          </div>
+        </a>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+

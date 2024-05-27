@@ -195,7 +195,7 @@ export class AnimeService {
 
   //mostrar ultimos añadidos
   getultimos(): Observable<any> {
-    const $anime = this.httpClient.get<Anime[]>(`${this.base}/ultimosanimes`);
+    const $anime = this.httpClient.get<Anime[]>(`${this.base}/ultimoscapitulos`);
     return $anime;
 
   }

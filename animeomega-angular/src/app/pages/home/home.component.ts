@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {MenuComponent} from "../../shared/menu/menu.component";
 import {BarraLateralComponent} from "../../shared/barra-lateral/barra-lateral.component";
 import {AnimeService} from "../../service/anime.service";
-import { AsyncPipe } from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {map, Observable, of} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {UltimosagregadosComponent} from "../../componentes/ultimosagregados/ultimosagregados.component";
 
 @Component({
   selector: 'app-home',
@@ -13,8 +14,11 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
   imports: [
     MenuComponent,
     BarraLateralComponent,
-    AsyncPipe
-],
+    AsyncPipe,
+    NgIf,
+    NgForOf,
+    UltimosagregadosComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

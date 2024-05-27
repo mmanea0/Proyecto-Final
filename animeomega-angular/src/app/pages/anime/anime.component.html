@@ -94,6 +94,8 @@
                       </div>
                     </div>
                   }
+
+
                   <div class="flex justify-center -mt-20 ml-10">
                     <ul class="w-full md:w-1/2">
                       @for (capitulo of anime.capitulos; track capitulo) {
@@ -110,11 +112,13 @@
                           </a>
                           @if (sesionIniciada) {
                             <div class="flex items-center ml-auto">
-                              @if (capituloVisto !== undefined) {
+                              @if (capitulo.visto !== null) {
                                 <input type="checkbox"
-                                  class="toggle toggle-accent"
-                                  [(ngModel)]="capituloVisto"
-                                  (change)="marcarEpisodioComoVisto(capitulo.id, capituloVisto)"/>
+                                       class="toggle toggle-accent"
+                                       [(ngModel)]="capitulo.visto"
+                                       (change)="marcarEpisodioComoVisto(capitulo.id, capitulo.visto)"
+
+                                />
                               }
                             </div>
                           }
