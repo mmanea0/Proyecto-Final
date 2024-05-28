@@ -1,45 +1,4 @@
-<label class="input input-bordered flex items-center gap-2 max-w-60">
-  <input
-    type="text"
-    class="grow"
-    [(ngModel)]="query"
-    placeholder="Buscar anime"
-    (input)="search()"
-    />
-    </label>
 
+  <app-modaladdanime ></app-modaladdanime>
 
-<div class="mt-20">
-    @if (loading) {
-      <div class="flex items-center mt-2">
-        <p class="mr-2">Buscando</p>
-        <span class="loading loading-spinner text-primary"></span>
-      </div>
-    } @else {
-      @if (results && results.length > 0) {
-        <div>
-          <div class="anime-list">
-            @for (anime of results; track anime) {
-                <div class="card card-compact w-96 bg-white shadow-xl mb-5 mt-10">
-                  <figure class="px-10 pt-10" ><img [src]="anime.coverImage.large" alt="{{ anime.title.romaji }}"></figure>
-                  <div class="card-body">
-                    <h2 class="card-title text-black">{{ anime.title.romaji }}</h2>
-                    <p class="text-black" >{{ anime.description }}</p>
-                    <div class="card-actions justify-end">
-                      <button class="btn btn-primary " (click)="selectAnime(anime)">Añadir</button>
-                    </div>
-                  </div>
-                </div>
-            }
-          </div>
-        </div>
-      }
-      @if (results && results.length < 3) {
-        <div>
-          <p>Busca algo con al menos 3 caracteres</p>
-        </div>
-      }
-    }
-
-</div>
-
+<app-tablaanime></app-tablaanime>

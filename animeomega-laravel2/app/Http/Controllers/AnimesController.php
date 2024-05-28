@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anime;
+use App\Models\Aviso;
+use App\Models\BibliotecaAnime;
+use App\Models\BibliotecaCapitulo;
 use App\Models\CapituloAnime;
 use App\Models\Enlace;
 use App\Models\Genero;
+use App\Models\GeneroAnime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class AnimesController extends Controller
@@ -151,6 +156,109 @@ class AnimesController extends Controller
             ->get();
 
         return response()->json($ultimosCapitulos);
+    }
+
+
+    public function addCapituloAnime(Request $request, $idanime)
+    {
+        // Validar los datos del request
+        $validated = $request->validate([
+            'numero_capitulo' => 'required|integer',
+            'sipnosis' => 'nullable|string',
+            'duracion' => 'nullable|string',
+            'enlaces' => 'required|array',
+            'enlaces.*.url' => 'required|url'
+        ]);
+
+        // Verificar si el anime existe
+        $anime = Anime::find($idanime);
+        if (!$anime) {
+            return response()->json(['error' => 'Anime not found'], 404);
+        }
+
+        // Establecer valores predeterminados si no se proporcionan
+        $sipnosis = $validated['sipnosis'] ?? 'vacio';
+        $duracion = $validated['duracion'] ?? '0';
+
+        // Verificar si el capítulo ya existe
+        $capitulo = CapituloAnime::where('anime_id', $idanime)
+            ->where('numero_capitulo', $validated['numero_capitulo'])
+            ->first();
+
+        if (!$capitulo) {
+            // Crear un nuevo capítulo si no existe
+            $capitulo = new CapituloAnime([
+                'anime_id' => $idanime,
+                'numero_capitulo' => $validated['numero_capitulo'],
+                'sipnosis' => $sipnosis,
+                'duracion' => $duracion
+            ]);
+            // Guardar el capítulo
+            $anime->capitulos()->save($capitulo);
+        } else {
+            // Actualizar el capítulo existente
+            $capitulo->update([
+                'sipnosis' => $sipnosis,
+                'duracion' => $duracion
+            ]);
+        }
+
+        // Actualizar o crear el enlace para el capítulo
+        foreach ($validated['enlaces'] as $enlaceData) {
+            $enlace = Enlace::updateOrCreate(
+                ['capitulo_id' => $capitulo->id],
+                ['url' => $enlaceData['url']]
+            );
+        }
+
+        // Responder con los datos del capítulo y el enlace creado o actualizado
+        return response()->json([
+            'message' => 'Capítulo y enlace añadido o actualizado correctamente',
+            'capitulo' => $capitulo,
+            'enlaces' => $capitulo->enlaces
+        ], 201);
+    }
+
+    public function deleteanime($idanime)
+    {
+        try {
+            // Desactivar restricciones de clave externa temporalmente
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+            // 1. Eliminar registros en la tabla genero_anime donde aparezca el anime
+            GeneroAnime::where('anime_id', $idanime)->delete();
+
+            // 2. Eliminar los registros en la tabla biblioteca_capitulos que hacen referencia a los capítulos del anime
+            BibliotecaCapitulo::whereIn('capitulo_id', function ($query) use ($idanime) {
+                $query->select('id')->from('capitulos_animes')->where('anime_id', $idanime);
+            })->delete();
+
+            // 3. Borrar todos los capítulos del anime de la tabla capitulos_animes
+            CapituloAnime::where('anime_id', $idanime)->delete();
+
+            // 4. Eliminar los capítulos relacionados con las tablas enlace y biblioteca_capitulos
+            Enlace::whereIn('capitulo_id', function ($query) use ($idanime) {
+                $query->select('id')->from('capitulos_animes')->where('anime_id', $idanime);
+            })->delete();
+
+            // 5. Eliminar cualquier registro en la tabla biblioteca_anime que tenga el ID del anime
+            BibliotecaAnime::where('id_anime', $idanime)->delete();
+
+            // 6. Borrar cualquier registro en la tabla avisos que tenga el ID del anime
+            Aviso::where('anime_id', $idanime)->delete();
+
+            // Restablecer restricciones de clave externa
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            // Finalmente, eliminar el anime
+            Anime::findOrFail($idanime)->delete();
+
+            return response()->json(['message' => 'Anime y registros relacionados eliminados con éxito']);
+        } catch (\Exception $e) {
+            // Restablecer restricciones de clave externa en caso de error
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
 

@@ -199,4 +199,34 @@ export class AnimeService {
     return $anime;
 
   }
+
+  addCapituloAnime(idAnime: number, capituloData: any): Observable<any> {
+    const $anime= this.httpClient.post<any>(`${this.base}/addcapituloanime/${idAnime}`, capituloData);
+    return $anime;
+  }
+
+  deleteAnime(idAnime: number): Observable<any> {
+
+    // Verificar si la sesión está iniciada
+    if (this.isSesionIniciada()) {
+      // Obtener el token JWT del almacenamiento local
+      const jwtToken = localStorage.getItem('jwtToken');
+      // Verificar si se encontró un token JWT
+      if (jwtToken) {
+        // Construir las cabeceras de la solicitud con el token JWT
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        // Realizar la solicitud HTTP con las cabeceras
+        return this.httpClient.post<any>(`${this.base}/quitaranime/${idAnime}`, {}, { headers });
+      } else {
+        // Manejar el caso de token faltante
+        return throwError('Token JWT no encontrado');
+      }
+    } else {
+      // Manejar el caso de sesión no iniciada
+      return throwError('Sesión no iniciada');
+    }
+
+   }
 }

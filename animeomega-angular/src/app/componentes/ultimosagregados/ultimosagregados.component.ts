@@ -3,15 +3,17 @@ import {Observable, of} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {TruncatePipe} from "../../pipe/limte.pipe";
 
 @Component({
   selector: 'app-ultimosagregados',
   standalone: true,
-  imports: [
-    NgForOf,
-    AsyncPipe,
-    NgIf
-  ],
+    imports: [
+        NgForOf,
+        AsyncPipe,
+        NgIf,
+        TruncatePipe
+    ],
   templateUrl: './ultimosagregados.component.html',
   styleUrl: './ultimosagregados.component.css'
 })
@@ -19,6 +21,7 @@ export class UltimosagregadosComponent implements OnInit {
 
   animes$: Observable<any> | undefined;
   isLoading = false;
+  selectedAnime: any;
 
   constructor(
     private AnimeService: AnimeService,
@@ -49,11 +52,8 @@ export class UltimosagregadosComponent implements OnInit {
     this.ruta.navigate(['/anime', anime.id, 'capitulo', idcapitulo]);
   }
 
-  getShortSynopsis(synopsis: string): string {
-    if (synopsis.length > 120) {
-      return synopsis.substring(0, 120) + '...';
-    }
-    return synopsis;
+  openEditModal(anime: any): void {
+    this.selectedAnime = anime; // Almacena los datos del anime seleccionado
   }
 }
 

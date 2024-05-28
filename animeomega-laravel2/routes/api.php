@@ -26,12 +26,13 @@ Route::get('/anime/id/{id}', [AnimesController::class, 'show']);
 Route::get('anime/{animeId}/capitulos/{capituloId}', [AnimesController::class, 'enlacesCapitulo']);
 Route::get('/anime', [AnimesController::class, 'getAnimes']);
 Route::get('/anime/{anime}', [AnimesController::class, 'findAnime']);
-Route::get('/prueba', [AnimesController::class, 'prueba']);
+//Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/anime/genero/{genero}', [AnimesController::class, 'findGenero']);
 Route::get('/ultimoscapitulos', [AnimesController::class, 'ultimosCapitulosanimesañadidos']);
 
 Route::post('/api-search', [ApiAnimeController::class, 'search']);
 Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
+Route::post('/addcapituloanime/{id_anime}',[AnimesController::class, 'addCapituloAnime']);
 
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
@@ -55,6 +56,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/marcarvisto/{id_capitulo}',[MisListasController::class, 'marcarepisodiocomovisto']);
     Route::get('/capitulosvisto/{id_capitulo}',[MisListasController::class, 'capitulosvistos']);
 
+    Route::post('/quitaranime/{id_anime}',[AnimesController::class, 'deleteanime']);
 
 });
 

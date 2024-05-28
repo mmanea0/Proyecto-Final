@@ -23,6 +23,7 @@
     "@angular/ssr": "^17.2.1",
     "@ionic/angular": "^8.0.1",
     "express": "^4.18.2",
+    "ng-apexcharts": "^1.10.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.11.0",
     "tslib": "^2.3.0",

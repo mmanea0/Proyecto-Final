@@ -104,15 +104,26 @@ class ApiAnimeController extends Controller
         }
 
         // Crear o encontrar la categoría
-        $categoria = Categoria::firstOrCreate(['tipo' => $animeData['format']]);
+        $categoria = Categoria::firstOrCreate(['tipo' => $animeData['format'] ?? 'vacio']);
         // Crear o encontrar el estado
-        $estado = Estado::firstOrCreate(['estado' => $animeData['status']]);
+        $estado = Estado::firstOrCreate(['estado' => $animeData['status'] ?? 'vacio']);
         // Crear o encontrar la season
-        $season = Season::firstOrCreate(['apoca' => $animeData['season']]);
+        $season = Season::firstOrCreate(['apoca' => $animeData['season'] ?? 'vacio']);
 
         // Crear una nueva instancia del modelo Anime
         $anime = new Anime();
 
+
+        if (!empty($animeData['startDate']['year'])) {
+            // Construir la fecha de estreno en el formato adecuado (YYYY-MM-DD)
+            $year = $animeData['startDate']['year'];
+            $month = $animeData['startDate']['month'] ?? '01'; // Si no se proporciona el mes, se asume enero (01)
+            $day = $animeData['startDate']['day'] ?? '01'; // Si no se proporciona el día, se asume el primero del mes (01)
+            $anime->fecha_de_estreno = $year . '-' . $month . '-' . $day;
+        } else {
+            // Si no se proporciona el año de la fecha de estreno, se usa la fecha actual
+            $anime->fecha_de_estreno = now()->toDateString(); // Obtener la fecha actual en el formato YYYY-MM-DD
+        }
         // Llenar los campos del modelo con los datos obtenidos de la API
         $anime->nombre_original = !empty($animeData['title']['native']) ? $animeData['title']['native'] : 'vacio';
         $anime->nombre_en = !empty($animeData['title']['english']) ? $animeData['title']['english'] : 'vacio';
@@ -120,7 +131,6 @@ class ApiAnimeController extends Controller
         $anime->foto = !empty($animeData['coverImage']['large']) ? $animeData['coverImage']['large'] : 'vacio';
         $anime->banner = !empty($animeData['bannerImage']) ? $animeData['bannerImage'] : 'vacio';
         $anime->sipnosis = !empty($animeData['description']) ? strip_tags($animeData['description']) : 'vacio';
-        $anime->fecha_de_estreno = $animeData['startDate']['year'] . '-' . $animeData['startDate']['month'] . '-' . $animeData['startDate']['day'];
         $anime->estudio_de_animacion = !empty($animeData['studios']['nodes']) ? implode(', ', array_column($animeData['studios']['nodes'], 'name')) : 'vacio';
         $anime->capitulos_totales = !empty($animeData['episodes']) ? $animeData['episodes'] : 0;
         $anime->valoracion = !empty($animeData['averageScore']) ? $animeData['averageScore'] : 0;
