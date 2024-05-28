@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GeneroAnime extends Model
 {
     use HasFactory;
-    protected $table = 'genero_anime';
+    protected $table = 'generos_animes';
     protected $fillable = ['anime_id', 'genero_id'];
 
     public function animes()

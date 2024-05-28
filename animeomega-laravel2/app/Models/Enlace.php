@@ -11,6 +11,9 @@ class Enlace extends Model
     protected $fillable = ['url', 'capitulo_id'];
     use HasFactory;
 
-
+    public function capitulo()
+    {
+        return $this->belongsTo(CapituloAnime::class, 'capitulo_id');
+    }
 
 }
