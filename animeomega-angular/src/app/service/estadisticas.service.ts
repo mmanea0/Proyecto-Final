@@ -29,6 +29,56 @@ export class EstadisticasService {
     return new Observable<EstadisticasGenero[]>();
   }
 
+  getFavoritosTotales(): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.get<any>(`${this.base}/contarfasvoritos`, {headers});
+      }
+    }
+    return new Observable<any>();
+  }
 
 
+  getAbandonadosTotales(): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.get<any>(`${this.base}/contadorabandonados`, {headers});
+      }
+    }
+    return new Observable<any>();
+  }
+
+  getCompletadosTotales(): Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.get<any>(`${this.base}/contadorcompletados`, {headers});
+      }
+    }
+    return new Observable<any>();
+  }
+
+  getUsuarioquemasanimeacompletado():Observable<any> {
+    if (this.isSesionIniciada()) {
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwtToken}`
+        });
+        return this.httpClient.get<any>(`${this.base}/usuarioquemasanimeavisualizado`, {headers});
+      }
+    }
+    return new Observable<any>();
+  }
 }

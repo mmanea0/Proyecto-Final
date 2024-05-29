@@ -18,18 +18,12 @@ export class GenerosComponent implements OnInit{
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
-    maintainAspectRatio: false, // Permitir que el tamaño del canvas no sea proporcional al contenedor
+    maintainAspectRatio: false,
     scales: {
       x: {
         display: true,
         grid: {
           display: false
-        },
-        ticks: {
-          align: 'center',
-          color: 'black',
-          maxRotation: 0,
-          minRotation: 0
         }
       },
       y: {
@@ -48,9 +42,9 @@ export class GenerosComponent implements OnInit{
       }
     },
     layout: {
-      padding: 10 // Ajustar el espacio alrededor del gráfico
+      padding: 10
     },
-    aspectRatio: 1.5 // Ajustar la relación de aspecto del gráfico
+    aspectRatio: 1.5
   };
 
   public barChartType = 'bar' as const;

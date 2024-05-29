@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anime;
+use App\Models\BibliotecaAnime;
 use App\Models\Genero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,4 +26,46 @@ class EstadisticasController extends Controller
 
         return response()->json($generosMasVistos);
     }
+
+
+    public function animesfavoritos()
+    {
+        // Obtener el nombre del anime y contar cuántos usuarios lo tienen como favorito
+        $animesFavoritos = BibliotecaAnime::select('animes.nombre_original_sin_kanji', DB::raw('COUNT(biblioteca_anime.id) as total_favoritos'))
+            ->join('animes', 'animes.id', '=', 'biblioteca_anime.id_anime')
+            ->where('biblioteca_anime.favorito', 1)
+            ->groupBy('animes.nombre_original_sin_kanji')
+            ->get();
+
+        return $animesFavoritos;
+    }
+
+    public function animesAbandonados()
+    {
+        return Anime::join('biblioteca_anime', 'animes.id', '=', 'biblioteca_anime.id_anime')
+            ->select('animes.nombre_original_sin_kanji', DB::raw('COUNT(biblioteca_anime.id) as total_abandonados'))
+            ->where('biblioteca_anime.estado_id', '=', '4')
+            ->groupBy('animes.nombre_original_sin_kanji')
+            ->get();
+    }
+
+    public function aniemesCompletados(){
+        return Anime::join('biblioteca_anime', 'animes.id', '=', 'biblioteca_anime.id_anime')
+            ->select('animes.nombre_original_sin_kanji', DB::raw('COUNT(biblioteca_anime.id) as total_completados'))
+            ->where('biblioteca_anime.estado_id', '=', '3')
+            ->groupBy('animes.nombre_original_sin_kanji')
+            ->get();
+    }
+
+    public function usuarioquemasanimesavisto()
+    {
+        return BibliotecaAnime::select('users.name AS usuario', DB::raw('COUNT(biblioteca_anime.id) as total_vistos'))
+            ->join('users', 'users.id', '=', 'biblioteca_anime.id_usuario')
+            ->where('biblioteca_anime.estado_id', 3)
+            ->groupBy('users.id', 'users.name') // Agrupa por el ID del usuario para evitar problemas con usuarios que tienen el mismo nombre
+            ->orderByDesc('total_vistos')
+            ->get();
+    }
+
+
 }

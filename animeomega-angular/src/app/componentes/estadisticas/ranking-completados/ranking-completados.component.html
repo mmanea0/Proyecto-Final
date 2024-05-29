@@ -1,0 +1,23 @@
+<div class="bg-gray-300 rounded-lg shadow-md p-4">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Nombre Column -->
+    <ng-container matColumnDef="nombre_original_sin_kanji">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let element" class="p-2 border-t">{{element.nombre_original_sin_kanji}}</td>
+    </ng-container>
+
+    <!-- Total Favoritos Column -->
+    <ng-container matColumnDef="total_completados">
+      <th mat-header-cell *matHeaderCellDef> Total Completados </th>
+      <td mat-cell *matCellDef="let element" class="p-2 border-t">{{element.total_completados}}</td>
+    </ng-container>
+
+    <!-- Define las filas y columnas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons aria-label="Select page of users"></mat-paginator>
+</div>
