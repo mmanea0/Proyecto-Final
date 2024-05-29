@@ -62,7 +62,7 @@ class EstadisticasController extends Controller
         return BibliotecaAnime::select('users.name AS usuario', DB::raw('COUNT(biblioteca_anime.id) as total_vistos'))
             ->join('users', 'users.id', '=', 'biblioteca_anime.id_usuario')
             ->where('biblioteca_anime.estado_id', 3)
-            ->groupBy('users.id', 'users.name') // Agrupa por el ID del usuario para evitar problemas con usuarios que tienen el mismo nombre
+            ->groupBy('users.id', 'users.name')
             ->orderByDesc('total_vistos')
             ->get();
     }
