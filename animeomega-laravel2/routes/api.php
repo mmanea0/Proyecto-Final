@@ -4,6 +4,7 @@ use App\Http\Controllers\AnimesController;
 use App\Http\Controllers\ApiAnimeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\GestionUsuarioController;
 use App\Http\Controllers\MisListasController;
 use Illuminate\Http\Request;
@@ -35,9 +36,11 @@ Route::post('/api-search', [ApiAnimeController::class, 'search']);
 Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
 Route::post('/addcapituloanime/{id_anime}',[AnimesController::class, 'addCapituloAnime']);
 
+
+
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
-
+    Route::get('/generosmasvistos', [EstadisticasController::class, 'generosmasvistos'])->middleware('can:admin-access');
     Route::get('/usuarios', [GestionUsuarioController::class, 'vertodoslosusuarios'])->middleware('can:admin-access');
     Route::post('/eliminarusuario/{idusuario}', [GestionUsuarioController::class, 'eliminarUsuario'])->middleware('can:admin-access');
     // Ruta para obtener el usuario autenticado
