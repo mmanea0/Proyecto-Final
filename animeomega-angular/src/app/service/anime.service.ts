@@ -100,8 +100,6 @@ export class AnimeService {
 
 
 
-
-
   removeFavorito(animeId: number): Observable<any> {
     if (this.isSesionIniciada()) {
       const jwtToken = localStorage.getItem('jwtToken');

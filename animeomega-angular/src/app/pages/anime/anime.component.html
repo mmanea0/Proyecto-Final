@@ -113,11 +113,11 @@
                           @if (sesionIniciada) {
                             <div class="flex items-center ml-auto">
                               @if (capitulo.visto !== null) {
-                                <input type="checkbox"
-                                       class="toggle toggle-accent"
-                                       [(ngModel)]="capitulo.visto"
-                                       (change)="marcarEpisodioComoVisto(capitulo.id, capitulo.visto)"
-
+                                <input
+                                  type="checkbox"
+                                  class="toggle toggle-accent"
+                                  [(ngModel)]="capitulo.visto"
+                                  (change)="marcarEpisodioComoVisto(capitulo.id, capitulo.visto)"
                                 />
                               }
                             </div>

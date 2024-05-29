@@ -1,7 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {Observable, catchError, map, of} from 'rxjs';
-import {AlertController} from '@ionic/angular';
 import {User} from '../interfaces/user';
 import {LoginRequest, LoginResponse} from "../interfaces/auth";
 import {environment} from "../../../environments/environment";
@@ -23,7 +22,6 @@ export class AutenticacionService {
 
   constructor(
     private httpClient: HttpClient,
-    private alertController: AlertController,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
   }

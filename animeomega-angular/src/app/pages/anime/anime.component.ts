@@ -24,7 +24,7 @@ export class AnimeComponent implements OnInit {
   isLoading = false;
   sesionIniciada: boolean = false;
   isFavorito: boolean = false;
-  capituloVisto: boolean = false;
+  capitulosVistos: { [key: number]: boolean } = {};
 
   constructor(
     private animeService: AnimeService,
@@ -48,9 +48,10 @@ export class AnimeComponent implements OnInit {
         (anime) => {
           this.anime$ = of(anime);
           this.verificarFavorito(id);
-          this.verificacionCapituloVisto(id);
+          anime.capitulos.forEach((capitulo: any) => {
+            this.verificacionCapituloVisto(capitulo);
+          });
           this.isLoading = false;
-
         },
         error => {
           console.error('Error al cargar el anime', error);
@@ -77,13 +78,12 @@ export class AnimeComponent implements OnInit {
     }
   }
 
-  verificacionCapituloVisto(idCapitulo: number): void {
+  verificacionCapituloVisto(capitulo: any): void {
     if (this.sesionIniciada) {
-      this.animeService.GetUnEpisodioVisto(idCapitulo).subscribe(
+      this.animeService.GetUnEpisodioVisto(capitulo.id).subscribe(
         (response) => {
-          this.capituloVisto = response.visto === 1;
-          console.log('Capitulo visto', this.capituloVisto)
-          },
+          capitulo.visto = response.visto === 1 || response.visto === true;
+        },
         error => {
           console.error('Error al verificar el estado de capitulo visto', error);
         }
@@ -257,27 +257,48 @@ export class AnimeComponent implements OnInit {
     );
   }
 
-  marcarEpisodioComoVisto(idCapitulo: number, visto: boolean): void {
-    if (this.anime$) { // Verificar si anime$ está definido
+  marcarEpisodioComoVisto(idCapitulo: number, isChecked: boolean): void {
+    if (this.anime$) {
       this.animeService.marcarComoVisto(idCapitulo).subscribe(
         () => {
-          // Actualizar el estado del checkbox
-          this.anime$?.pipe(
-            map(anime => anime?.capitulos.find((c: any) => c.id === idCapitulo))
-          )?.subscribe((capitulo: any) => {
-            if (capitulo) {
-              capitulo.visto = !visto; // Invertir el estado
-            }
-          });
+          this.anime$ = this.anime$?.pipe(
+            map(anime => {
+              if (anime && anime.capitulos) {
+                anime.capitulos.forEach((capitulo: any) => {
+                  if (capitulo.id === idCapitulo) {
+                    capitulo.visto = isChecked;
+                  }
+                });
+              }
+              return anime;
+            })
+          );
         },
         error => {
           console.error('Error al marcar episodio como visto', error);
+          // En caso de error, revertir el estado del checkbox
+          if (this.anime$) {
+            this.anime$ = this.anime$.pipe(
+              map(anime => {
+                if (anime && anime.capitulos) {
+                  anime.capitulos.forEach((capitulo: any) => {
+                    if (capitulo.id === idCapitulo) {
+                      capitulo.visto = !isChecked;
+                    }
+                  });
+                }
+                return anime;
+              })
+            );
+          }
         }
       );
     } else {
       console.error('Error: anime$ es undefined');
     }
   }
+
+
 
 
 

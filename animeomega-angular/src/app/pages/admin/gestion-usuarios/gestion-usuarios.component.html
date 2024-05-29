@@ -1,1 +1,136 @@
-<p>gestion-usuarios works!</p>
+<div class="overflow-x-auto">
+
+  <div class="flex items-center gap-2 justify-center">
+    <label class="input input-bordered flex items-center gap-2">
+      <input type="text" class="grow" placeholder="Buscar en la Tabla" [(ngModel)]="filtro" (input)="buscar()" />
+    </label>
+
+    <div class="ml-auto"> <!-- Utilidad 'ml-auto' para mover el botón a la derecha -->
+      <button type="button" class="button" (click)="actualizarTabla()">
+        <span class="button__text">Actualizar</span>
+        <span class="button__icon"><svg class="svg" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"></path><path d="M0 0h48v48h-48z" fill="none"></path></svg></span>
+      </button>
+    </div>
+  </div>
+
+
+  <table class="table">
+    <!-- head -->
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th >Usuario</th>
+      <th >Email & Nickname</th>
+      <th >Id Discord</th>
+      <th >Configuración</th>
+
+    </tr>
+    </thead>
+    <tbody>
+      @for (usuario of usuarios$ | async; track usuario) {
+        <!-- row 1 -->
+        <tr class="hover:bg-sky-900 cursor-pointer">
+          {{usuario.id}}
+          <td>
+            <div class="flex items-center gap-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img src="{{usuario.avatar}}" alt="Avatar Tailwind CSS Component" />
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{ usuario.name }}</div>
+<!--                <div class="text-sm opacity-50">{{ usuario.nombre_en }}</div>-->
+              </div>
+            </div>
+          </td>
+          <td>
+            {{ usuario.email | truncate:200 }}
+            <br/>
+            <span class="badge badge-ghost badge-sm">{{ usuario.nickname }}</span>
+          </td>
+          <td>{{usuario.discord_id}}</td>
+          <th class="flex justify-center items-center">
+
+            <!--         papelera-->
+            <label for="my_modal_{{ usuario.id }}" class="btn mr-4 bin-button"
+                   (click)="openDeleteModal(usuario.id)">
+              <svg
+                class="bin-top"
+                viewBox="0 0 39 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+                <line
+                  x1="12"
+                  y1="1.5"
+                  x2="26.0357"
+                  y2="1.5"
+                  stroke="white"
+                  stroke-width="3"
+                ></line>
+              </svg>
+              <svg
+                class="bin-bottom"
+                viewBox="0 0 33 39"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <mask id="path-1-inside-1_8_19" fill="white">
+                  <path
+                    d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                  ></path>
+                </mask>
+                <path
+                  d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                  fill="white"
+                  mask="url(#path-1-inside-1_8_19)"
+                ></path>
+                <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+              </svg>
+            </label>
+
+            <input type="checkbox" id="my_modal_{{ usuario.id }}" class="modal-toggle" />
+            <div class="modal" role="dialog">
+              <div class="modal-box">
+                <h3 class="font-bold text-lg">Seguro Que quiere borrar {{ usuario.nombre_original_sin_kanji}}</h3>
+                <div class="py-4">
+                  <div class="container">
+                    <div>
+                      <img src="{{ usuario.foto}}" alt="">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-action">
+                  <label for="my_modal_{{ usuario.id }}" class="btn" (click)="deleteAnime(usuario.id)">Borrar</label>
+                  <label for="my_modal_{{ usuario.id }}" class="btn">Cerrar</label>
+                </div>
+              </div>
+            </div>
+
+          </th>
+        </tr>
+
+
+
+      }
+    </tbody>
+    <!-- foot -->
+    <tfoot>
+    <tr>
+      <th>Id</th>
+      <th >Usuario</th>
+      <th >Email & Nickname</th>
+      <th >Id Discord</th>
+      <th >Configuración</th>
+
+    </tr>
+    </tfoot>
+
+  </table>
+</div>
+
+
+

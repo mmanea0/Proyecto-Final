@@ -4,6 +4,8 @@ import {routes} from './app.routes';
 import {provideClientHydration} from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, provideHttpClient} from "@angular/common/http";
 import {AuthInterceptorService} from "./auth/services/auth-interceptor.service";
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +16,6 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    }, provideCharts(withDefaultRegisterables()), provideAnimationsAsync()
   ]
 };

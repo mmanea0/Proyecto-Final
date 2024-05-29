@@ -132,8 +132,6 @@ export class TablaanimeComponent implements OnInit,OnChanges{
 
   onSubmit(): void {
 
-
-    // Si la URL es válida, continúa con la llamada al servicio
     if (!this.idAnime) {
       console.error('ID del anime no definido');
       return;

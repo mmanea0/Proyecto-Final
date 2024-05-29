@@ -1,61 +1,77 @@
-import { Component } from '@angular/core';
-import {ApexOptions, NgApexchartsModule} from "ng-apexcharts";
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {BaseChartDirective} from "ng2-charts";
+import {ChartConfiguration, ChartData, ChartEvent} from "chart.js";
+
 
 @Component({
   selector: 'app-estadisticas',
   standalone: true,
-  imports: [
-    NgApexchartsModule
-  ],
   templateUrl: './estadisticas.component.html',
+  imports: [
+    BaseChartDirective
+  ],
   styleUrl: './estadisticas.component.css'
 })
 export class EstadisticasComponent {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
-  chartOptions: ApexOptions = {};
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 10,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+  };
+  public barChartType = 'bar' as const;
 
-  constructor() {
-    this.chartOptions = {
-      series: [],
-      chart: {
-        height: 350,
-        type: 'bar',
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-      },
-      yaxis: {
-        title: {
-          text: 'Sales',
-          style: {
-            color: '#7c97b6'
-          }
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter: function(val) {
-            return "$ " + val + " thousands"
-          }
-        }
-      }
-    };
+  public barChartData: ChartData<'bar'> = {
+    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+    datasets: [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+    ],
+  };
+
+  // events
+  public chartClicked({
+                        event,
+                        active,
+                      }: {
+    event?: ChartEvent;
+    active?: object[];
+  }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({
+                        event,
+                        active,
+                      }: {
+    event?: ChartEvent;
+    active?: object[];
+  }): void {
+    console.log(event, active);
+  }
+
+  public randomize(): void {
+    // Only Change 3 values
+    this.barChartData.datasets[0].data = [
+      Math.round(Math.random() * 100),
+      59,
+      80,
+      Math.round(Math.random() * 100),
+      56,
+      Math.round(Math.random() * 100),
+      40,
+    ];
+
+    this.chart?.update();
   }
 }

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('discord_id')->nullable();
             $table->string('nickname')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('imagen')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
