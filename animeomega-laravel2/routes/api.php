@@ -75,7 +75,6 @@ Route::middleware('auth:api')->group(function () {
 
 
 
-
 // Otras rutas públicas
 //Route::get('/prueba', [PruebaController::class, 'prueba1']);
 
