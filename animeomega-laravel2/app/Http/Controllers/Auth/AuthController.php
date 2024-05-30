@@ -64,7 +64,7 @@ class AuthController extends Controller
         $avatar = $user->avatar; // Suponiendo que $user->avatar contiene la URL del avatar
         $rol = $user->roles->first()->name; // Obtener el nombre del primer rol del usuario
 
-        return redirect()->to('http://localhost:4200/login-callback/?access_token='.$token.'&nickname='.$nickname.'&avatar='.$avatar.'&rol='.$rol);
+        return redirect()->to('http://mysterunicorn.duckdns.org:2285/angular-app/login-callback/?access_token='.$token.'&nickname='.$nickname.'&avatar='.$avatar.'&rol='.$rol);
     }
 
 
