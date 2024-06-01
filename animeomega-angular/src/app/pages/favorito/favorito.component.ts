@@ -4,13 +4,15 @@ import {Anime} from "../../interfaces/anime";
 import {AnimeService} from "../../service/anime.service";
 import { AsyncPipe } from "@angular/common";
 import {Router} from "@angular/router";
+import {TruncatePipe} from "../../pipe/limte.pipe";
 
 @Component({
   selector: 'app-favorito',
   standalone: true,
-  imports: [
-    AsyncPipe
-],
+    imports: [
+        AsyncPipe,
+        TruncatePipe
+    ],
   templateUrl: './favorito.component.html',
   styleUrl: './favorito.component.css'
 })
@@ -58,6 +60,12 @@ export class FavoritoComponent implements OnInit {
 
   verAnime(anime: any): void {
     this.ruta.navigate(['/anime', anime.id]);
+  }
+  getShortSynopsis(synopsis: string): string {
+    if (synopsis.length > 120) {
+      return synopsis.substring(0, 120) + '...';
+    }
+    return synopsis;
   }
 
 }

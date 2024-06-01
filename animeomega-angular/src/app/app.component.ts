@@ -19,29 +19,7 @@ export class AppComponent {
 
 
   constructor(
-   private authDiscordService: AuthDiscordService,
   ) {
 
-  }
-
-  login() {
-    this.authDiscordService.iniciosesiondiscord().subscribe(response => {
-      console.log(response);
-    },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  muestrausuario() {
-
-    this.authDiscordService.muestrausuario().subscribe(response => {
-      console.log(response);
-    });
-  }
-
-  loginprueba() {
-  window.location.href = this.authDiscordService.loginUrl;
   }
 }

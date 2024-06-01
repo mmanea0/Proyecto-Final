@@ -67,26 +67,31 @@
     }
   </div>
 
+
   <div class="navbar-end">
-    <button class="btn btn-ghost btn-circle pr-16">
-      <i [innerHTML]="ICONO_CAMPANA"></i>
-    </button>
-    <button class="btn btn-ghost btn-circle pr-16">
-      <div class="indicator">
-        <i [innerHTML]="ICONO_NOTIFICACIONES"></i>
-        <span class="badge badge-xs badge-primary indicator-item"></span>
-      </div>
-    </button>
+
 
 
     @if (!montarinfouser) {
       <button data-v-0fc51e59="" class="cut-text flex h-10 items-center gap-1 rounded px-2 text-lg font-bold ocultar"
         style="background: linear-gradient(121deg, rgb(88, 101, 242) 0%, rgb(64, 78, 237) 100%);">
-        <i [innerHTML]="ICONO_DISCORD"></i> <a href="http://localhost/api/logindiscord"> INICIO DISCORD</a>
+<!--        <i [innerHTML]="ICONO_DISCORD"></i> <a href="http://localhost/api/logindiscord"> INICIO DISCORD</a>-->
+        <i [innerHTML]="ICONO_DISCORD"></i> <a href="http://mysterunicorn.duckdns.org:2284/api/logindiscord"> INICIO DISCORD</a>
       </button>
     }
 
     @if (montarinfouser) {
+
+      <button class="mr-10 hover:bg-gray-300 hover:bg-opacity-40 hover:rounded-xl">
+        <i [innerHTML]="ICONO_CAMPANA" class="hover:bg-gray-200 hover:rounded-xl"></i>
+      </button>
+      <button class="mr-5 hover:bg-gray-300 hover:bg-opacity-40 hover:rounded-xl">
+        <div class="indicator">
+          <i [innerHTML]="ICONO_NOTIFICACIONES"></i>
+          <span class="badge badge-xs badge-primary indicator-item"></span>
+        </div>
+      </button>
+
       <div class="ocultar">
         <div class="dropdown dropdown-end pr-5">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">

@@ -7,6 +7,7 @@ import {map, Observable, of} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {UltimosagregadosComponent} from "../../componentes/ultimosagregados/ultimosagregados.component";
+import {TruncatePipe} from "../../pipe/limte.pipe";
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ import {UltimosagregadosComponent} from "../../componentes/ultimosagregados/ulti
     AsyncPipe,
     NgIf,
     NgForOf,
-    UltimosagregadosComponent
+    UltimosagregadosComponent,
+    TruncatePipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

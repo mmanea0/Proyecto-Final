@@ -56,7 +56,7 @@
   <div class="mt-10">
     <div class="text-white text-2xl ml-10">Recomendaciones</div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10 ">
           @for (anime of animes$ | async; track anime) {
             <a (click)="verAnime(anime)">
               <div class="relative overflow-hidden w-60 h-80 rounded-3xl cursor-pointer text-2xl font-bold bg-[#1a1e2b]">
@@ -74,9 +74,9 @@
                   <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}"
                     class="rounded-xl w-full h-full object-cover">
                   </div>
-                  <h2 class="text-center text-white">{{ anime.nombre_original }}</h2>
                 </div>
-              </a>
+              <div class="text-white">{{ anime.nombre_original_sin_kanji | truncate:24}}</div>
+            </a>
             }
           </div>
         </div>

@@ -3,13 +3,15 @@ import { AsyncPipe } from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {Observable, of} from "rxjs";
+import {TruncatePipe} from "../../pipe/limte.pipe";
 
 @Component({
   selector: 'app-explorar',
   standalone: true,
     imports: [
-    AsyncPipe
-],
+        AsyncPipe,
+        TruncatePipe
+    ],
   templateUrl: './explorar.component.html',
   styleUrl: './explorar.component.css'
 })
