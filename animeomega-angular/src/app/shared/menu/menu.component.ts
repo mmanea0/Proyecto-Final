@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Router, RouterLink} from "@angular/router";
 import {AnimeService} from "../../service/anime.service";
 import {FormsModule} from "@angular/forms";
-import { AsyncPipe } from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {Anime} from "../../interfaces/anime";
-import {Observable} from "rxjs";
+import {delay, Observable} from "rxjs";
 import {AutenticacionService} from "../../auth/services/autenticacion.service";
+import {NotificacionesService} from "../../service/notificaciones.service";
 
 @Component({
   selector: 'app-menu',
@@ -14,12 +15,14 @@ import {AutenticacionService} from "../../auth/services/autenticacion.service";
   imports: [
     RouterLink,
     FormsModule,
-    AsyncPipe
-],
+    AsyncPipe,
+    NgForOf,
+    NgIf
+  ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent implements OnInit{
+export class MenuComponent implements OnInit, OnDestroy{
   ICONO_LUPA: SafeHtml;
   ICONO_CERRAR: SafeHtml;
   ICONO_CAMPANA: SafeHtml;
@@ -34,12 +37,24 @@ export class MenuComponent implements OnInit{
   userRoles$: Observable<string[]> | undefined;
 
   datosUsuario$: Observable<any> | undefined;
+  notificaciones: any[] = [];
+
+  noHayNotificacionesMostrado = false;
+
 
   ngOnInit(): void {
     this.mostrarinfmoracion();
     this.datosUsuario$ = this.autenticacionService.getDatosUsuario();
     this.verificarAutenticacion();
     this.checkAdminRole();
+    this.cargarNotificaciones();
+    this.ajaxnotificaciones()
+
+  }
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   constructor(
@@ -47,6 +62,7 @@ export class MenuComponent implements OnInit{
     private animeService: AnimeService,
     private router: Router,
     private autenticacionService: AutenticacionService,
+    private notificacioneservice: NotificacionesService,
 
   ) {
     this.ICONO_LUPA = this.sanitizer.bypassSecurityTrustHtml(`
@@ -117,7 +133,6 @@ export class MenuComponent implements OnInit{
   }
 
   seleccionarAnime(anime: Anime): void {
-    // Aquí puedes manejar la selección del anime, por ejemplo, redirigir a una página de detalles del anime
     console.log('Anime seleccionado:', anime);
   }
 
@@ -151,6 +166,65 @@ export class MenuComponent implements OnInit{
   checkAdminRole() {
     this.autenticacionService.getRoles().subscribe(roles => {
       this.isAdmin = roles.includes('Administrador');
+    });
+  }
+
+  cargarNotificaciones(): void {
+    this.notificacioneservice.getNotificaciones().subscribe(
+      (data: any[]) => {
+        this.notificaciones = data;
+        if (this.notificaciones.length === 0 && !this.noHayNotificacionesMostrado) {
+          this.noHayNotificacionesMostrado = true;
+          console.log('No tienes notificaciones');
+          clearInterval(this.intervalId);
+        }else if (this.notificaciones.length > 0 && this.noHayNotificacionesMostrado) {
+          this.noHayNotificacionesMostrado = false;
+          this.ajaxnotificaciones();
+        }
+      },
+      (error) => {
+        console.error('Error al cargar las notificaciones', error);
+      }
+    );
+  }
+
+
+  isLoading = false;
+
+  verAnime(anime: any, idNotificacion: number): void {
+    this.isLoading = true;
+    this.notificacioneservice.marcarLeida(idNotificacion).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate(['/anime', anime.id]);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('Error al marcar la notificación como leída', err);
+        this.router.navigate(['/anime', anime.id]);
+      }
+    });
+  }
+
+  private intervalId: any;
+
+  ajaxnotificaciones(): void {
+    if (this.notificaciones.length === 0) {
+      this.intervalId = setInterval(() => {
+        this.cargarNotificaciones();
+      }, 300); // 300 milisegundos
+    }
+  }
+
+
+  marcarTodasComoLeidas(): void {
+    this.notificacioneservice.marcarTodasComoLeidas().subscribe({
+      next: () => {
+        this.cargarNotificaciones();
+      },
+      error: (err) => {
+        console.error('Error al marcar todas las notificaciones como leídas', err);
+      }
     });
   }
 

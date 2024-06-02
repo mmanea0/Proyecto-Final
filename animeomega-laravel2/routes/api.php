@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\GestionUsuarioController;
 use App\Http\Controllers\MisListasController;
+use App\Http\Controllers\NotificacionesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ Route::post('/api-search', [ApiAnimeController::class, 'search']);
 Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
 Route::post('/addcapituloanime/{id_anime}',[AnimesController::class, 'addCapituloAnime']);
 
-
+Route::get('/futurosanimes/{mes}', [AnimesController::class, 'futurosanimes']);
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
 
@@ -70,6 +71,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/quitaranime/{id_anime}',[AnimesController::class, 'deleteanime']);
 
+    Route::get('/notificaciones', [NotificacionesController::class, 'mostrarNotificacionesUsuario']);
+    Route::post('/notificacionesleido/{id}/', [NotificacionesController::class, 'marcarNotificacionComoLeida']);
+    Route::post('/notificacionesleidotodas', [NotificacionesController::class, 'notificacionesleidotodas']);
 });
 
 

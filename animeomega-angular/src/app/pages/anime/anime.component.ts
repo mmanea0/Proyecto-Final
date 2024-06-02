@@ -297,9 +297,4 @@ export class AnimeComponent implements OnInit {
       console.error('Error: anime$ es undefined');
     }
   }
-
-
-
-
-
 }

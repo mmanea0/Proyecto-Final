@@ -129,7 +129,7 @@ class ApiAnimeController extends Controller
         $anime->nombre_en = !empty($animeData['title']['english']) ? $animeData['title']['english'] : 'vacio';
         $anime->nombre_original_sin_kanji = !empty($animeData['title']['romaji']) ? $animeData['title']['romaji'] : 'vacio';
         $anime->foto = !empty($animeData['coverImage']['large']) ? $animeData['coverImage']['large'] : 'vacio';
-        $anime->banner = !empty($animeData['bannerImage']) ? $animeData['bannerImage'] : 'vacio';
+        $anime->banner = !empty($animeData['bannerImage']) ? $animeData['bannerImage'] : 'https://i.postimg.cc/vHSS7Fjn/baner-defecto.jpg';
         $anime->sipnosis = !empty($animeData['description']) ? strip_tags($animeData['description']) : 'vacio';
         $anime->estudio_de_animacion = !empty($animeData['studios']['nodes']) ? implode(', ', array_column($animeData['studios']['nodes'], 'name')) : 'vacio';
         $anime->capitulos_totales = !empty($animeData['episodes']) ? $animeData['episodes'] : 0;

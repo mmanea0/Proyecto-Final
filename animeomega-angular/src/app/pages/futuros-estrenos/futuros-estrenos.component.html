@@ -1,1 +1,42 @@
-<p>futuros-estrenos works!</p>
+<div class="flex justify-center min-h-screen">
+  <div class="relative inline-block text-center">
+    <select class="bg-white text-black mt-10 rounded-xl p-5 pr-10 text-center" (change)="onMesChange($event)" [(ngModel)]="selectedMes">
+
+      <option value="" selected disabled class="text-center">Selecciona un mes</option>
+      <option value="1">Enero</option>
+      <option value="2">Febrero</option>
+      <option value="3">Marzo</option>
+      <option value="4">Abril</option>
+      <option value="5">Mayo</option>
+      <option value="6">Junio</option>
+      <option value="7">Julio</option>
+      <option value="8">Agosto</option>
+      <option value="9">Septiembre</option>
+      <option value="10">Octubre</option>
+      <option value="11">Noviembre</option>
+      <option value="12">Diciembre</option>
+    </select>
+
+@if (animes && animes.length){
+  <div *ngFor="let anime of animes" class="flex items-center bg-[#181e2b] rounded-2xl">
+    <div class="avatar">
+      <div class="w-36 rounded-xl m-10">
+        <img [src]="anime.foto"/>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <h3 class="text-xl">{{ anime.nombre_original }}</h3>
+      <div class="flex items-center mt-2">
+        <p class="mr-4">{{ anime.fecha_de_estreno }}</p>
+        <i [innerHTML]="ICONO_CAMPANA" class="text-gray-500 ml-20"></i>
+      </div>
+    </div>
+  </div>
+
+}@else  {
+  <p>No hay animes con fecha de estreno posterior al día de hoy en este mes.</p>
+}
+
+
+</div>
+</div>

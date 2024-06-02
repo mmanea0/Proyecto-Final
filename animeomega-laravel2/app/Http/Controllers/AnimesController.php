@@ -10,6 +10,7 @@ use App\Models\CapituloAnime;
 use App\Models\Enlace;
 use App\Models\Genero;
 use App\Models\GeneroAnime;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -195,12 +196,21 @@ class AnimesController extends Controller
             ]);
             // Guardar el capítulo
             $anime->capitulos()->save($capitulo);
-        } else {
-            // Actualizar el capítulo existente
-            $capitulo->update([
-                'sipnosis' => $sipnosis,
-                'duracion' => $duracion
-            ]);
+
+            // Verificar si algún usuario sigue este anime y enviar notificaciones si es necesario
+            $usuariosSiguientes = BibliotecaAnime::where('id_anime', $idanime)
+                ->where('estado_id', 1)
+                ->pluck('id_usuario');
+
+            foreach ($usuariosSiguientes as $usuarioId) {
+                Aviso::create([
+                    'usuario_id' => $usuarioId,
+                    'tipo_aviso_id' => 1,
+                    'mensaje' => '¡Nuevo capítulo!',
+                    'anime_id' => $idanime,
+                    'leido' => false,
+                ]);
+            }
         }
 
         // Actualizar o crear el enlace para el capítulo
@@ -261,5 +271,18 @@ class AnimesController extends Controller
         }
     }
 
+    public function futurosanimes($mes)
+    {
+        // Obtener la fecha actual
+        $hoy = Carbon::now();
+
+        // Filtrar los animes por el mes y año de estreno mayor a la fecha actual
+        $animes = Anime::whereMonth('fecha_de_estreno', $mes)
+            ->where('fecha_de_estreno', '>', $hoy)
+            ->get();
+
+        // Retornar los animes encontrados
+        return response()->json($animes);
+    }
 
 }

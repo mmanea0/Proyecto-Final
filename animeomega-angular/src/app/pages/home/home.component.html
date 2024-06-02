@@ -52,10 +52,8 @@
       </div>
 
   <app-ultimosagregados></app-ultimosagregados>
-
   <div class="mt-10">
-    <div class="text-white text-2xl ml-10">Recomendaciones</div>
-
+    <div class="text-white text-2xl ml-10">RECOMENDACIONES</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10 ">
           @for (anime of animes$ | async; track anime) {
             <a (click)="verAnime(anime)">

@@ -227,4 +227,9 @@ export class AnimeService {
     }
 
    }
+
+   getFuturosestrenos(mes: number): Observable<any> {
+     const $anime = this.httpClient.get<Anime[]>(`${this.base}/futurosanimes/${mes}`);
+     return $anime;
+   }
 }
