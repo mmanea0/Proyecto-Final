@@ -1,9 +1,31 @@
+<div class="mt-5 ml-10">
+
+  <mat-form-field>
+    <mat-label>Filtrar por género:</mat-label>
+    <mat-select [formControl]="generosControl" multiple>
+      <mat-option *ngFor="let genero of generosDisponibles" [value]="genero">{{ genero }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Filtrar por Año:</mat-label>
+    <mat-select [formControl]="annosControl" multiple>
+      <mat-option *ngFor="let anno of annosDisponibles" [value]="anno">{{ anno }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button (click)="filtrar()">Filtrar</button>
+</div>
+
+
 <div class="mt-10">
   <div class="text-white text-2xl ml-10">BIBLIOTECA DE ANIMES</div>
 
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10">
-    @for (anime of animes$ | async; track anime) {
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-10" infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="300"
+       (scrolled)="onScroll()">
+    <ng-container *ngFor="let anime of animes">
       <a (click)="verAnime(anime)">
         <div class="relative overflow-hidden w-60 h-80 rounded-3xl cursor-pointer text-2xl font-bold bg-[#1a1e2b]">
           <div class="z-10 absolute w-full h-full peer"></div>
@@ -17,9 +39,8 @@
             <img src="{{ anime.foto }}" alt="{{ anime.nombre_original }}" class="rounded-xl w-full h-full object-cover">
           </div>
         </div>
-        <div class="text-white">{{ anime.nombre_original_sin_kanji | truncate:24}}</div>
+        <div class="text-white">{{ anime.nombre_original_sin_kanji | truncate:24 }}</div>
       </a>
-    }
+    </ng-container>
   </div>
 </div>
-

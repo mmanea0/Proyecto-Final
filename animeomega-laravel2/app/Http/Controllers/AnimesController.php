@@ -70,37 +70,82 @@ class AnimesController extends Controller
         return response()->json($animesTransformados);
     }
 
-    public function findAnime(Request $request, $anime)
+    public function searcher(Request $request)
     {
-        // Realizar la búsqueda de anime por nombre original o en inglés
-        $animes = Anime::where('nombre_original', 'LIKE', "%$anime%")
-            ->orWhere('nombre_en', 'LIKE', "%$anime%")
-            ->get();
+        // Obtener los parámetros de consulta
+        $genres = $request->input('generos', []);
+        $years = $request->input('year', []);
+        $categories = $request->input('categoria', []);
+        $estado = $request->input('estado', []);
+        $order = $request->input('order', 'default');
 
-        // Verificar si se encontraron resultados
-        if ($animes->isEmpty()) {
-            // No se encontraron resultados, devolver un mensaje de error
-            return response()->json(['message' => 'No se encontraron resultados para la búsqueda: ' . $anime], 404);
+        // Construir la consulta base para los animes
+        $query = Anime::query();
+
+        // Filtrar por género si se proporcionan géneros
+        if (!empty($genres)) {
+            $genreArray = collect($genres)->flatMap(function ($genre) {
+                return explode(',', $genre);
+            })->unique()->toArray();
+
+            $query->whereHas('generos', function ($query) use ($genreArray) {
+                $query->whereIn('genero', $genreArray);
+            });
         }
 
-        // Se encontraron resultados, devolver los animes encontrados
-        return response()->json($animes);
-    }
 
-    public function findGenero(Request $request, $genero)
-    {
-        // Realizar la búsqueda de animes por género
-        $animes = Anime::whereHas('generos', function ($query) use ($genero) {
-            $query->where('genero', 'LIKE', "%$genero%");
-        })->get();
+        if (!empty($years)) {
+            // Convertir los años separados por comas en un array si es necesario
+            $yearArray = collect($years)->flatMap(function ($year) {
+                return explode(',', $year);
+            })->map(function ($year) {
+                return substr($year, 0, 4);
+            })->unique()->toArray();
 
-        // Verificar si se encontraron resultados
-        if ($animes->isEmpty()) {
-            return response()->json(['message' => 'No se encontraron animes para el género: ' . $genero], 404);
+            $query->whereIn(DB::raw('YEAR(fecha_de_estreno)'), $yearArray);
         }
+        if (!empty($categories)) {
+            $categoryArray = collect($categories)->flatMap(function ($category) {
+                return explode(',', $category);
+            })->unique()->toArray();
+
+            $query->whereHas('categoria', function ($query) use ($categoryArray) {
+                $query->whereIn('tipo', $categoryArray);
+            });
+        }
+
+        // Filtrar por estado si se proporciona
+        if (!empty($estado)) {
+            $estadoArray = collect($estado)->flatMap(function ($estadoItem) {
+                return explode(',', $estadoItem);
+            })->unique()->toArray();
+
+            $query->whereHas('estado', function ($query) use ($estadoArray) {
+                $query->whereIn('estado', $estadoArray);
+            });
+        }
+        switch ($order) {
+            case 'name_asc':
+                $query->orderBy('nombre_original_sin_kanji', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('nombre_original_sin_kanji', 'desc');
+                break;
+            case 'rating':
+                $query->orderBy('valoracion', 'desc');
+                break;
+            case 'newest':
+                $query->orderBy('created_at', 'desc');
+                break;
+            default:
+                break;
+        }
+        // Ejecutar la consulta y obtener los resultados
+        $animes = $query->get();
+
+        // Devolver los resultados
         return response()->json($animes);
     }
-
 
     public function show(Request $request, $id)
     {

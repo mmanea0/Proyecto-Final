@@ -232,4 +232,30 @@ export class AnimeService {
      const $anime = this.httpClient.get<Anime[]>(`${this.base}/futurosanimes/${mes}`);
      return $anime;
    }
+
+  searchAnimes(generos: string[] = [], year: number[] = [], categoria: string[] = [], estado: string[] = [], order: string = 'default'): Observable<Anime[]> {
+    let params = new HttpParams();
+
+    if (generos.length > 0) {
+      params = params.append('generos', generos.join(','));
+    }
+
+    if (year.length > 0) {
+      params = params.append('year', year.join(','));
+    }
+
+    if (categoria.length > 0) {
+      params = params.append('categoria', categoria.join(','));
+    }
+
+    if (estado.length > 0) {
+      params = params.append('estado', estado.join(','));
+    }
+
+    if (order !== 'default') {
+      params = params.append('order', order);
+    }
+
+    return this.httpClient.get<Anime[]>(`${this.base}/searcher`, { params });
+  }
 }

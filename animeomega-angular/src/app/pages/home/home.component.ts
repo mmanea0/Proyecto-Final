@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit{
   anteriorImagen(): void {
     if (this.animes$) {
       this.animes$.subscribe(animes => {
-        const lastIndex = 4; // Índice de la última imagen en la vista
+        const lastIndex = 4;
         this.currentIndex = this.currentIndex === 0 ? lastIndex : this.currentIndex - 1;
       });
     }
@@ -67,21 +67,21 @@ export class HomeComponent implements OnInit{
   cargarAnime() {
     this.isLoading = true;
     this.router.params.subscribe((params) => {
-     const id = params['id'];
-     this.AnimeService.getAnime().subscribe(
-       (anime) => {
-         this.animes$ = of(anime);
-         this.isLoading = false;
-
-       },
-       error => {
-         console.error('Error al cargar el anime',error);
-         this.isLoading = false;
-
-       }
-     );
-   });
-}
+      const id = params['id'];
+      this.AnimeService.getAnime().pipe(
+        map(anime => anime.slice(0, 16)) // Obtener solo los primeros 15 animes
+      ).subscribe(
+        (anime) => {
+          this.animes$ = of(anime);
+          this.isLoading = false;
+        },
+        error => {
+          console.error('Error al cargar el anime', error);
+          this.isLoading = false;
+        }
+      );
+    });
+  }
 
 
   tooltipText: string | null = null; // Inicializamos el texto del tooltip como nulo
