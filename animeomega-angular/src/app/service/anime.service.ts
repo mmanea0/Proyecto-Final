@@ -258,4 +258,30 @@ export class AnimeService {
 
     return this.httpClient.get<Anime[]>(`${this.base}/searcher`, { params });
   }
+
+  getgeneros(): Observable<any> {
+    const $anime = this.httpClient.get<string[]>(`${this.base}/getgeneros`);
+    return $anime;
+  }
+
+  getanno(): Observable<any> {
+    const $anime = this.httpClient.get<number[]>(`${this.base}/getanno`);
+    return $anime;
+  }
+
+  getcategorias(): Observable<any> {
+    const $anime = this.httpClient.get<string[]>(`${this.base}/getcategoria`);
+    return $anime;
+  }
+
+  getestados(): Observable<any> {
+    const $anime = this.httpClient.get<string[]>(`${this.base}/getestado`);
+    return $anime;
+  }
+
+  getordenar(): Observable<any> {
+    const $anime = this.httpClient.get<string[]>(`${this.base}/getordenar`);
+    return $anime;
+
+  }
 }

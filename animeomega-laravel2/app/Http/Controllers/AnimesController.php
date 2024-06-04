@@ -7,7 +7,9 @@ use App\Models\Aviso;
 use App\Models\BibliotecaAnime;
 use App\Models\BibliotecaCapitulo;
 use App\Models\CapituloAnime;
+use App\Models\Categoria;
 use App\Models\Enlace;
+use App\Models\Estado;
 use App\Models\Genero;
 use App\Models\GeneroAnime;
 use Carbon\Carbon;
@@ -125,16 +127,16 @@ class AnimesController extends Controller
             });
         }
         switch ($order) {
-            case 'name_asc':
+            case 'Ordenar Ascedente':
                 $query->orderBy('nombre_original_sin_kanji', 'asc');
                 break;
-            case 'name_desc':
+            case 'Odenar Descendente':
                 $query->orderBy('nombre_original_sin_kanji', 'desc');
                 break;
-            case 'rating':
+            case 'Ordenar por Valoracion':
                 $query->orderBy('valoracion', 'desc');
                 break;
-            case 'newest':
+            case 'Ordenar por Fecha de Estreno':
                 $query->orderBy('created_at', 'desc');
                 break;
             default:
@@ -145,6 +147,41 @@ class AnimesController extends Controller
 
         // Devolver los resultados
         return response()->json($animes);
+    }
+
+    public function getordenar(){
+        $ordenar = ['Ordenar Ascedente', 'Odenar Descendente', 'Ordenar por Valoracion', 'Ordenar por Fecha de Estreno'];
+        return response()->json($ordenar);
+    }
+
+    public function getgeneros()
+    {
+        //Obtener los nombres de los géneros
+        $generos = Genero::all()->pluck('genero');
+        return response()->json($generos);
+    }
+
+    public function getanno()
+    {
+        $annos = Anime::all()->pluck('fecha_de_estreno')
+            ->map(function ($fecha) {
+                return Carbon::parse($fecha)->year;
+            })
+            ->unique()
+            ->sortDesc()
+            ->values();
+        return response()->json($annos);
+    }
+
+    public function getcategoria()
+    {
+        $categoria = Categoria::all()->pluck('tipo');
+        return response()->json($categoria);
+    }
+
+    public function getestado(){
+        $estado = Estado::all()->pluck('estado');
+        return response()->json($estado);
     }
 
     public function show(Request $request, $id)

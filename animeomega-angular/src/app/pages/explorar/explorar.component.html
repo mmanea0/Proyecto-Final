@@ -1,21 +1,42 @@
-<div class="mt-5 ml-10">
-
-  <mat-form-field>
-    <mat-label>Filtrar por género:</mat-label>
+<div class="mt-5 flex flex-row items-center">
+  <mat-form-field class="mr-10 basis-1/5 mt-5">
+    <mat-label>Género:</mat-label>
     <mat-select [formControl]="generosControl" multiple>
       <mat-option *ngFor="let genero of generosDisponibles" [value]="genero">{{ genero }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Filtrar por Año:</mat-label>
+  <mat-form-field class="mr-10 basis-1/5 mt-5">
+    <mat-label>Año:</mat-label>
     <mat-select [formControl]="annosControl" multiple>
       <mat-option *ngFor="let anno of annosDisponibles" [value]="anno">{{ anno }}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <button (click)="filtrar()">Filtrar</button>
+  <mat-form-field class="mr-10 basis-1/5 mt-5">
+    <mat-label>Categoria:</mat-label>
+    <mat-select [formControl]="categoriasControl" multiple>
+      <mat-option *ngFor="let categoria of categoriasDisponibles" [value]="categoria">{{ categoria }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="mr-10 basis-1/5 mt-5">
+    <mat-label>Estado:</mat-label>
+    <mat-select [formControl]="estadoControl" multiple>
+      <mat-option *ngFor="let estado of estadoDisponible" [value]="estado">{{ estado }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="mr-10 basis-1/5 mt-5">
+    <mat-label>Ordenar:</mat-label>
+    <mat-select [formControl]="orderControl">
+      <mat-option *ngFor="let order of orderDisponible" [value]="order">{{ order }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button class="btn btn-accent" (click)="filtrar()">Filtrar</button>
 </div>
+
 
 
 <div class="mt-10">

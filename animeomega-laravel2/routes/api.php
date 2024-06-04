@@ -38,6 +38,13 @@ Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
 Route::post('/addcapituloanime/{id_anime}',[AnimesController::class, 'addCapituloAnime']);
 
 Route::get('/futurosanimes/{mes}', [AnimesController::class, 'futurosanimes']);
+Route::get('/getgeneros', [AnimesController::class, 'getgeneros']);
+Route::get('/getanno', [AnimesController::class, 'getanno']);
+Route::get('/getcategoria', [AnimesController::class, 'getcategoria']);
+Route::get('/getestado', [AnimesController::class, 'getestado']);
+Route::get('/getordenar', [AnimesController::class, 'getordenar']);
+
+
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
 

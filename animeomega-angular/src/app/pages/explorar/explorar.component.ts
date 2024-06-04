@@ -31,13 +31,24 @@ import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
   styleUrl: './explorar.component.css'
 })
 export class ExplorarComponent implements OnInit{
-  generosDisponibles: string[] = ['Action', 'Adventure', 'Comedy', 'Drama','Fantasy','Slice of Life'];
+  generosDisponibles: string[] = [];
   generosSeleccionados: string[] = [];
-  annosDisponibles: number[] = [2021, 2020, 2019, 2018, 2017, 2016, 2015,2006];
+  annosDisponibles: number[] = [];
   annosSeleccionados: number[] = [];
+  categoriasDisponibles: string[] = [];
+  categoriasSeleccionadas: string[] = [];
+  estadoDisponible: string[] = [];
+  estadoSeleccionados: string[] = [];
+  orderDisponible: string[] = [];
+  orderSeleccionados: string = '';
+
   animes$: Observable<any> | undefined;
   generosControl = new FormControl();
   annosControl = new FormControl();
+  categoriasControl = new FormControl();
+  estadoControl = new FormControl();
+  orderControl = new FormControl();
+
   pageSize = 20;
   pageIndex = 0;
   animes: any[] = [];
@@ -50,16 +61,29 @@ export class ExplorarComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.cargarGeneros();
+    this.cargarAnnos();
     this.cargarAnime();
+    this.cargarCategorias();
+    this.cargarEstados();
+    this.cargarOrdenar();
     this.generosControl.valueChanges.subscribe((selectedGeneros: string[]) => {
       this.generosSeleccionados = selectedGeneros;
     });
-
     this.annosControl.valueChanges.subscribe((selectedAnnos: number[]) => {
       this.annosSeleccionados = selectedAnnos;
     });
-  }
+    this.categoriasControl.valueChanges.subscribe((selectedCategorias: string[]) => {
+      this.categoriasSeleccionadas = selectedCategorias;
+    });
+    this.estadoControl.valueChanges.subscribe((selectedEstado: string[]) => {
+      this.estadoSeleccionados = selectedEstado;
+    });
+    this.orderControl.valueChanges.subscribe((selectedOrder: string) => {
+      this.orderSeleccionados = selectedOrder;
+    });
 
+  }
 
   cargarAnime() {
     this.router.params.subscribe((params) => {
@@ -99,26 +123,63 @@ export class ExplorarComponent implements OnInit{
     return synopsis;
   }
 
-  toggleGeneroSeleccionado(genero: string): void {
-    const index = this.generosSeleccionados.indexOf(genero);
-    if (index === -1) {
-      this.generosSeleccionados.push(genero);
-    } else {
-      this.generosSeleccionados.splice(index, 1);
-    }
+  cargarGeneros(): void {
+    this.AnimeService.getgeneros().subscribe(
+      (generos) => {
+        this.generosDisponibles = generos;
+      },
+      error => {
+        console.error('Error al cargar los géneros', error);
+      }
+    );
   }
 
-  toggleAnnoSeleccionado(anno: number): void {
-    const index = this.annosSeleccionados.indexOf(anno);
-    if (index === -1) {
-      this.annosSeleccionados.push(anno);
-    } else {
-      this.annosSeleccionados.splice(index, 1);
-    }
+  cargarAnnos(): void {
+    this.AnimeService.getanno().subscribe(
+      (annos) => {
+        this.annosDisponibles = annos;
+      },
+      error => {
+        console.error('Error al cargar los años', error);
+      }
+    );
+  }
+
+  cargarCategorias(): void {
+    this.AnimeService.getcategorias().subscribe(
+      (categorias) => {
+        this.categoriasDisponibles = categorias;
+      },
+      error => {
+        console.error('Error al cargar las categorias', error);
+      }
+    );
+  }
+
+  cargarEstados(): void {
+    this.AnimeService.getestados().subscribe(
+      (estados) => {
+        this.estadoDisponible = estados;
+      },
+      error => {
+        console.error('Error al cargar los estados', error);
+      }
+    );
+  }
+
+  cargarOrdenar(): void {
+    this.AnimeService.getordenar().subscribe(
+      (ordenar) => {
+        this.orderDisponible = ordenar;
+      },
+      error => {
+        console.error('Error al cargar los ordenar', error);
+      }
+    );
   }
 
   filtrar(): void {
-    this.AnimeService.searchAnimes(this.generosSeleccionados, this.annosSeleccionados).subscribe(
+    this.AnimeService.searchAnimes(this.generosSeleccionados, this.annosSeleccionados, this.categoriasSeleccionadas,this.estadoSeleccionados,this.orderSeleccionados).subscribe(
       (animes) => {
         this.allAnimes = animes;
         this.pageIndex = 0;
