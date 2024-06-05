@@ -49,18 +49,25 @@
       }
 
       @if (montarinfouser) {
-        <div>
+        <div class="flex justify-center">
           <div class="relative left-10 bottom-5">
             <!-- Avatar y nickname -->
             <div class="absolute -top-24 left-5 p-4 text-white z-10">
-              <img [src]="(datosUsuario$ | async)?.avatar" class="rounded-xl" alt="" height="132px" width="131px" >
+              <img [src]="(datosUsuario$ | async)?.avatar" class="rounded-xl" alt="" height="132px" width="131px">
             </div>
             <!-- Imagen de fondo con filtro de desenfoque -->
             <div class="rounded-xl overflow-hidden" style="width: 200px; height: 250px;">
               <img src="assets/imagenes/animacion.webp" class="w-full h-full" style="filter: blur(15px);">
             </div>
+            <!-- Información del usuario -->
+            <div class="absolute top-20 inset-x-0 text-white text-lg flex justify-center items-center">
+              <p class="ml-2">{{ (datosUsuario$ | async)?.nickname }}</p>
+            </div>
+
+
             <!-- Botón de cerrar sesión -->
-            <button class="absolute top-40 left-5 p-4 bg-gray-300 bg-opacity-60 text-white rounded-2xl" (click)="logout()">
+
+            <button class="absolute top-40 left-11 p-4 bg-gray-300 bg-opacity-60 text-white rounded-2xl" (click)="logout()">
               Cerrar sesión
             </button>
           </div>

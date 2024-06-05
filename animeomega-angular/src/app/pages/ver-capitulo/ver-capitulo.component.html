@@ -22,7 +22,7 @@
     @for (enlace of data.enlaces; track enlace) {
       <div class="my-4 flex flex-col items-center w-full video-container">
         <iframe [src]="sanitizeUrl(enlace.url)" width="1024" height="480" frameborder="0" allowfullscreen class="rounded-2xl"></iframe>
-        <div class="flex mt-4" style="margin-left: -40rem">
+ <!--       <div class="flex mt-4" style="margin-left: -40rem">
           <div [innerHTML]="ICONO_ANTERIOR"
             class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl mr-4"
             (click)="volverAlCapituloanterior()"
@@ -34,7 +34,7 @@
             [class.disabled]="!capituloSiguienteDisponible">
           </div>
           <div [innerHTML]="ICONO_BOMBILLA" class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl" (click)="aplicarFiltroOscuro($event)"></div>
-        </div>
+        </div>-->
       </div>
     }
     @if (filtroOscuroActivo) {

@@ -140,17 +140,13 @@ export class BarraLateralComponent implements OnInit{
 
 
     this.ICONO_ESTRENO = this.santizer.bypassSecurityTrustHtml(`
-  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_60_45)">
-<path d="M33.0007 9.16602H11.0007C8.97561 9.16602 7.33398 10.8076 7.33398 12.8327V34.8327C7.33398 36.8577 8.97561 38.4993 11.0007 38.4993H33.0007C35.0257 38.4993 36.6673 36.8577 36.6673 34.8327V12.8327C36.6673 10.8076 35.0257 9.16602 33.0007 9.16602Z" stroke="white" stroke-opacity="0.7" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M29.334 5.5V12.8333" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M14.666 5.5V12.8333" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.33398 20.166H36.6673" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.166 27.5H21.9993" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22 27.5V33" stroke="white"  stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_622_2)">
+<path d="M9.16667 22H5.5L22 5.5L38.5 22H34.8333" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.16602 22V34.8333C9.16602 35.8058 9.55232 36.7384 10.24 37.4261C10.9276 38.1137 11.8602 38.5 12.8327 38.5H31.166C32.1385 38.5 33.0711 38.1137 33.7587 37.4261C34.4464 36.7384 34.8327 35.8058 34.8327 34.8333V22" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
-<clipPath id="clip0_60_45">
+<clipPath id="clip0_622_2">
 <rect width="44" height="44" fill="white"/>
 </clipPath>
 </defs>
@@ -199,19 +195,11 @@ export class BarraLateralComponent implements OnInit{
       this.limpiarSeleccion();
       return;
     }
-
-    // Inicializar el objeto seleccionado si es nulo o indefinido
     if (!this.seleccionado) {
       this.seleccionado = {};
     }
-
-    // Verificar si el elemento actual ya está seleccionado
     const elementoSeleccionado = this.seleccionado[elemento];
-
-    // Cambiar el estado de selección del elemento
     this.seleccionado[elemento] = !elementoSeleccionado;
-
-    // Deseleccionar los otros elementos si este elemento se selecciona
     if (this.seleccionado[elemento]) {
       for (const key in this.seleccionado) {
         if (key !== elemento) {

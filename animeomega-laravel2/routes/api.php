@@ -43,11 +43,11 @@ Route::get('/getanno', [AnimesController::class, 'getanno']);
 Route::get('/getcategoria', [AnimesController::class, 'getcategoria']);
 Route::get('/getestado', [AnimesController::class, 'getestado']);
 Route::get('/getordenar', [AnimesController::class, 'getordenar']);
-
-
+Route::get('/getUltimoCapituloDelAnime/{id_anime}', [AnimesController::class, 'getUltimoCapituloDelAnime']);
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
 
+    Route::post('/animeestreno/{animeId}', [NotificacionesController::class, 'animeestreno']);
     Route::get('/usuarioquemasanimeavisualizado', [EstadisticasController::class, 'usuarioquemasanimesavisto'])->middleware('can:admin-access');
     Route::get('/contadorcompletados', [EstadisticasController::class, 'aniemesCompletados'])->middleware('can:admin-access');
     Route::get('/contadorabandonados', [EstadisticasController::class, 'animesAbandonados'])->middleware('can:admin-access');

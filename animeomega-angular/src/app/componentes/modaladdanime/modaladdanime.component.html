@@ -1,9 +1,7 @@
 
 
-  <button
-  title="Añadir anime"
-  class="group cursor-pointer outline-none hover:rotate-90 duration-300">
-    <label for="my_modal_6" class="btn bg-transparent hover:bg-transparent">
+
+    <label for="my_modal_6" class="btn bg-transparent hover:bg-transparent group cursor-pointer outline-none hover:rotate-90 duration-300 border-none">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="50px"
@@ -20,7 +18,7 @@
   </svg>
 
     </label>
-</button>
+
 
 <input type="checkbox" id="my_modal_6" class="modal-toggle" />
 <div class="modal" role="dialog">
@@ -36,7 +34,7 @@
           (input)="search()"
         />
       </label>
-      <div class="overflow-y-auto max-h-96 mt-5 "> <!-- Aquí se limita la altura máxima, se agrega el desplazamiento vertical y se configuran dos columnas por fila -->
+      <div class="overflow-y-auto max-h-96 mt-5 ">
         @if (loading) {
           <div class="flex items-center mt-2">
             <p class="mr-2">Buscando</p>
@@ -46,7 +44,7 @@
           <div>
             <div class="anime-list grid grid-cols-2 gap-4 ">
               @for (anime of results; track anime) {
-                <div class="card card-compact w-48 h-96 bg-white shadow-xl mb-5 mt-10"> <!-- Se ajusta el ancho y el alto de la tarjeta -->
+                <div class="card card-compact w-48 h-96 bg-white shadow-xl mb-5 mt-10">
                   <figure class="px-10 pt-10">
                     <img
                       [src]="anime.coverImage.large"

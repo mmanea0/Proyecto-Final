@@ -215,6 +215,20 @@ class AnimesController extends Controller
         ];
     }
 
+    public function findAnime(Request $request, $anime){
+        // Realizar la búsqueda de anime por nombre original o en inglés
+        $animes = Anime::where('nombre_original', 'LIKE', "%$anime%")
+            ->orWhere('nombre_en', 'LIKE', "%$anime%")
+            ->get();
+        // Verificar si se encontraron resultados
+        if ($animes->isEmpty()) {
+            // No se encontraron resultados, devolver un mensaje de error
+            return response()->json(['message' => 'No se encontraron resultados para la búsqueda: ' . $anime], 404);
+        }
+        // Se encontraron resultados, devolver los animes encontrados
+        return response()->json($animes);
+    }
+
 
     public function enlacesCapitulo(Request $request, $animeId, $capituloId)
     {
@@ -365,6 +379,27 @@ class AnimesController extends Controller
 
         // Retornar los animes encontrados
         return response()->json($animes);
+    }
+
+    public function getUltimoCapituloDelAnime($animeId)
+    {
+        // Buscar el anime por su ID
+        $anime = Anime::find($animeId);
+
+        // Verificar si el anime existe
+        if (!$anime) {
+            return response()->json(['message' => 'Anime no encontrado'], 404);
+        }
+
+        $ultimoCapitulo = $anime->capitulos()->orderByDesc('numero_capitulo')->first();
+
+        // Verificar si se encontró algún capítulo
+        if (!$ultimoCapitulo) {
+            return response()->json( );
+        }
+
+        // Retornar el número del último capítulo
+        return response()->json(['ultimo_capitulo' => $ultimoCapitulo->numero_capitulo]);
     }
 
 }

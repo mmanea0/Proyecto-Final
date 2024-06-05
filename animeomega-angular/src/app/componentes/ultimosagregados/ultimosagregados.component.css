@@ -1,0 +1,29 @@
+/* Establece un mínimo de 1 columna y un máximo de 5 columnas */
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Media queries para ajustar el número de columnas en la rejilla y el ancho de columna */
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Aumenta el ancho de la columna */
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Aumenta el ancho de la columna */
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Aumenta el ancho de la columna */
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Aumenta el ancho de la columna */
+  }
+}

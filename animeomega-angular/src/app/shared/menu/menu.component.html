@@ -40,20 +40,22 @@
       <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1 ">
         <i [innerHTML]="ICONO_LUPA"></i>
       </button>
-      <input type="text" [(ngModel)]="terminoBusqueda" autocomplete="off" (input)="buscarAnime()" name="terminoBusqueda" required="" placeholder="BUSCAR..." class="input px-8 py-3 border-2 border-white focus:outline-none placeholder-white text-white bg-transparent rounded-lg focus:border-white w-full">
+      <input type="text" [(ngModel)]="terminoBusqueda" (input)="buscarAnime()" name="terminoBusqueda" required="" placeholder="BUSCAR..." class="input px-8 py-3 border-2 border-white focus:outline-none placeholder-white text-white bg-transparent rounded-lg focus:border-white w-full">
       <button class="absolute right-3 -translate-y-1/2 top-1/2 p-1" type="reset">
         <i [innerHTML]="ICONO_CERRAR"></i>
       </button>
     </form>
 
-    @if (terminoBusqueda && resultadosBusqueda.length > 0) {
-      <div class="absolute z-20 bg-red-400 rounded-lg shadow-lg max-h-36 overflow-y-auto w-full md:w-80 mt-56">
+    @if (terminoBusqueda && resultadosBusqueda.length > 0)
+    {
+      <div class="absolute z-20 text-white bg-[#1b2636] rounded-lg shadow-lg h-52 overflow-y-auto w-full md:w-80 mt-72 border-[2.5px] border-gray-300">
         <ul>
-          @for (anime of resultadosBusqueda.slice(); track anime) {
-            <li class="px-4 py-2 hover:bg-gray-100">
-              <a href="#" (click)="seleccionarAnime(anime)" class="flex">
-                <img src="{{ anime.foto}}" alt="" width="40px" height="50px">
-                {{ anime.nombre_original }}
+          @for (anime of resultadosBusqueda; track anime)
+          {
+            <li class="px-4 py-2 hover:bg-gray-100 hover:bg-opacity-40  mt-2 bg-[#1b2636] rounded-xl">
+              <a href="#" (click)="seleccionarAnime($event, anime)" class="flex items-center space-x-2">
+                <img src="{{ anime.foto }}" alt="" class="w-10 h-12 rounded">
+                {{ anime.nombre_original_sin_kanji }}
               </a>
             </li>
           }
@@ -82,22 +84,26 @@
         <div class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-circle mr-10">
             <div class="indicator">
-              <span class="indicator-item badge badge-secondary">{{ notificaciones.length }}</span>
+              @if (notificaciones.length > 0) {
+                <span class="indicator-item badge badge-secondary">{{ notificaciones.length }}</span>
+              }
               <i [innerHTML]="ICONO_CAMPANA" class="hover:bg-gray-200 hover:rounded-xl hover:bg-opacity-40"></i>
             </div>
           </div>
-          <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-            <div class="card-body">
+          <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 shadow">
+            <div class="card-body bg-[#1a1e2b] rounded-xl border-[2.5px] border-white">
               <span class="font-bold text-lg">Notificaciones</span>
               <div *ngIf="notificaciones.length === 0">
                 <div class="text-center text-gray-500">No tienes notificaciones</div>
               </div>
-              <div *ngFor="let notificacion of notificaciones">
-                <div class="badge badge-accent">{{ notificacion.mensaje }}</div>
+              <div *ngFor="let notificacion of notificaciones" >
+                <div class="badge text-white bg-[#0284c7]">{{ notificacion.mensaje }}</div>
                 <div class="flex items-center space-x-2 my-2 px-5">
-                  <a (click)="verAnime(notificacion.anime, notificacion.id)" class="flex items-center space-x-2 cursor-pointer hover:bg-sky-500 hover:rounded-xl hover:text-white">
+                  <a (click)="verAnime(notificacion.anime, notificacion.id)" class="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 hover:bg-opacity-40 hover:rounded-xl hover:text-white">
+                    <div class="tooltip tooltip-left flex items-center" [attr.data-tip]="notificacion.anime.nombre_original_sin_kanji">
                     <img src="{{ notificacion.anime.foto }}" alt="Anime Foto" class="w-10 h-10 object-cover rounded mr-5">
-                    <div class="text-white flex-grow">{{ notificacion.anime.nombre_original_sin_kanji }}</div>
+                      <div class="text-white flex-grow">{{ notificacion.anime.nombre_original_sin_kanji | truncate:15 }}</div>
+                    </div>
                   </a>
                 </div>
               </div>
@@ -109,16 +115,6 @@
         </div>
       </div>
 
-
-      <!--      <button class="mr-10 hover:bg-gray-300 hover:bg-opacity-40 hover:rounded-xl">-->
-<!--        <i [innerHTML]="ICONO_CAMPANA" class="hover:bg-gray-200 hover:rounded-xl"></i>-->
-<!--      </button>-->
-<!--      <button class="mr-5 hover:bg-gray-300 hover:bg-opacity-40 hover:rounded-xl">-->
-<!--        <div class="indicator">-->
-<!--          <i [innerHTML]="ICONO_NOTIFICACIONES"></i>-->
-<!--          <span class="badge badge-xs badge-primary indicator-item"></span>-->
-<!--        </div>-->
-<!--      </button>-->
       <div class="ocultar">
         <div class="dropdown dropdown-end pr-5">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
@@ -128,13 +124,13 @@
           </div>
           <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-[#1B2636] rounded-box w-52">
             <li>
-<!--              <a class="justify-between">-->
-<!--                Profile-->
-<!--                <span class="badge">New</span>-->
-<!--              </a>-->
-<!--            </li>-->
-            <li><a>Nombre Usuario</a></li>
-            <li (click)="logout()"><a><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <li>
+            <div *ngIf="(datosUsuario$ | async) as user">
+              <!-- Usar la variable user para acceder a los datos del usuario -->
+              {{ user.nickname }}
+            </div>
+
+            <li (click)="logout()"><a><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout mt-3" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
             <path d="M9 12h12l-3 -3" />

@@ -133,11 +133,9 @@ export class VerCapituloComponent implements OnInit, OnDestroy{
           this.animeService.getEnlacesCapitulo(animeId, capituloId)
         ]).pipe(
           tap(() => {
-            // Cambiar isLoading a false cuando los datos se carguen correctamente
             this.isLoading = false;
           }),
           tap(([anime, enlaces]) => {
-            // Verificar si hay un capítulo anterior disponible
             const capituloAnteriorId = parseInt(capituloId) - 1;
             this.capituloAnteriorDisponible = capituloAnteriorId >= 1;
           })

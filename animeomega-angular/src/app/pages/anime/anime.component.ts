@@ -46,6 +46,8 @@ export class AnimeComponent implements OnInit {
       const id = params['id'];
       this.animeService.getAnimePorId(id).subscribe(
         (anime) => {
+          // Ordenar los capítulos en orden descendente
+          anime.capitulos.sort((a: any, b: any) => b.numero_capitulo - a.numero_capitulo);
           this.anime$ = of(anime);
           this.verificarFavorito(id);
           anime.capitulos.forEach((capitulo: any) => {
@@ -60,6 +62,7 @@ export class AnimeComponent implements OnInit {
       );
     });
   }
+
 
   verCapitulo(animeId: number, capituloId: number): void {
     this.router.navigate(['/anime', animeId, 'capitulo', capituloId]);

@@ -99,16 +99,14 @@
                   <div class="flex justify-center -mt-20 ml-10">
                     <ul class="w-full md:w-1/2">
                       @for (capitulo of anime.capitulos; track capitulo) {
-                        <li class="bg-[#1a1e2b] mb-2 flex pr-16 pl-5 py-5 rounded-xl">
-                          <div class="avatar">
-                            <div class="w-36 rounded-xl mr-10">
-                              <img [src]="anime.foto"/>
+                        <li class="bg-[#1a1e2b] mb-2 flex pr-16 pl-5 py-5 rounded-xl items-center">
+                          <a (click)="verCapitulo(anime.id, capitulo.id)" style="cursor: pointer;" class="flex items-center">
+                            <div class="avatar">
+                              <div class="w-36 rounded-xl mr-10">
+                                <img [src]="anime.foto"/>
+                              </div>
                             </div>
-                          </div>
-                          <a (click)="verCapitulo(anime.id, capitulo.id)" style="cursor: pointer;">
-                            <strong>CAPÍTULO Nº {{ capitulo.numero_capitulo }}</strong> <br>
-                            SINOPSIS: <br>
-                            {{ capitulo.sipnosis }}
+                            <strong class="items-center mx-auto text-center">CAPÍTULO Nº {{ capitulo.numero_capitulo }}</strong>
                           </a>
                           @if (sesionIniciada) {
                             <div class="flex items-center ml-auto">
@@ -124,6 +122,7 @@
                           }
                         </li>
                       }
+
                     </ul>
                   </div>
                 </div>

@@ -36,7 +36,6 @@ export class AnimeService {
 
   }
 
-
   getEnlacesCapitulo(animeId: number, capituloId: number): Observable<any> {
     const $anime = this.httpClient.get<any>(`${this.animeUrl}/${animeId}/capitulos/${capituloId}`);
     return $anime;
@@ -57,7 +56,6 @@ export class AnimeService {
     // Si no se encontró un token JWT o la sesión no está iniciada, retornar un observable vacío o manejar el caso según sea necesario
     return new Observable<any>();
   }
-
 
   getUnfavortio(animeId: number): Observable<any> {
     if (this.isSesionIniciada()) {
@@ -283,5 +281,9 @@ export class AnimeService {
     const $anime = this.httpClient.get<string[]>(`${this.base}/getordenar`);
     return $anime;
 
+  }
+
+  getUltimoCapituloDelAnime(animeId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.base}/getUltimoCapituloDelAnime/${animeId}`);
   }
 }

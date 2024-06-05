@@ -8,6 +8,7 @@ import {Anime} from "../../interfaces/anime";
 import {delay, Observable} from "rxjs";
 import {AutenticacionService} from "../../auth/services/autenticacion.service";
 import {NotificacionesService} from "../../service/notificaciones.service";
+import {TruncatePipe} from "../../pipe/limte.pipe";
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +18,8 @@ import {NotificacionesService} from "../../service/notificaciones.service";
     FormsModule,
     AsyncPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    TruncatePipe
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
@@ -28,8 +30,8 @@ export class MenuComponent implements OnInit, OnDestroy{
   ICONO_CAMPANA: SafeHtml;
   ICONO_NOTIFICACIONES: SafeHtml;
   terminoBusqueda: string = '';
-  resultadosBusqueda: Anime[] = [
-  ];
+  resultadosBusqueda: Anime[] = [];
+  listadodeanimes: Anime[] = [];
   ICONO_DISCORD: SafeHtml;
   montarinfouser = false;
   isAdmin = false;
@@ -49,8 +51,9 @@ export class MenuComponent implements OnInit, OnDestroy{
     this.checkAdminRole();
     this.cargarNotificaciones();
     this.ajaxnotificaciones()
-
+    this.cargaranime();
   }
+
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -115,36 +118,29 @@ export class MenuComponent implements OnInit, OnDestroy{
   }
 
   buscarAnime(): void {
-    if (this.terminoBusqueda.trim() !== '') { // Verifica si el término de búsqueda no está vacío
-      this.animeService.getAnimeNombre(this.terminoBusqueda).subscribe(
-        (data: Anime[]) => {
-          // Almacena los resultados de la búsqueda
-          this.resultadosBusqueda = data;
-        },
-        (error) => {
-          // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
-          console.error(error);
-        }
-      );
-    } else {
-      // Limpia los resultados de búsqueda si el término de búsqueda está vacío
-      this.resultadosBusqueda = [];
-    }
+    const termino = this.terminoBusqueda.toLowerCase();
+    this.resultadosBusqueda = this.listadodeanimes.filter(anime =>
+      anime.nombre_original_sin_kanji.toLowerCase().includes(termino)
+    );
   }
 
-  seleccionarAnime(anime: Anime): void {
+  cargaranime() {
+    this.animeService.getAnime().subscribe({
+      next: (animes) => {
+        this.listadodeanimes = animes;
+      },
+      error: (error) => {
+        console.error('Error al obtener animes:', error);
+      }
+    });
+  }
+
+  seleccionarAnime(event: Event, anime: any): void {
+    event.preventDefault();
     console.log('Anime seleccionado:', anime);
+    this.router.navigate(['/anime', anime.id]);
   }
 
-  // Método para redirigir al componente resultado-busqueda con los resultados de la búsqueda
-  redireccionarResultadoBusqueda() {
-    // Comprueba si el término de búsqueda está definido
-    if (this.terminoBusqueda) {
-      // Navega al componente resultado-busqueda y pasa el término de búsqueda como parámetro en la URL
-      this.router.navigate(['/resultado', {termino: this.terminoBusqueda}]);
-    }
-
-  }
 
   mostrarinfmoracion() {
     this.autenticacionService.getDatosUsuario().subscribe(usuario => {
@@ -215,7 +211,6 @@ export class MenuComponent implements OnInit, OnDestroy{
       }, 300); // 300 milisegundos
     }
   }
-
 
   marcarTodasComoLeidas(): void {
     this.notificacioneservice.marcarTodasComoLeidas().subscribe({
