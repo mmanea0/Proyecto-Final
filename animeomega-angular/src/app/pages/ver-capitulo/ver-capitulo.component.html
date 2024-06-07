@@ -1,41 +1,28 @@
-<!--
-<div *ngIf="isLoading">
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <span class="loading loading-spinner text-warning loading-lg"></span>
-  </div>
-</div>
 
-
-<div *ngIf="isLoading">
-</div>
--->
-
-
-<!-- app/ver-capitulo/ver-capitulo.component.html -->
 @if (animeAndEnlaces$ | async; as data) {
   <div>
     <div class="flex items-center justify-between">
       <h2 class="text-4xl ml-20">{{ data.anime.nombre_original_sin_kanji }}</h2>
-
-      <div (click)="verAnime(data.anime.id)" [innerHTML]="ICONO_ANIME" class="cursor-pointer mr-10 bg-[#0f131b] p-1 px-10 rounded-xl"></div>
+      <h2 class="text-4xl ml-20">Capítulo: {{ numeroCapitulo }}</h2> <!-- Mostrar el número del capítulo -->      <div (click)="verAnime(data.anime.id)" [innerHTML]="ICONO_ANIME" class="cursor-pointer mr-10 bg-[#0f131b] p-1 px-10 rounded-xl"></div>
     </div>
     @for (enlace of data.enlaces; track enlace) {
       <div class="my-4 flex flex-col items-center w-full video-container">
         <iframe [src]="sanitizeUrl(enlace.url)" width="1024" height="480" frameborder="0" allowfullscreen class="rounded-2xl"></iframe>
- <!--       <div class="flex mt-4" style="margin-left: -40rem">
+        <div class="flex mt-4" style="margin-left: -40rem">
           <div [innerHTML]="ICONO_ANTERIOR"
-            class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl mr-4"
-            (click)="volverAlCapituloanterior()"
-            [class.disabled]="!capituloAnteriorDisponible">
+               class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl mr-4"
+               (click)="verAnteriorCapitulo()"
+               [class.disabled]="capituloAnteriorDisponible">
           </div>
           <div [innerHTML]="ICONO_SIGUIENTE"
-            class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl mr-4"
-            (click)="verCapituloSiguiente()"
-            [class.disabled]="!capituloSiguienteDisponible">
+               class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl mr-4"
+               (click)="verSiguienteCapitulo()"
+               [class.disabled]="capituloSiguienteDisponible">
           </div>
           <div [innerHTML]="ICONO_BOMBILLA" class="cursor-pointer bg-[#0f131b] p-1 px-7 rounded-xl" (click)="aplicarFiltroOscuro($event)"></div>
-        </div>-->
+        </div>
       </div>
+
     }
     @if (filtroOscuroActivo) {
       <div class="dark-filter"></div>

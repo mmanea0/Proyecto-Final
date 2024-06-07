@@ -402,4 +402,83 @@ class AnimesController extends Controller
         return response()->json(['ultimo_capitulo' => $ultimoCapitulo->numero_capitulo]);
     }
 
+    public function versiguientecapitulo($idanime, $idcapitulo)
+    {
+        // Obtener el capítulo actual
+        $capituloActual = CapituloAnime::where('anime_id', $idanime)
+            ->where('id', $idcapitulo)
+            ->first();
+
+        if (!$capituloActual) {
+            // Manejar el caso en que el capítulo actual no exista
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
+
+        // Obtener el siguiente capítulo basado en el número de capítulo
+        $siguienteCapitulo = CapituloAnime::where('anime_id', $idanime)
+            ->where('numero_capitulo', '>', $capituloActual->numero_capitulo)
+            ->orderBy('numero_capitulo', 'asc')
+            ->first();
+
+        if (!$siguienteCapitulo) {
+            // Manejar el caso en que no haya un siguiente capítulo
+            return response()->json([]);
+        }
+
+        // Retornar el siguiente capítulo con el ID actualizado
+        return response()->json([
+            'id' => $siguienteCapitulo->id,
+            'anime_id' => $siguienteCapitulo->anime_id,
+            'numero_capitulo' => $siguienteCapitulo->numero_capitulo
+        ]);
+    }
+
+    public function veranteriorcapitulo($idanime, $idcapitulo)
+    {
+        // Obtener el capítulo actual
+        $capituloActual = CapituloAnime::where('anime_id', $idanime)
+            ->where('id', $idcapitulo)
+            ->first();
+
+        if (!$capituloActual) {
+            // Manejar el caso en que el capítulo actual no exista
+            return response()->json([]);
+        }
+
+        // Obtener el capítulo anterior basado en el número de capítulo
+        $anteriorCapitulo = CapituloAnime::where('anime_id', $idanime)
+            ->where('numero_capitulo', '<', $capituloActual->numero_capitulo)
+            ->orderBy('numero_capitulo', 'desc')
+            ->first();
+
+        if (!$anteriorCapitulo) {
+            // Manejar el caso en que no haya un capítulo anterior
+            return response()->json([]);
+        }
+
+        // Retornar el capítulo anterior con el ID actualizado
+        return response()->json([
+            'id' => $anteriorCapitulo->id,
+            'anime_id' => $anteriorCapitulo->anime_id,
+            'numero_capitulo' => $anteriorCapitulo->numero_capitulo
+        ]);
+    }
+
+    public static function getnumerocapitulo($idanime, $idcapitulo)
+    {
+        // Buscar el capítulo en la base de datos
+        $capitulo = CapituloAnime::where('anime_id', $idanime)
+            ->where('id', $idcapitulo)
+            ->first();
+        // Verificar si se encontró el capítulo
+        if ($capitulo) {
+            // Retornar el número del capítulo
+            return $capitulo->numero_capitulo;
+        } else {
+            // Si no se encuentra el capítulo, retornar null o lanzar una excepción según tus necesidades
+            return null;
+        }
+    }
+
+
 }

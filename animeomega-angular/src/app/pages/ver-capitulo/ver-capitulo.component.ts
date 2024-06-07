@@ -4,6 +4,9 @@ import {AnimeService} from "../../service/anime.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import { AsyncPipe } from "@angular/common";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import Swal from "sweetalert2";
+
+
 
 @Component({
   selector: 'app-ver-capitulo',
@@ -27,7 +30,9 @@ export class VerCapituloComponent implements OnInit, OnDestroy{
   videoEnlaces: string[] = [];
   capituloAnteriorDisponible = false;
   capituloSiguienteDisponible = false;
-
+  private animeId: number | undefined;
+  private capituloId: number | undefined;
+  numeroCapitulo: number | undefined;
 
   animeAndEnlaces$: Observable<{ anime: any, enlaces: any }> | undefined;
     constructor(
@@ -91,7 +96,12 @@ export class VerCapituloComponent implements OnInit, OnDestroy{
     }
 
   ngOnInit(): void {
-    this.cargarCapitulo();
+    this.route.params.subscribe(params => {
+      this.animeId = params['animeId'];
+      this.capituloId = params['capituloId'];
+      this.cargarCapitulo();
+    });
+
   }
 
   ngOnDestroy(): void {
@@ -123,27 +133,28 @@ export class VerCapituloComponent implements OnInit, OnDestroy{
     }
   }
 
+  obtenerNumeroCapitulo(animeId: number, capituloId: number): Observable<number> {
+    return this.animeService.getcapituloanime(animeId, capituloId);
+  }
+
   cargarCapitulo(): void {
     this.animeAndEnlaces$ = this.route.params.pipe(
       switchMap(params => {
         const animeId = params['animeId'];
         const capituloId = params['capituloId'];
+
         return combineLatest([
           this.animeService.getAnimePorId(animeId),
-          this.animeService.getEnlacesCapitulo(animeId, capituloId)
+          this.animeService.getEnlacesCapitulo(animeId, capituloId),
+          this.obtenerNumeroCapitulo(animeId, capituloId) // Nuevo: obtener número del capítulo
         ]).pipe(
-          tap(() => {
-            this.isLoading = false;
-          }),
-          tap(([anime, enlaces]) => {
-            const capituloAnteriorId = parseInt(capituloId) - 1;
-            this.capituloAnteriorDisponible = capituloAnteriorId >= 1;
-          })
+          tap(([_, __, numeroCapitulo]) => this.numeroCapitulo = numeroCapitulo),
+          map(([anime, enlaces, _]) => ({ anime, enlaces })) // Omitimos el numeroCapitulo de aquí
         );
-      }),
-      map(([anime, enlaces]) => ({ anime, enlaces }))
+      })
     );
   }
+
 
   sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -153,39 +164,85 @@ export class VerCapituloComponent implements OnInit, OnDestroy{
     this.router.navigate(['/anime', animeId]);
   }
 
-  volverAlCapituloanterior(): void {
-    // Obtener los parámetros de la ruta actual
-    const currentAnimeId = this.route.snapshot.params['animeId'];
-    const currentCapituloId = this.route.snapshot.params['capituloId'];
 
-    // Calcular el ID del capítulo anterior (por ejemplo, decrementar en 1)
-    const capituloAnteriorId = parseInt(currentCapituloId) - 1;
+  verSiguienteCapitulo(): void {
 
-    // Construir la ruta del capítulo anterior
-    const rutaCapituloAnterior = `/anime/${currentAnimeId}/capitulo/${capituloAnteriorId}`;
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
 
-    // Navegar a la ruta del capítulo anterior solo si hay un capítulo anterior
-    if (capituloAnteriorId >= 1) {
-      this.router.navigate([rutaCapituloAnterior]);
-    } else {
-      // Lógica adicional si no hay capítulos anteriores
-      // Por ejemplo, mostrar un mensaje o deshabilitar el botón
+
+    if (this.animeId && this.capituloId) {
+      // Llama al servicio para verificar el siguiente capítulo
+      this.animeService.versiguientecapitulo(this.animeId, this.capituloId).subscribe(capituloSiguiente => {
+        if (capituloSiguiente && capituloSiguiente.id) {
+          const siguienteCapituloId = capituloSiguiente.id;
+          if (!isNaN(siguienteCapituloId)) {
+            this.router.navigate(['/anime', this.animeId, 'capitulo', siguienteCapituloId]);
+          } else {
+            console.log('El id del siguiente capítulo no es un número válido');
+          }
+        } else {
+
+          Toast.fire({
+            iconHtml: '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 26 26"><g fill="#ff2825"><path d="M18.544 12.59a1 1 0 0 1-.053 1.728L9.476 19.2A1 1 0 0 1 8 18.321V7.804a1 1 0 0 1 1.53-.848z"/><path d="M4.293 5.707a1 1 0 0 1 1.414-1.414l16 16a1 1 0 0 1-1.414 1.414z"/><path fill-rule="evenodd" d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2S2 6.925 2 13s4.925 11 11 11m0 2c7.18 0 13-5.82 13-13S20.18 0 13 0S0 5.82 0 13s5.82 13 13 13" clip-rule="evenodd"/></g></svg>',
+            title: 'No hay mas capitulos disponibles',
+            background: '#1a1e2b',
+            color: '#fff',
+            iconColor: 'transparent'
+          });
+
+          console.log('No hay un capítulo siguiente disponible');
+        }
+      });
     }
   }
 
-  verCapituloSiguiente(): void {
-    // Obtener los parámetros de la ruta actual
-    const currentAnimeId = this.route.snapshot.params['animeId'];
-    const currentCapituloId = this.route.snapshot.params['capituloId'];
+  verAnteriorCapitulo(): void {
 
-    // Calcular el ID del capítulo siguiente (por ejemplo, incrementar en 1)
-    const capituloSiguienteId = parseInt(currentCapituloId) + 1;
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      }
+    });
 
-    // Construir la ruta del capítulo siguiente
-    const rutaCapituloSiguiente = `/anime/${currentAnimeId}/capitulo/${capituloSiguienteId}`;
 
-    // Navegar a la ruta del capítulo siguiente
-    this.router.navigate([rutaCapituloSiguiente]);
+    if (this.animeId && this.capituloId) {
+      // Llama al servicio para verificar el capítulo anterior
+      this.animeService.veranteriorcapitulo(this.animeId, this.capituloId).subscribe(capituloAnterior => {
+        if (capituloAnterior && capituloAnterior.id) {
+          const anteriorCapituloId = capituloAnterior.id;
+          if (!isNaN(anteriorCapituloId)) {
+            this.router.navigate(['/anime', this.animeId, 'capitulo', anteriorCapituloId]);
+          } else {
+            console.log('El id del capítulo anterior no es un número válido');
+          }
+        } else {
+          Toast.fire({
+            iconHtml: '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 26 26"><g fill="#ff2825"><path d="M18.544 12.59a1 1 0 0 1-.053 1.728L9.476 19.2A1 1 0 0 1 8 18.321V7.804a1 1 0 0 1 1.53-.848z"/><path d="M4.293 5.707a1 1 0 0 1 1.414-1.414l16 16a1 1 0 0 1-1.414 1.414z"/><path fill-rule="evenodd" d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2S2 6.925 2 13s4.925 11 11 11m0 2c7.18 0 13-5.82 13-13S20.18 0 13 0S0 5.82 0 13s5.82 13 13 13" clip-rule="evenodd"/></g></svg>',
+            title: 'No hay mas capitulos disponibles',
+            background: '#1a1e2b',
+            color: '#fff',
+            iconColor: 'transparent'
+          });
+          console.log('No hay un capítulo anterior disponible');
+        }
+      });
+    }
   }
 }
 

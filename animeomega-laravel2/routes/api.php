@@ -32,6 +32,8 @@ Route::get('/anime/{anime}', [AnimesController::class, 'findAnime']);
 //Route::get('/prueba', [AnimesController::class, 'prueba']);
 Route::get('/searcher', [AnimesController::class, 'searcher']);
 Route::get('/ultimoscapitulos', [AnimesController::class, 'ultimosCapitulosanimesañadidos']);
+Route::get('/capitulosiguiente/{id_anime}/{id_capitulo}', [AnimesController::class, 'versiguientecapitulo']);
+Route::get('/capituloanterior/{id_anime}/{id_capitulo}', [AnimesController::class, 'veranteriorcapitulo']);
 
 Route::post('/api-search', [ApiAnimeController::class, 'search']);
 Route::post('/save-anime', [ApiAnimeController::class, 'saveAnime']);
@@ -44,6 +46,7 @@ Route::get('/getcategoria', [AnimesController::class, 'getcategoria']);
 Route::get('/getestado', [AnimesController::class, 'getestado']);
 Route::get('/getordenar', [AnimesController::class, 'getordenar']);
 Route::get('/getUltimoCapituloDelAnime/{id_anime}', [AnimesController::class, 'getUltimoCapituloDelAnime']);
+Route::get('/getnumerocapitulo/{id_anime}/{idcapitulo}', [AnimesController::class, 'getnumerocapitulo']);
 // Otras rutas protegidas por autenticación
 Route::middleware('auth:api')->group(function () {
 

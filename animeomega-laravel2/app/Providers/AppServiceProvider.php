@@ -26,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
             $event->extendSocialite('discord', \SocialiteProviders\Discord\Provider::class);
         });
 
-
         Gate::define('admin-access', function ($user){
             return $user->hasRole('Administrador');
         });

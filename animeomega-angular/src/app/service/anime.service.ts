@@ -286,4 +286,18 @@ export class AnimeService {
   getUltimoCapituloDelAnime(animeId: number): Observable<any> {
     return this.httpClient.get<any>(`${this.base}/getUltimoCapituloDelAnime/${animeId}`);
   }
+
+
+  veranteriorcapitulo(animeId: number, capituloId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.base}/capituloanterior/${animeId}/${capituloId}`);
+  }
+
+  versiguientecapitulo(animeId: number, capituloId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.base}/capitulosiguiente/${animeId}/${capituloId}`);
+  }
+
+  getcapituloanime(animeId: number, capituloId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.base}/getnumerocapitulo/${animeId}/${capituloId}`);
+  }
+
 }
